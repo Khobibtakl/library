@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Dynamic Vintage Scanned Paper Noise Pattern */
+  .scanned-vintage-paper {
+    background-color: #f3edd8;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 80%),
+      radial-gradient(circle at 10% 20%, rgba(0,0,0,0.03) 0%, transparent 5%),
+      radial-gradient(circle at 90% 80%, rgba(0,0,0,0.04) 0%, transparent 8%),
+      linear-gradient(rgba(100,50,0,0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 8px 8px, 12px 12px, 100% 32px;
+    box-shadow: inset 0 0 100px rgba(139, 92, 26, 0.15);
+  }
+  
+  .scanned-ink-high-contrast {
+    filter: contrast(1.75) brightness(0.9) grayscale(1);
+    color: #050505 !important;
+  }
+
+  .scanned-digital-sharpen {
+    filter: contrast(1.1) saturate(1.1) brightness(1.02);
+  }
+
+  .scanned-sepia-paper {
+    background-color: #ebdfc3;
+    color: #2e1c0c !important;
+    box-shadow: inset 0 0 80px rgba(80, 40, 10, 0.2);
+  }
+
+  .scanned-emerald-board {
+    background-color: #1a3a2a;
+    color: #e6f4ea !important;
+    box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.45);
+  }
+
+  .gpu-hardware-accelerated {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom glow effect */
+  .glow-amber-accent {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.15);
+  }
+}
+
+@layer base {
+  body {
+    -webkit-tap-highlight-color: transparent;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Animations */
+@keyframes slow-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-slow-fade-in {
+  animation: slow-fade-in 0.4s ease-out forwards;
+}
+
+@keyframes scan-line-movement {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.animate-scan-line {
+  animation: scan-line-movement 6s linear infinite;
+}

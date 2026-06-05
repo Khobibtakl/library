@@ -1,0 +1,25 @@
+د کتابونو پوښونو (انځورونو) لپاره لارښود:
+تاسو کولی شئ په دې فولډر کې د هر کتاب لپاره ځانګړی ریښتینی انځور (.jpg کلیشه) ځای په ځای کړئ.
+د هر کتاب د انځور نوم باید کټ مټ د کتاب له آی ډي (Book ID) سره سم وي:
+
+۱. تنوير المسلمین پښتو: tanwir-ul-muslimeen-pashto.jpg
+۲. الجامع اللطیف پښتو: al-jami-ul-latif-pashto.jpg
+۳. تحفة المباركة پښتو: tuhfat-ul-mubaraka-pashto.jpg
+۴. الرسالة الحقانية: al-risalat-ul-haqqaniyyah.jpg
+۵. معراج التصوف پښتو: miraj-ul-tasawwuf-pashto.jpg
+۶. سيف القهار فارسی: saif-ul-qahhar-farsi.jpg
+۷. تنوير المسلمین فارسی: tanwir-ul-muslimeen-farsi.jpg
+۸. زبدة المسائل پښتو: zubdat-ul-masail-pashto.jpg
+۹. معراج الإسلام پښتو: miraj-ul-islam-pashto.jpg
+۱۰. سيف القهار على المستهزين الکفار پښتو: saif-ul-qahhar-ala-al-mustahzi-ul-kuffar-pashto.jpg
+۱. المنهاج الجليل في حكم القتيل پښتو: al-minhaj-al-jalil-pashto.jpg
+۱۲. معراج الحجاج پښتو: miraj-ul-hujjaj-pashto.jpg
+۱۳. الجامع اللطیف عربي: al-jami-ul-latif-arabic.jpg
+۱۴. المنهاج الجليل في حكم القتيل عربي: al-minhaj-al-jalil-arabic.jpg
+۱۵. زاد المسافر پښتو: zad-ul-musafir-pashto.jpg
+۱۶. تلخص معراج الحجاج والمعتمرين: talkhis-miraj-ul-hujjaj.jpg
+۱۷. معراج الواعظين: miraj-ul-waizin.jpg
+۱۸. منهاج الفرقة الناجية پښتو: minhaj-ul-firqa-al-najiya-pashto.jpg
+۱۹. زبدة الصلوة علی اشرف المخلوقات: zubdat-ul-salat.jpg
+
+کله چې د دغو نومونو سره خپل انځورونه دلته واچوئ، سیسټم به په اتوماتیک ډول ستاسو اصلي انځورونه نندارې ته وړاندې کړي. که انځور شتون ونلري، سیسټم د هغې پر ځای جوړ شوی ډیزاین ښکاره کوي.

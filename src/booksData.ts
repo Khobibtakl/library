@@ -1,0 +1,390 @@
+export interface BookPage {
+  pageNumber: number;
+  chapterTitle: string;
+  content: string;
+}
+
+export interface Book {
+  id: string;
+  title: string;
+  pashtoTitle: string;
+  author: string;
+  category: 'literature' | 'philosophy' | 'islamic' | 'science' | 'history' | 'language';
+  categoryLabel: string;
+  description: string;
+  pages: BookPage[];
+  coverGradient: string;
+  coverPattern: 'geometric' | 'islamic' | 'crest' | 'stellar' | 'poetry' | 'science';
+  size: string;
+  publishedYear: string;
+  language: 'pashto' | 'dari' | 'english';
+  difficulty: 'advanced' | 'medium' | 'beginner';
+  difficultyLabel: string;
+}
+
+export const booksData: Book[] = [
+  {
+    id: "tanwir-ul-muslimeen-pashto",
+    title: "Tanwir-ul-Muslimeen Pashto",
+    pashtoTitle: "تنوير المسلمین پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "د معاصر وخت له مهمو موضوعاتو څخه د تلویزیون، موسیقۍ، سندرو او رسنیو شرعي احکام دي. «تنویر المسلمین فی حکم التلفزيون» یو ارزښتناک علمي اثر دی چې یاد مسائل د قرآن، سنتو او د فقهاوو د اقوالو په رڼا کې څېړي. په دې کتاب کې د تلویزیون تاریخ، د موسیقۍ او سندرو شرعي حکم، د «لهو الحدیث» مفهوم، د موسیقۍ د ضررونو او علاج لارې، د پردې او عریانۍ احکام، او د عکسونو او تصویرونو فقهي څېړنه په مستند او علمي ډول وړاندې شوې ده. «تنویر المسلمین فی حکم التلفزيون» د هغو لوستونکو لپاره یو ګټور لارښود دی چې غواړي د معاصرو رسنیزو او ټولنیزو موضوعاتو شرعي احکام په مستند او علمي ډول وپېژني.",
+    size: "3.5 MB",
+    publishedYear: "۱۴۰۲",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-[#87CEEB] to-[#4682B4]",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "سریزه (پېژندنه)", content: "د کتاب پیل او لومړنۍ شرحه دلته ځای پر ځای کېږي." },
+      { pageNumber: 2, chapterTitle: "مضمون اول", content: "د مبارک کتاب لومړی تفصیلي بحث او شرعي دلایل." },
+      { pageNumber: 3, chapterTitle: "شرحه او پایله", content: "د بحث پای او د مؤلف وروستۍ دعاګانې." }
+    ]
+  },
+  {
+    id: "al-jami-ul-latif-pashto",
+    title: "Al-Jami-ul-Latif Pashto",
+    pashtoTitle: "الجامع اللطیف پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "د ولاء او براء د موضوع په اړه يو ارزښتمن او ګټور اثر دی، چې د قرآن او سنتو په رڼا کې د دوستۍ او دښمنۍ شرعي اصول بيانوي. په دې کتاب کې د ولاء او براء حقيقت، د هغې دلائل، له منافقانو، مرتدينو، بدعتيانو، ګنهګارانو او باغيانو سره د شرعي تعامل احکام، او همدارنګه اسلام ته د بلنې مهمې لارې او وسيلې په علمي او مستند ډول څېړل شوې دي. دا کتاب د عقيدې د پياوړتيا، د اسلامي شخصيت د روزنې او د صحيح اسلامي منهج د پېژندنې لپاره يوه ارزښتناکه علمي سرچينه ده.",
+    size: "4.1 MB",
+    publishedYear: "۱۴۰۱",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-blue-850 to-indigo-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "شرحه او سریزه", content: "د مبارک اثر لومړۍ برخه او اهداف." },
+      { pageNumber: 2, chapterTitle: "مسایل او احکام", content: "د فقهي او عقیدوي احکامو ارزښتناکه بحث." }
+    ]
+  },
+  {
+    id: "tuhfat-ul-mubaraka-pashto",
+    title: "Tuhfat-ul-Mubaraka Pashto",
+    pashtoTitle: "تحفة المباركة پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "دا کتاب د رسول الله ﷺ د مبارکو نومونو او القابو په اړه یو ارزښتناک او روحاني اثر دی. مؤلف په دې کتاب کې هغه مبارک نومونه راټول کړي دي چې د مدینې منورې د باب السلام څخه تر باب البقیع پورې لیکل شوي دي، او د هر نوم تر شا د نبوي عظمت, فضیلت او لوړ مقام ښکلي رازونه بیانوي. د دې مبارکو نومونو مطالعه د رسول الله ﷺ د شخصیت، مقام او ځانګړنو په اړه د لوستونکي پوهه لا پیاوړې کوي او په زړه کې د نبوي محبت، تعظیم او عقیدت احساس زیاتوي. دا اثر د سیرت او شمائل نبوي له مینهوالو سره مرستې کوي چې د نبي کریم ﷺ د مبارکو نومونو له لارې د هغه له سپېڅلي مقام سره لا ژوره آشنایي ترلاسه کړي. «تحفه المباركة» د رسول الله ﷺ د مبارکو نومونو په رڼا کې د نبوي عظمت، محبت او معرفت یوه ښکلې ډالۍ ده.",
+    size: "2.8 MB",
+    publishedYear: "۱۴۰۰",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-teal-850 to-teal-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "تحفة المباركة پېژندنه", content: "د کتاب موضوع او ګټې په ساده ژبه بیان شوې دي." }
+    ]
+  },
+  {
+    id: "al-risalat-ul-haqqaniyyah",
+    title: "Al-Risalat-ul-Haqqaniyyah",
+    pashtoTitle: "الرسالة الحقانية",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "philosophy",
+    categoryLabel: "عقلي او فلسفي منطق",
+    description: "الرسالة الحقانية د شیخ ګل الرحمن حقاني عقیدوي او فکري ځوابیه اثر دی چې د اسلامي اصولو او شریعت په رڼا کې بېلابېل تفصیلي موضوعات په مستند، کره او باوري علمي طریقه څېړي.",
+    size: "3.2 MB",
+    publishedYear: "۱۴۰۳",
+    language: "pashto",
+    difficulty: "advanced",
+    difficultyLabel: "پرمختللی",
+    coverGradient: "from-purple-800 to-indigo-950",
+    coverPattern: "crest",
+    pages: [
+      { pageNumber: 1, chapterTitle: "د رسالې ارزښت", content: "په دې برخه کې د کتاب عقلي او دلایلو پر بنسټ شالید روښانه شوی دی." }
+    ]
+  },
+  {
+    id: "miraj-ul-tasawwuf-pashto",
+    title: "Miraj-ul-Tasawwuf Pashto",
+    pashtoTitle: "معراج التصوف پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "د معراج التصوف د مبارک اثر پېژندنه او شرحه دلته ولولئ. دا کتاب د تصوف او د زړه د تصفیې روحاني احوال په ډېره ښکلې او پښتو فصیحه ژبه څېړي او د معنويت لوړو مدارجو ته لاره پرانیزي.",
+    size: "4.5 MB",
+    publishedYear: "۱۳۹۹",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-rose-800 to-slate-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "د تصوف عرفاني مانا", content: "د زړه پاکوالي او الوهیت پېژندلو تصوفي مرتبې او د روح معراج." }
+    ]
+  },
+  {
+    id: "saif-ul-qahhar-farsi",
+    title: "Saif-ul-Qahhar Farsi",
+    pashtoTitle: "سيف القهار فارسی",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "philosophy",
+    categoryLabel: "عقلي او فلسفي منطق",
+    description: "این کتاب ارزشمند علمی پیرامون مقام، فضایل و حقوق خاتم الانبیاء حضرت محمد ﷺ نگاشته شده است. مؤلف با دلایل مستند عظمت رسول الله ﷺ، کمالات نبوت و اهمیت احترام به ذات مبارک ایشان را به شیوه ای علمی و زیبا بیان کرده است. همچنین ویژگی های پیامبر رحمت در پرتو قرآن و احادیث و راه های وفاداری و دفاع به تصویر کشیده شده است.",
+    size: "5.0 MB",
+    publishedYear: "۱۴۰۲",
+    language: "dari",
+    difficulty: "advanced",
+    difficultyLabel: "پرمختللی",
+    coverGradient: "from-red-800 to-rose-950",
+    coverPattern: "geometric",
+    pages: [
+      { pageNumber: 1, chapterTitle: "مقدمه سیف القهار", content: "دفاع حقه او مباحث فکری و کلامی در روشنگری اذهان سالم." }
+    ]
+  },
+  {
+    id: "tanwir-ul-muslimeen-farsi",
+    title: "Tanwir-ul-Muslimeen Farsi",
+    pashtoTitle: "تنوير المسلمین فارسی",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "این اثر ارزشمند علمی به بررسی احکام شرعی تلویزیون، موسیقی، سرودها و رسانه ها در پرتو قرآن، سنت و اقوال فقها می پردازد و یک رهنمود مفید برای خوانندگانی است که مایل به شناخت احکام موضوعات رسانه ای معاصر هستند.",
+    size: "3.7 MB",
+    publishedYear: "۱۴۰۱",
+    language: "dari",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-cyan-800 to-slate-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "مقدمه تنویر المسلمین", content: "بیان راه رهایی و هدایت جامعه در پرتو شریعت ناب اسلامی." }
+    ]
+  },
+  {
+    id: "zubdat-ul-masail-pashto",
+    title: "Zubdat-ul-Masail Pashto",
+    pashtoTitle: "زبدة المسائل پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "موضوع : د کتاب د اسلامي اقتصاد او شرعي معاملات هغه مهم اصول بیانوي چې د نن عصر سوداګرۍ او مالي چارو ته روښانه لار ښيي.! دا کتاب په ساده، علمي او د باور وړ انداز د شرکتونو، مضاربت، اجارې او سود اړوند مسئلې څېړي، تر څو لوستونکی وکولای شي خپلې معاملې د شریعت مطابق سمې پر مخ یوسي. که غواړې د اسلامي اقتصاد ژوره پوهه ترلاسه کړې او د حلالو معاملاتو سمه لاره وپېژنې، نو «زبدة المسائل» ستا لپاره یو ارزښتناک او ګټور کتاب دی.",
+    size: "3.9 MB",
+    publishedYear: "۱۴۰۰",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-lime-800 to-emerald-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "د میاشتې مسائل", content: "د لومړنیو فقهي احکامو او ورځنیو مسایلو خالص غبرګون او لارښود." }
+    ]
+  },
+  {
+    id: "miraj-ul-islam-pashto",
+    title: "Miraj-ul-Islam Pashto",
+    pashtoTitle: "معراج الإسلام پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "دا کتاب د اسلامي سیاست، اسلامي حکومت او د امت د سیاسي او ټولنیز پرمختګ په اړه یو مهم او فکري اثر دی. مؤلف په دې کتاب کې د اسلام د سیاسي نظام بنسټونه، د اسلامي حکومت اصول او د اسلامي پالیسۍ مهم اړخونه د قرآن کریم او سنتو په رڼا کې څېړلي دي. همچنین د مسلمانانو د عزت، یووالي او پرمختګ عوامل، د اسلامي قیادت ځانګړنې او هغه لارې چارې بیان شوې دي چې د امت د ځواک، ثبات او ځواک سبب ګرځي. کتاب لوستونکي ته د اسلامي سیاست د اهدافو، د عادلانه حکومتدارۍ د ارزښت او د عادلانه حکومتدارۍ اصول په ډاګه کوي.",
+    size: "4.6 MB",
+    publishedYear: "۱۳۹۸",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-purple-900 to-indigo-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "معراج الإسلام پیل", content: "د اسلام د عظیم الشان لوړو مراتب معرفي او تشریحي بحث." }
+    ]
+  },
+  {
+    id: "saif-ul-qahhar-ala-al-mustahzi-ul-kuffar-pashto",
+    title: "Saif-ul-Qahhar ala al-Mustahzi-ul-Kuffar Pashto",
+    pashtoTitle: "سيف القهار على المستهزين الکفار پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "philosophy",
+    categoryLabel: "عقلي او فلسفي منطق",
+    description: "دا کتاب د خاتم الانبیاء، رحمة للعالمین حضرت محمد ﷺ د مقام، فضیلتونو او حقوقو په اړه یو ارزښتناک علمي اثر دی. مؤلف په مستندو دلایلو د رسول الله ﷺ عظمت، د نبوت کمالات او د هغه مبارک ذات د درناوي اهمیت په ښکلي او علمي انداز بیان کړی دی. په دې کتاب کې د قرآن کریم او احادیثو په رڼا کې د رسول الله ﷺ ځانګړتیاوې، پر امت د هغه حقوق، د نبي کریم ﷺ د ستاینې فضیلت او د سپکاوي کوونکو د ناوړه انجام په اړه مهم بحثونه وړاندې شوي دي. همدارنګه د صحابه کرامو رضی الله عنهم د مینې، وفادارۍ او دفاع ځلانده بېلګې هم پکې ذکر شوې دي. سیف القهار علی المستهزئین الکفار: د نبوي محبت، د رسول الله ﷺ د حقوقو د پېژندنې او د اسلامي عقیدې د پیاوړتیا لپاره یو ګټور او اغېزمن اثر دی.",
+    size: "5.4 MB",
+    publishedYear: "۱۴۰۳",
+    language: "pashto",
+    difficulty: "advanced",
+    difficultyLabel: "پرمختللی",
+    coverGradient: "from-red-900 to-amber-955",
+    coverPattern: "geometric",
+    pages: [
+      { pageNumber: 1, chapterTitle: "دفاع او رد عمل هڅې", content: "د دښمنانو د تبلیغاتو شننه او د حق پلوه روښانه عقايدو خپرونه." }
+    ]
+  },
+  {
+    id: "al-minhaj-al-jalil-pashto",
+    title: "Al-Minhaj-al-Jalil Pashto",
+    pashtoTitle: "المنهاج الجليل في حكم القتيل پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "history",
+    categoryLabel: "تاریخ او پېښلیک",
+    description: "د اسلامي جنایي فقهې یو ارزښتناک اثر چې د انساني ژوند د حرمت، د قتل د احکامو، د قصاص او دیت د مسائلو او د شهادت د مقام په اړه مهم بحثونه وړاندې کوي. دا کتاب د اسلامي شریعت د عدلي نظام حکمتونه روښانه کوي او د عدالت، امنیت او د انساني حقوقو د ساتنې پر اهمیت رڼا اچوي. د کتاب مهم موضوعات: ▪️ د قتل ډولونه او احکام ▪️ د قصاص او دیت مسائل ▪️ د خطا او عمد قتل ترمنځ توپیر ▪️ د قطاع الطریق (لارشکونکو) احکام ▪️ د شهادت مقام او فضیلتونه ▪️ د ظلم حرمت او د وینې د حقونو ساتنه. «المنهاج الجلیل فی حکم القتیل»: د اسلامي جنایي فقهې په رڼا کې د ژوند، عدالت او انساني کرامت یو ګټور لارښود.",
+    size: "4.8 MB",
+    publishedYear: "۱۴۰۲",
+    language: "pashto",
+    difficulty: "advanced",
+    difficultyLabel: "پرمختللی",
+    coverGradient: "from-amber-900 to-stone-950",
+    coverPattern: "crest",
+    pages: [
+      { pageNumber: 1, chapterTitle: "د احکامو لومړنی باب", content: "په قتل او شرعي قصاص کې د لارښوونو او پلوه قوانین." }
+    ]
+  },
+  {
+    id: "miraj-ul-hujjaj-pashto",
+    title: "Miraj-ul-Hujjaj Pashto",
+    pashtoTitle: "معراج الحجاج پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "«معراج الحجاج والمعتمرین» د شیخ ګل الرحمن حقاني یو ارزښتناک اثر دی، چې د حج او عمرې د سپېڅلي سفر لپاره یو جامع لارښود ګڼل کېږي. په دې کتاب کې د حج فضایل، آداب، د مناسکو د ادا کولو ترتیب او د عمرې اړوند مسایل په ډېر دقت سره بیان شوي دي. د دې ترڅنګ، د «دیار حبیب» (مدینې منورې) د زیارت آداب په روحاني ژبه پکې ځای پر ځای شوي دي. دا کتاب د هغو کسانو لپاره غوره سرچینه ده چې غواړي خپل عبادت د نبوي سنتو مطابق په پوره پوهه او اخلاص ترسره کړي.",
+    size: "3.4 MB",
+    publishedYear: "۱۴۰۱",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-stone-830 to-slate-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "د حج طریقې", content: "د حاجیانو لپاره د مناسکو اسانه تشرېحات او عملي طریقې." }
+    ]
+  },
+  {
+    id: "al-jami-ul-latif-arabic",
+    title: "Al-Jami-ul-Latif Arabic",
+    pashtoTitle: "الجامع اللطیف عربي",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "هو كتاب قيم وبديع حول مبدأ الولاء والبراء، يوضح الأحكام والضوابط الشرعية في موالاة المؤمنين والبراءة من أهل البدع والضلال والدجالين بما يوافق الكتاب والسنة النبوية الشريفة.",
+    size: "4.0 MB",
+    publishedYear: "۱۴۰۰",
+    language: "english",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-cyan-900 to-indigo-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "الخطبة والمقدمة", content: "نحمده ونسأله من فضل العظيم في تيسير الفقه في ربوع الإسلام." }
+    ]
+  },
+  {
+    id: "al-minhaj-al-jalil-arabic",
+    title: "Al-Minhaj-al-Jalil Arabic",
+    pashtoTitle: "المنهاج الجليل في حكم القتيل عربي",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "history",
+    categoryLabel: "تاریخ او پېښلیک",
+    description: "مؤلف فقهي جليل حول أحكام القتل والقصاص والديات في الشريعة الإسلامية يوضح صون الدماء والعدالة وحرمة الأنفس والحدود الشرعية.",
+    size: "4.9 MB",
+    publishedYear: "۱۴۰۲",
+    language: "english",
+    difficulty: "advanced",
+    difficultyLabel: "پرمختللی",
+    coverGradient: "from-stone-900 to-amber-955",
+    coverPattern: "crest",
+    pages: [
+      { pageNumber: 1, chapterTitle: "رسالة فی الدیات والقصاص", content: "الحمد لله رب العالمين والصلاة والسلام على نبينا محمد الضحوك القتال." }
+    ]
+  },
+  {
+    id: "zad-ul-musafir-pashto",
+    title: "Zad-ul-Musafir Pashto",
+    pashtoTitle: "زاد المسافر پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "literature",
+    categoryLabel: "ادب او هنر",
+    description: "«زاد المسافر» د شیخ ګل الرحمن حقاني یو جامع اثر دی چې د سفر شرعي او اخلاقي مسایل پکې په تفصیل بیان شوي. په دې کتاب کې د سفر آداب، د مسافاتو مقدار، د وطن اصلي او اقامت احکام او د سفر اړوند نور مهم مسایل د قران او سنتو په رڼا کې په ډېر اسانه انداز څېړل شوي دي. دا کتاب د هغو کسانو لپاره یو بشپړ لارښود دی چې غواړي خپل سفرونه د دیني لارښوونو سره سم ترسره کړي او د سفر له برکتونو او ګټو څخه برخمن شي.",
+    size: "3.1 MB",
+    publishedYear: "۱۳۹۷",
+    language: "pashto",
+    difficulty: "beginner",
+    difficultyLabel: "مبتدي",
+    coverGradient: "from-orange-850 to-amber-952",
+    coverPattern: "poetry",
+    pages: [
+      { pageNumber: 1, chapterTitle: "زاد المسافر زېرمه", content: "د سفر په زړو او نویو کلتوري او معنوي احوالو غوره توتیا او ګوروان." }
+    ]
+  },
+  {
+    id: "talkhis-miraj-ul-hujjaj",
+    title: "Talkhis Miraj-ul-Hujjaj wal-Mutamireen",
+    pashtoTitle: "تلخيص معراج الحجاج والمعتمرين",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "دا کتاب د عمرې د مبارک سفر په اړه یو ګټور او ارزښتناک لارښود دی چې د معتمرینو لپاره د سفر له پیل څخه تر راستنېدو پورې اړین معلومات په روانه او علمي بڼه وړاندې کوي. مؤلف په دې اثر کې د عمرې فضیلتونه، د عمرې د صحیح ادا کولو طریقه، اړوند فقهي مسائل او د مکې معظمې د سپېڅلو ځایونو او تاریخي مسجدونو پېژندنه بیان کړې ده. همدارنګه د دیارِ حبیب حضرت محمد ﷺ د سفر او زیارت، د مدینې منورې د فضیلتونو، ځانګړنو او مبارکو آثارو په اړه ګټور معلومات وړاندې شوي دي. دا کتاب د عمرې د سفر یو بشپړ ملګری دی چې لوستونکي ته د عابدت د سمې اداء، د مقدسو ځایونو د پېژندنې او د روحاني ګټو د ترلاسه کولو لارښوونه کوي. د وطن ته د راستنېدو آداب هم په ښکلي او ګټور انداز پکې بیان شوي دي. زاد المعتمرین د عمرې د مبارک سفر لپاره یو جامع، عملي او روحاني لارښود دی چې د معتمر په زړه کې د حرمینو شریفینو محبت او د عبادت شوق لا زیاتوي.",
+    size: "2.9 MB",
+    publishedYear: "۱۴۰۳",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-teal-900 to-slate-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "تلخيص اول", content: "د عمرې او د حج د اسانه تشرېحاتو خورا ساده خلاصه او راټولونه." }
+    ]
+  },
+  {
+    id: "miraj-ul-waizin",
+    title: "Miraj-ul-Waizin",
+    pashtoTitle: "معراج الواعظين",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "literature",
+    categoryLabel: "ادب او هنر",
+    description: "«معراج الواعظین» د شیخ القرآن والحدیث الحاج ګل الرحمن حقاني المهاجر المدني یو له هغو ارزښتناکو تالیفاتو څخه دی چې د اسلامي علم او اخلاقو په برخه کې د واعظانو او خطیبانو لپاره یوه مهمه سرچینه ګڼل کېږي. دا کتاب د دیني احکامو، عقایدو او د نبوي سیرت د پېښو په اړه د ویناوو او تقریرونو لپاره یو جامع لارښود دی.",
+    size: "3.8 MB",
+    publishedYear: "۱۴۰۱",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-emerald-950 to-emerald-900",
+    coverPattern: "poetry",
+    pages: [
+      { pageNumber: 1, chapterTitle: "واعظ همکار لارښود", content: "د واعظینو او مخلصینو لپار وعظونو منځپانګې پېژندنه او لارښودونه." }
+    ]
+  },
+  {
+    id: "minhaj-ul-firqa-al-najiya-pashto",
+    title: "Minhaj-ul-Firqa al-Najiya Pashto",
+    pashtoTitle: "منهاج الفرقة الناجية پښتو",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "اسلامي علوم او تصوف",
+    description: "په دې کتاب کې لیکوال د توحید د سپېڅلي اصل په بیانولو سره، د ختم نبوت د عقیدې پر اهمیت ټینګار کړی دی. د دې ترڅنګ، د تقلید، تصوف، توسل، سماع موتی، ذکر جهري او د حیلې اسقاط په څېر موضوعات په ډېر علمي او تحقیقي ډول څېړل شوي دي. شیخ صاحب هڅه کړې چې دغه مسایل د قران او نبوي سنتو په رڼا کې داسې بیان کړي، چې د لوستونکي د ذهن ټولې پوښتنې ځواب او د عقیدې بنسټونه یې پیاوړي شي.",
+    size: "3.6 MB",
+    publishedYear: "۱۴۰۰",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-blue-900 to-slate-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "منهاج النجاح", content: "هغه لاره او عقیده چې مخلص مسلمان په دغه دنیا او اخرت کې له ګناه خلاصوي او خلاصون ورکوي." }
+    ]
+  },
+  {
+    id: "zubdat-ul-salat",
+    title: "Zubdat-ul-Salat ala Ashraf al-Makhluqat",
+    pashtoTitle: "زبدة الصلوة علی اشرف المخلوقات",
+    author: "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    category: "islamic",
+    categoryLabel: "تصوف او عرفان",
+    description: "یوازې یو کتاب نه، بلکې د نبوي مینې او د مصطفی (ص) د سیرت د پیروۍ یو روحاني سفر دی. دا اثر د ایمان په رڼا کې د رسول الله (ص) د شخصیت لوړوالی، د هغه اطاعت, او د هغه د سپېڅلي ذات سره د مینې او اقتدا په ارزښتونو په ډېر فصیح او ادبي انداز بحث کوي. په دې کتاب کې لیکوال په ډېر مهارت سره د ایمان، اطاعت، محبت، اتباع او اقتدا ترمنځ اړیکې انځور کړي دي. دا اثر لوستونکي ته ورښيي چې د رسول الله (ص) پیروي یوازې د ظاهري اعمالو نوم نه دی، بلکې د زړه په ژورو کې د هغه د محبت د کرلو او د هغه د سیرت په رڼا کې د ژوند د هر ګام د برابرولو نوم دی. دا کتاب د هغو کسانو لپاره یو غوره لارښود دی چې غواړي د نبوي سنتو په پیروۍ کې د کمال درجې ته ورسېږي.",
+    size: "4.2 MB",
+    publishedYear: "۱۴۰۲",
+    language: "pashto",
+    difficulty: "medium",
+    difficultyLabel: "منځنی",
+    coverGradient: "from-[#0b0c10] to-indigo-950",
+    coverPattern: "islamic",
+    pages: [
+      { pageNumber: 1, chapterTitle: "درودونه فضیلتونه", content: "پر سرور کائنات حضرت محمد مصطفی ﷺ د درود لوستلو او ثوابونو بېسارې مجموعې او بحث." }
+    ]
+  }
+];

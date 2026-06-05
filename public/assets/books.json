@@ -1,0 +1,477 @@
+[
+  {
+    "id": "khushal-kulliyat",
+    "title": "Kulliyat-e-Khushal Khan Khattak",
+    "pashtoTitle": "د خوشحال خان خټک کلیات",
+    "author": "خوشحال خان خټک",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "د شاعرۍ، فلسفې، ملي ننګ او مبارزې يو بې‌سارې ټولګه چې د پښتو ادبیاتو تر ټولو غني او ستر لاسي ليکل شوی ثروت ګڼل کیږي.",
+    "size": "4.8 MB",
+    "publishedYear": "۱۳۹۸ (اکاډمي)",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-amber-800 to-amber-950",
+    "coverPattern": "crest",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د کتاب سریزه او پېژندنه",
+        "content": "خوشحال خان خټک د پښتو ادب ستر لاروی، شاعر او توره وال مشر دی. په دې کلیات کې د هغه ټولې ادبي پنځونې لکه غزلونه، قصیدې، مثنوۍ او رباعي شامل دي.\n\n[د چیني خطاطۍ او پخواني چاپ تصوير لوړ کیفیت لرونکی] زما توره زما قلم دی او زما قلم زما د مړانې نښان."
+      },
+      {
+        "pageNumber": 2,
+        "chapterTitle": "باب اول: د مېړانې او ننګ غزلونه",
+        "content": "زه هغه تورزن افغان یم چې په هر ډګر کې مې خپل نوم ګټلی دی. زما قلم زما توره دی او زما توره زما قلم دی.\n\nنه مې هېر شي ستا هغه جګې سترګې،\nچې په ناز او په نخرو مو زړونه وړینه.\nعرش ته به پورته شي غږ زما د مېړانې..."
+      },
+      {
+        "pageNumber": 3,
+        "chapterTitle": "باب دویم: د هوډ او مبارزې فلسفه",
+        "content": "د افغان په غاړه کې تل توره ځلیږي. اراده مې غره غوندې کلکه ده او د باطل په وړاندې سر ورکول منم خو غاړه ایښودل نه منم. د ژوند حق یوازې د هغو خلکو دی چې د خپلې آزادۍ او وقار لپاره جګړه کوي."
+      }
+    ]
+  },
+  {
+    "id": "rahman-diwan",
+    "title": "Diwan-e-Rahman Baba",
+    "pashtoTitle": "د رحمان بابا دیوان",
+    "author": "عبدالرحمن بابا",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "عرفاني او تصوفي شاعري چې د افغانانو په زړونو او کلتور کې خورا ژور ريښې لري او زړونو ته د سولې او تقوا پیغام لېږدوي.",
+    "size": "3.2 MB",
+    "publishedYear": "۱۴۰۰ (عرفان ټولنه)",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-emerald-800 to-emerald-950",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د ديوان پېژندنه او عرفان معرفي",
+        "content": "عبدالرحمان بابا د زړونو پاچا او د پښتو ژبې تر ټولو نامتو صوفي شاعر دی. د هغه هره خبره د مینې، درناوي، تواضع او الهي معرفت درس ورکوي."
+      },
+      {
+        "pageNumber": 2,
+        "chapterTitle": "باب لومړی: د پنا او بقا معما",
+        "content": "دا دنیا فاني ده، بقا یوازې د الله تعالی ذات ته ده. لکه څنګه چې بوټی خاوره کیږي، انسان هم د مرګ په لور درومي.\n\nچې عمل یې وي د سم غوندې سیده،\nهغه به ناست وي په ارام غوندي مېلمنه."
+      }
+    ]
+  },
+  {
+    "id": "pashto-history-raat",
+    "title": "Pashtuns in the Light of History",
+    "pashtoTitle": "پښتانه د تاریخ په رڼا کې",
+    "author": "سید بهادر شاه ظفر کاکاخیل",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د پښتنو د اصل او نسل، کډوالۍ، امپراتوریو او د دوی د ژوندانه د هر پړاو مستند تاریخي کتنه.",
+    "size": "6.1 MB",
+    "publishedYear": "۱۳۹۵ (پښتو اکاډمي)",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-stone-800 to-stone-950",
+    "coverPattern": "geometric",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د پښتنو د نژاد او اصلي هستوګنې آندونه",
+        "content": "تاریخ پوهان د افغانانو یا پښتنو د اصلي سرچينو په اړه بېل بېل اندونه لري. ځینې یې آریایان، ځینې یې د سامي نژاد او ځینې یې نور کلتورونه بولي."
+      }
+    ]
+  },
+  {
+    "id": "tazkirat-awliya",
+    "title": "Tazkirat al-Awliya",
+    "pashtoTitle": "تذکرة الاولیاء پښتو ترجمه",
+    "author": "شیخ فرید الدین عطار نیشابوري",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "د لویو ديني عالمانو، صوفیانو او صالحو بندګانو ارشادات، مناقب او عبرتناک ژوندلیکونه د زړونو د اصلاح لپاره.",
+    "size": "5.2 MB",
+    "publishedYear": "۱۳۹۱ (اصلاح ټولنه)",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-teal-800 to-teal-950",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د تذکرة الاولیاء منځپانګه او پیغام",
+        "content": "د اولیاء الله ذکر زړونه ویښوي او په روح کې د زهد او تقوا ډیوې بلوي. عطار نیشابوري د سلو څخه د زیاتو هغو متقیانو او سالکانو تذکره راټوله کړې ده."
+      }
+    ]
+  },
+  {
+    "id": "sher-shah-history",
+    "title": "History of Sher Shah Suri",
+    "pashtoTitle": "د شیر شاه سوري تاریخ او کارنامې",
+    "author": "ډاکټر لطیف یاد",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د پښتون تاریخ د مېړني او نوښتګر واکمن شیر شاه سوري د حکومتولۍ، رغنیزو پروژو او نظامي سټراټیژیو جامع څېړنه.",
+    "size": "4.1 MB",
+    "publishedYear": "۱۳۹۷",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-amber-900 to-yellow-950",
+    "coverPattern": "geometric",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د سوري واکمنۍ پیل او شالید",
+        "content": "فريد چې وروسته په شير شاه مشهور شو، د هند په خاوره کې د يوې خورا منظمې پښتون سترواکۍ بنسټ کېښود چې په ډېر کم وخت کې یې ستر بدلونونه پلي کړل."
+      }
+    ]
+  },
+  {
+    "id": "ahmad-shah-baba",
+    "title": "Ahmad Shah Baba Durrani Biography",
+    "pashtoTitle": "احمد شاه بابا د افغانستان بنسټ اېښودونکی",
+    "author": "غلام محمد غبار",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د هېواد د ستر بنسټ اېښودونکي او غازي امپراتور احمد شاه بابا درانې د ژوند لیک، جهادونو او ستر ملي کلتور برابروونکی پلار پېژندنه.",
+    "size": "5.5 MB",
+    "publishedYear": "۱۳۹۴",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-sky-900 to-slate-950",
+    "coverPattern": "crest",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د ۱۷۴۷ جرګه او د پاچاهۍ ټاکل",
+        "content": "په شېر سرخ مزار کې د غونډې له پرانیستلو وروسته، صابر شاه ملنګ د احمدشاه په سر باندې د غنمو وږي کښېښودل او هغه یې د افغان امپراتورۍ د مشر په توګه وټاکه."
+      }
+    ]
+  },
+  {
+    "id": "pashto-grammar",
+    "title": "Comprehensive Pashto Grammar",
+    "pashtoTitle": "د پښتو ژبي پښویه او ستایل پوهنه",
+    "author": "حبیب الله تږی",
+    "category": "language",
+    "categoryLabel": "ژبپوهنه او ادبیات",
+    "description": "د پښتو ګرامر، د غږونو جوړښت، نحوه، او د لیکدود د اصولو پېژندلو لپاره یوازینی معتبر او تدریسي تحلیلي کتاب.",
+    "size": "3.8 MB",
+    "publishedYear": "۱۳۹۶",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-red-900 to-rose-950",
+    "coverPattern": "geometric",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د پښتو تورو غږیزه ځانګړتیا",
+        "content": "پښتو ژبه د ځانګړو تورو (لکه ښ، څ، ځ، ږ، ډ، ړ) په درلودلو سره له نورو هندو آریایي ژبو جلا والي او خوږ غږيز غنا رامنځته کوي."
+      }
+    ]
+  },
+  {
+    "id": "mirwais-nika",
+    "title": "Mirwais Nika and the Kandahar Revolution",
+    "pashtoTitle": "میرویس نیکه او د کندهار ملي پاڅون",
+    "author": "عبد الرؤوف بېنوا",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د افغاني ننګ او لومړنۍ خپلواکۍ د سپاهي مشر حاجي میرویس خان نیکه هوښیار مبارزه او د ګورګین د ظلم پر وړاندې د ولس قیام.",
+    "size": "3.9 MB",
+    "publishedYear": "۱۳۹۰",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-blue-900 to-indigo-950",
+    "coverPattern": "crest",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د کندهار بحران او مذهبي فتوا",
+        "content": "میرویس خان نیکه حج ته د سفر پر مهال د افغان ملت د خلاصون لپاره له علماوو څخه د پاڅون اجازه او شرعي جواز تر لاسه کړ."
+      }
+    ]
+  },
+  {
+    "id": "modern-philosophy-pash",
+    "title": "Modern Philosophy in Pashto Perspective",
+    "pashtoTitle": "فلسفه په زړه پورې اصطلاحاتو کې",
+    "author": "استاد بهاء الدین مجروح",
+    "category": "philosophy",
+    "categoryLabel": "فلسفه او منطق",
+    "description": "د کایناتو د پیدایښت، د عقل د پرمختګ، او د بشري شعور د لوړو پړاوونو د فلسفي پوښتنو ځواب موندلو هڅه په خوږه پښتو ژبه.",
+    "size": "4.5 MB",
+    "publishedYear": "۱۳۹۲",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-gray-800 to-gray-950",
+    "coverPattern": "stellar",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "نه حل کېدونکې سوالونه او د انسان روحي پلوه",
+        "content": "د ژوند بنسټ څه شی دی؟ ایا انسان د خپل برخلیک ټاکونکی دی که مجبور زیږېدلی؟ مجروح په دې کتاب کې مړه کجرې او ځانځاني ته لاره ښيي."
+      }
+    ]
+  },
+  {
+    "id": "seerat-ul-nabi",
+    "title": "Seerat-un-Nabi",
+    "pashtoTitle": "د خوږ پیغمبر ﷺ مبارک سیرت",
+    "author": "مولانا صفي الرحمن مبارکپوري",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "الرحیق المختوم نامتو معتبر کتاب پښتو ترجمه د رسول اکرم ص د زیږیدنې، رسالت، مبارزو او وفات بشپړ د ژوند تاریخ.",
+    "size": "6.5 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-emerald-900 to-teal-950",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د بعثت نه مخکې د عربو کلتوري او ټولنیز ژوند",
+        "content": "د اسلام د رڼا له بلېدو وړاندې جزیرة العرب د بدبختۍ، جهالت، وحشت او خرافاتو تر ټولو ستر مرکز و، چې رسول الله مبارک یې نجات ورکونکی شو."
+      }
+    ]
+  },
+  {
+    "id": "pashto-folklore",
+    "title": "Pashto Folk Tales & Oral Tradition",
+    "pashtoTitle": "د پښتو ولسي کیسې او متلونه",
+    "author": "پروفیسور راج ولي شاه خټک",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "د پېړیو راهیسې سینه په سینه راغلې پښتو لنډۍ، ولسي سندرې، کیسې او د ژوند خوږو متلونو علمي کره کتنه او پرتلنه.",
+    "size": "3.5 MB",
+    "publishedYear": "۱۳۹۹",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-orange-850 to-amber-950",
+    "coverPattern": "poetry",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د لنډیو بنسټیزه صنف پیژندنه",
+        "content": "لنډۍ د پښتو کلتور بې بېلګې کلتوري هینداره ده چې دوه سطرې مګر د پښتني احساس بې انتها جذبه او د زړه خبره پکې خوندي ده."
+      }
+    ]
+  },
+  {
+    "id": "hamid-बाबा-دیوان",
+    "title": "Diwan-e-Hamid Baba",
+    "pashtoTitle": "د حمید بابا شعرونو دیوان",
+    "author": "عبدالحمید مومند (حمید بابا)",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "د نازکخیال شاعر حمید بابا عشق او عرفان ته نږدې رنګین غزلونه، قصیدې او باريک بینه ادبي بېلګې.",
+    "size": "3.1 MB",
+    "publishedYear": "۱۳۹۳",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-purple-900 to-slate-950",
+    "coverPattern": "poetry",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د حمید بابا د ادبي مکتب ځانګړنه",
+        "content": "حمید بابا په پښتو شاعرۍ کې د نازک خیالو او مضمون آفرینۍ پلار بلل کیږي، د هغه په هره لنډۍ او بیت کې تصوفي اشارات او تخیلي ښکلا نغښتې ده."
+      }
+    ]
+  },
+  {
+    "id": "baznama-khushal",
+    "title": "Baznama - Khushal Khan Khattak",
+    "pashtoTitle": "بازنامه: د ښکاري بازانو پېژندنه",
+    "author": "خوشحال خان خټک",
+    "category": "science",
+    "categoryLabel": "تجربي علوم او هنرونه",
+    "description": "د ښې ښکارګرۍ، د مرغانو د روزنې او د ښکاري بازانو بېلابېلو نسلونو په هکله يو په زړه پورې منځګړی تجربي اثر.",
+    "size": "2.9 MB",
+    "publishedYear": "۱۳۸۹",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-violet-900 to-indigo-950",
+    "coverPattern": "science",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د باز د تربیې لومړني پړاوونه",
+        "content": "باز د طبیعي ازادۍ او غرور سمبول دی. د هغه په بند راوستلو، په ښه توګه مایل کولو او په لاس کښېنولو اصولو په اړه خوشحال خان ګټور معلومات ترتیب کړي."
+      }
+    ]
+  },
+  {
+    "id": "astronomy-basics-pashto",
+    "title": "Astronomy and Cosmos in Pashto",
+    "pashtoTitle": "کاینات پېژندنه او ستوري پوهنه",
+    "author": "ډاکټر محمد حنیف",
+    "category": "science",
+    "categoryLabel": "تجربي علوم او هنرونه",
+    "description": "د ستورپوهنې اساسات، د کهکشانونو نقشه، د لمریز نظام حرکت، تور سوري او د کایناتو د پرمختګ عصري نظريې په پښتو کې.",
+    "size": "4.9 MB",
+    "publishedYear": "۱۴۰۱",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-cyan-900 to-blue-950",
+    "coverPattern": "stellar",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د لمریز کالبد او د سیارو د الوت تګلاره",
+        "content": "زموږ کاینات میلیاردونه ستوري لري، او په دې برخه کې موږ د ځمکې، لمر او د کهکشان د ګرځېدو په زړه پورې سیسټم په ساده ژبه شاربو."
+      }
+    ]
+  },
+  {
+    "id": "tarikh-murassa",
+    "title": "Tarikh-e-Murassa",
+    "pashtoTitle": "تاریخ مرصع: د افغان پاچاهانو تاریخ",
+    "author": "افضل خان خټک",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د خوشحال خان خټک د لمسي افضل خان خټک مشهور تاریخي اثر چې د بېلا بېلو خټکو جګړو او افغان پرګنو احوال روښانه کوي.",
+    "size": "6.0 MB",
+    "publishedYear": "۱۳۸۸",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-amber-950 to-stone-900",
+    "coverPattern": "geometric",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د کتاب د لومړي مخ پېژندنه",
+        "content": "دا تاریخ خورا لوړ ارزښت لري چې د مغل امپراتورۍ پر مهال د افغانانو مېړني غبرګونونه او سیمه ییز کلتور په تفصیل بیانوي."
+      }
+    ]
+  },
+  {
+    "id": "islamic-jurisprudence",
+    "title": "Hanifi Islamic Fiqh",
+    "pashtoTitle": "د حنفي فقهي لارښود او احکام",
+    "author": "شیخ الحدیث نقيب الله خطیب",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "په ورځني ژوند کې د دیني احکامو، عباداتو، معاملاتو او د شریعت د تطبیق کوونکو روښانه لارو حنفي لیدلوری.",
+    "size": "5.0 MB",
+    "publishedYear": "۱۴۰۰",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-emerald-950 to-green-900",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د طهارت او اودس بنسټیز مسائل",
+        "content": "پاکوالی د مؤمن پاخه بنسټ او د هر عبادت د قبولیت لومړی شرط دی. په دې باب کې موږ د فرائضو، واجباتو او سنت د تطبیق اړخونه بیانوو."
+      }
+    ]
+  },
+  {
+    "id": "tazkiyah-heart",
+    "title": "Purification of the Heart - Pashto",
+    "pashtoTitle": "تزکیه او د زړه د رنځونو علاج",
+    "author": "مولانا عبدالکریم زاهد",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "د باطني اصلاح، تواضع، د کبر، کینې او حسد لرې کولو، او د معنوي سکون د حصول لپاره غوره اسلامي لارښود.",
+    "size": "4.2 MB",
+    "publishedYear": "۱۳۹۸",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-teal-900 to-teal-950",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د نیت سمون او د اخلاص ارزښت",
+        "content": "د هر مذهبي او دنیاوي کار بریا په نیت پورې تړلې ده، که انسان مخلص نه وي، عمل یې بې ثمره او د الله وړاندې په اوبو لاهو کیږي."
+      }
+    ]
+  },
+  {
+    "id": "stories-of-prophets",
+    "title": "Stories of the Prophets in Pashto",
+    "pashtoTitle": "د علیهم السلام الانبیاوو په زړه پورې کیسې",
+    "author": "مولانا حامد حسن الکوټی",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "د ابوالبشر معزز حضرت آدم ع څخه نیولې تر خاتم الانبیاء حضرت محمد ص پورې د پیغامبرانو عبرتناکې او د دعوت ترخې کیسې.",
+    "size": "5.7 MB",
+    "publishedYear": "۱۴۰۱",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-lime-900 to-emerald-950",
+    "coverPattern": "islamic",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د حضرت ابراهیم ع مېړانه او د توحید بلنه",
+        "content": "ابراهیم علیه السلام د کفر او بت پرستۍ په یو خورا سخت چاپیریال کې پاڅون وکړ او په پوره هوډ سره یې د نمرود باطل نظام ننګ کړ."
+      }
+    ]
+  },
+  {
+    "id": "pashto-poetry-anthology",
+    "title": "Modern Pashto Poetry Selection",
+    "pashtoTitle": "د نوې پښتو شاعرۍ ګلدسته",
+    "author": "شاعرانو ګډه غونډه",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "د معاصرې دورې د وتلو شاعرانو د انتخابي غزلو او ازادو نظمونو ستره ټولګه، چې د افغانانو مینه او درد انځوروي.",
+    "size": "3.3 MB",
+    "publishedYear": "۱۳۹۹",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-rose-900 to-grey-950",
+    "coverPattern": "poetry",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د نوو زمانې غزلونو او افکارو سپړنه",
+        "content": "دا شعرونه د جګړې پر غندنې، د سولې او ملي همغږۍ په تودو هیلو او هلو ځلو باندې ترتیب شوي، چې زړونه مړاوي نشي."
+      }
+    ]
+  },
+  {
+    "id": "physics-cosmos",
+    "title": "Fundamentals of Physics in Pashto",
+    "pashtoTitle": "د فزیک بنسټونه او بنسټیز قوانین",
+    "author": "پوهاند غلام رسول خان",
+    "category": "science",
+    "categoryLabel": "تجربي علوم او هنرونه",
+    "description": "د نیوټن له قوانینو نیولې تر کوانټمي تیورۍ او هستوي فزیک اساسات چې په ښوونیز طریقه پوهنتوني نصاب ته ورته دی.",
+    "size": "4.7 MB",
+    "publishedYear": "۱۳۹۶",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-indigo-900 to-slate-950",
+    "coverPattern": "science",
+    "pages": [
+      {
+        "pageNumber": 1,
+        "chapterTitle": "د نسبیت تیوري او زموږ کائیناتي فهم",
+        "content": "د آلبرټ اینشټاین پیړۍ جوړونکی نسبیت تیوري زمان او مکان ته یو نوی تعریف بښي چې د تجربي ساینس یو له بنسټونو څخه شمیرل کیږي."
+      }
+    ]
+  }
+]
