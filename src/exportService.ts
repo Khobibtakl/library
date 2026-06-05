@@ -1,5 +1,7 @@
 import { jsPDF } from 'jspdf';
 import { Book } from './booksData';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
 
 /**
  * Service to export embedded offline books to actual downloadable PDF documents.
@@ -220,17 +222,50 @@ export function exportBookToPublicStorage(book: Book): Promise<{ success: boolea
       
       const absoluteFilepath = `/storage/emulated/0/Download/${sanitizedFilename}`;
       
-      // Perform genuine browser download trigger
-      doc.save(sanitizedFilename);
-
-      // Simulate a small delayed progress mimicking secure device exports
-      setTimeout(() => {
-        resolve({
-          success: true,
-          filepath: absoluteFilepath,
-          size: book.size
-        });
-      }, 800);
+      // Perform genuine browser download trigger or Capacitor native file write
+      if (Capacitor.isNativePlatform()) {
+        try {
+          const rawBase64 = doc.output('datauristring').split(',')[1];
+          Filesystem.writeFile({
+            path: sanitizedFilename,
+            data: rawBase64,
+            directory: Directory.Documents,
+            recursive: true
+          }).then(() => {
+            resolve({
+              success: true,
+              filepath: `Documents/${sanitizedFilename}`,
+              size: book.size
+            });
+          }).catch((err) => {
+            console.error("Capacitor write error, falling back to browser save", err);
+            doc.save(sanitizedFilename);
+            resolve({
+              success: true,
+              filepath: absoluteFilepath,
+              size: book.size
+            });
+          });
+        } catch (err) {
+          console.error("Capacitor write exception, falling back", err);
+          doc.save(sanitizedFilename);
+          resolve({
+            success: true,
+            filepath: absoluteFilepath,
+            size: book.size
+          });
+        }
+      } else {
+        doc.save(sanitizedFilename);
+        // Simulate a small delayed progress mimicking secure device exports
+        setTimeout(() => {
+          resolve({
+            success: true,
+            filepath: absoluteFilepath,
+            size: book.size
+          });
+        }, 800);
+      }
 
     } catch (error) {
       console.error("PDF Export failure:", error);

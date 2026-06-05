@@ -39,6 +39,8 @@ import { booksData as fallbackBooks, Book, BookPage } from './booksData';
 import { exportBookToPublicStorage } from './exportService';
 import { BookCover } from './components/BookCover';
 import { App as CapApp } from '@capacitor/app';
+import { Filesystem } from '@capacitor/filesystem';
+import { Capacitor } from '@capacitor/core';
 
 // Storage Key Prefix
 const STORAGE_PREFIX = 'offline_library_v2_';
@@ -256,6 +258,8 @@ export default function App() {
   const [showSettingsModal, setShowSettingsModal] = useState<boolean>(false);
   const [showContactDialog, setShowContactDialog] = useState<boolean>(false);
   const [showAuthorBioModal, setShowAuthorBioModal] = useState<boolean>(false);
+  const [showStoragePermissionDialog, setShowStoragePermissionDialog] = useState<boolean>(false);
+  const [bookToExport, setBookToExport] = useState<Book | null>(null);
 
   // Audio / Speech
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -470,14 +474,40 @@ export default function App() {
     setIsSpeaking(false);
   };
 
-  const handleExportBook = async (book: Book) => {
+  const handleExportBook = (book: Book) => {
+    setBookToExport(book);
+    setShowStoragePermissionDialog(true);
+  };
+
+  const confirmAndExportBook = async () => {
+    if (!bookToExport) return;
+    setShowStoragePermissionDialog(false);
+
     try {
-      const result = await exportBookToPublicStorage(book);
+      if (Capacitor.isNativePlatform()) {
+        try {
+          const status = await Filesystem.checkPermissions();
+          if (status.publicStorage !== 'granted') {
+            const requestStatus = await Filesystem.requestPermissions();
+            if (requestStatus.publicStorage !== 'granted') {
+              triggerToast("سرچینې د حافظې اجازه نه ده ورکړل شوې.", "error");
+              return;
+            }
+          }
+        } catch (permerr) {
+          console.warn("Permission check/request failed natively", permerr);
+        }
+      }
+
+      triggerToast("د کتاب کښته کولو چمتووالی...", "info");
+      const result = await exportBookToPublicStorage(bookToExport);
       if (result.success) {
-        triggerToast(`«${book.pashtoTitle}» کتاب ډاونلوډ او ستاسو آلې ذخیرې ته صادر شو!`, 'success');
+        triggerToast(`«${bookToExport.pashtoTitle}» کتاب ډاونلوډ او ستاسو د آلې ذخیره کې خوندي شو!`, 'success');
       }
     } catch {
-      triggerToast("د کتاب صادراتو کې یو څه ستونزه وه.", "error");
+      triggerToast("د کتاب کښته کولو پر مهال تېروتنه رامنځته شوه.", "error");
+    } finally {
+      setBookToExport(null);
     }
   };
 
@@ -1077,7 +1107,7 @@ export default function App() {
             </div>
 
             {/* B. MID ZONE: COMPACT CENTRALIZED SLICK CONTROL DECK */}
-            <div className="flex items-center gap-1 sm:gap-1.5 flex-wrap justify-end">
+            <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto flex-nowrap max-w-[65%] sm:max-w-none scrollbar-none justify-end pb-0.5">
               
               {/* PAGE COUNTER & FORM */}
               <div className="flex items-center gap-1 bg-slate-900 px-1.5 py-0.5 rounded-lg border border-slate-800 text-[10px] sm:text-xs">
@@ -1608,6 +1638,68 @@ export default function App() {
                   className="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[9.5px] font-bold"
                 >
                   خوندي کړه
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* STORAGE ACCESS PERMISSION DIALOG */}
+      {showStoragePermissionDialog && bookToExport && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-sm overflow-hidden animate-slow-fade-in text-right">
+            
+            <div className="bg-slate-950 p-4 border-b border-slate-850 flex items-center justify-between text-right">
+              <button 
+                onClick={() => {
+                  setShowStoragePermissionDialog(false);
+                  setBookToExport(null);
+                }} 
+                className="p-1 rounded bg-slate-900 text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <h3 className="font-bold text-xs text-amber-500 flex items-center gap-1.5 justify-end">
+                <span>د وسیلې حافظې ته لاسرسی</span>
+                <HelpCircle className="w-4 h-4 text-amber-500" />
+              </h3>
+            </div>
+
+            <div className="p-4 space-y-4">
+              <div className="flex justify-center">
+                <div className="p-3 bg-amber-500/10 rounded-full text-amber-500 border border-amber-500/20">
+                  <Download className="w-10 h-10 animate-bounce" />
+                </div>
+              </div>
+
+              <div className="space-y-1.5 text-center sm:text-right">
+                <h4 className="text-xs font-bold text-white text-right">
+                  د «{bookToExport.pashtoTitle}» کتاب ډاونلوډ کولو لپاره د حافظې اجازه
+                </h4>
+                <p className="text-[10px] text-slate-400 leading-relaxed text-right">
+                  د دې لپاره چې د پښتو تصویري کتابتون دغه PDF اثر په بشپړ ډول ستاسو د موبایل په داخلي حافظه کې خوندي او صادر شي، نو اړینه ده چې د تایید اجازه کلیک کړئ. مهرباني وکړئ د اجازه ورکولو په کلیک کولو سره بهیر پیل کړئ.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2 justify-end pt-2">
+                <button
+                  onClick={() => {
+                    setShowStoragePermissionDialog(false);
+                    setBookToExport(null);
+                  }}
+                  className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[10.5px] font-bold cursor-pointer"
+                >
+                  لغوه کول
+                </button>
+                <button
+                  onClick={confirmAndExportBook}
+                  className="px-5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-[10.5px] font-extrabold flex items-center gap-1 cursor-pointer shadow-md"
+                >
+                  اجازه ورکول او ډاونلوډ
                 </button>
               </div>
 
