@@ -358,6 +358,26 @@ export default function App() {
     return () => clearInterval(slideInterval);
   }, [books.length]);
 
+  // Dynamic Status Bar Theme Color Synchronizer
+  useEffect(() => {
+    const metaTag = document.getElementById('status-bar-theme-color');
+    if (metaTag) {
+      let hexColor = '#020617'; // Default Slate dark
+      if (selectedTheme.id === 'ivory-day') {
+        hexColor = '#fafaf9'; // Peshawar white-cream (stone-50)
+      } else if (selectedTheme.id === 'kabul-emerald') {
+        hexColor = '#022c22'; // Kabul Emerald (emerald-950)
+      } else if (selectedTheme.id === 'helmand-sand') {
+        hexColor = '#1c1917'; // Helmand Sand or matching background specifier
+      } else if (selectedTheme.isDark) {
+        hexColor = '#020617';
+      } else {
+        hexColor = '#ffffff';
+      }
+      metaTag.setAttribute('content', hexColor);
+    }
+  }, [selectedTheme]);
+
   // Sync Storage
   useEffect(() => {
     try {
@@ -486,26 +506,32 @@ export default function App() {
     try {
       if (Capacitor.isNativePlatform()) {
         try {
-          const status = await Filesystem.checkPermissions();
-          if (status.publicStorage !== 'granted') {
-            const requestStatus = await Filesystem.requestPermissions();
-            if (requestStatus.publicStorage !== 'granted') {
-              triggerToast("سرچینې د حافظې اجازه نه ده ورکړل شوې.", "error");
-              return;
+          if (Filesystem && typeof Filesystem.checkPermissions === 'function') {
+            const status = await Filesystem.checkPermissions();
+            const perm = status.publicStorage || (status as any).storage;
+            if (perm !== 'granted') {
+              if (typeof Filesystem.requestPermissions === 'function') {
+                const requestStatus = await Filesystem.requestPermissions();
+                const reqPerm = requestStatus.publicStorage || (requestStatus as any).storage;
+                if (reqPerm !== 'granted') {
+                  console.warn("Permission denied by user natively, trying to save anyway");
+                }
+              }
             }
           }
         } catch (permerr) {
-          console.warn("Permission check/request failed natively", permerr);
+          console.warn("Native permission check failed or unsupported", permerr);
         }
       }
 
       triggerToast("د کتاب کښته کولو چمتووالی...", "info");
       const result = await exportBookToPublicStorage(bookToExport);
       if (result.success) {
-        triggerToast(`«${bookToExport.pashtoTitle}» کتاب ډاونلوډ او ستاسو د آلې ذخیره کې خوندي شو!`, 'success');
+        triggerToast(`«${bookToExport.pashtoTitle}» کتاب ډاونلوډ او په بریا سره ستاسو په آلې کې خوندي شو!`, 'success');
       }
-    } catch {
-      triggerToast("د کتاب کښته کولو پر مهال تېروتنه رامنځته شوه.", "error");
+    } catch (exportErr: any) {
+      console.error("Failed book export", exportErr);
+      triggerToast("د کتاب ډاونلوډ کولو کې تېروتنه: " + (exportErr?.message || "مهرباني وکړئ بیا هڅه وکړئ"), "error");
     } finally {
       setBookToExport(null);
     }
@@ -629,12 +655,12 @@ export default function App() {
               <Sparkles className="w-4 h-4 text-sky-400 absolute -top-1 -right-1" />
             </div>
 
-            <div className="space-y-1">
+            <div className="space-y-1 text-center">
               <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                پښتو آفلاین تصویري کتابتون
+                المکتبة المدنیة الشیخ المهاجر المدني
               </h1>
               <p className="text-[10px] text-amber-500/60 font-semibold uppercase tracking-widest">
-                ۱۹ د تصویري لوستلو پرمختللي بېلګې
+                ۲۲ د آنلاین او آفلاین تصویري لوستلو بې‌ساري کتابونه
               </p>
             </div>
 
@@ -674,10 +700,10 @@ export default function App() {
               <BookIcon className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-amber-500" />
             </div>
             <div className="text-right">
-              <h1 className="text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent truncate max-w-[130px] sm:max-w-none">
-                پښتو آفلاین تصویري کتابتون
+              <h1 className="text-[10px] sm:text-xs md:text-sm font-bold bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent truncate max-w-[155px] sm:max-w-none">
+                المکتبة المدنیة الشیخ المهاجر المدني
               </h1>
-              <p className="text-[8px] sm:text-[9px] opacity-60">کاريال جوړونکی: خبيب تکل</p>
+              <p className="text-[7.5px] sm:text-[9px] opacity-60">کاريال جوړونکی: خبيب تکل</p>
             </div>
           </div>
 
@@ -1320,7 +1346,7 @@ export default function App() {
 
                 {/* Running head of the page */}
                 <div className="flex items-center justify-between border-b border-black/10 pb-2 mb-4 font-mono text-[9px] opacity-75">
-                  <span>د خبیب افغان شخصي کتابتون تصویري تګ</span>
+                  <span>المکتبة المدنیة الشیخ المهاجر المدني</span>
                   <span className="font-bold">مخ: {readerPage} د {activeReadingBook.pages.length}</span>
                 </div>
 
@@ -1680,7 +1706,7 @@ export default function App() {
                   د «{bookToExport.pashtoTitle}» کتاب ډاونلوډ کولو لپاره د حافظې اجازه
                 </h4>
                 <p className="text-[10px] text-slate-400 leading-relaxed text-right">
-                  د دې لپاره چې د پښتو تصویري کتابتون دغه PDF اثر په بشپړ ډول ستاسو د موبایل په داخلي حافظه کې خوندي او صادر شي، نو اړینه ده چې د تایید اجازه کلیک کړئ. مهرباني وکړئ د اجازه ورکولو په کلیک کولو سره بهیر پیل کړئ.
+                  د دې لپاره چې د «المکتبة المدنیة الشیخ المهاجر المدني» دغه د کیفیت لرونکي لوستلو اثر په بشپړ ډول ستاسو د آلې په داخلي حافظه کې خوندي او صادر شي، نو اړینه ده چې د ډاونلوډ اجازه تایید کړئ.
                 </p>
               </div>
 

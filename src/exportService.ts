@@ -238,22 +238,13 @@ export function exportBookToPublicStorage(book: Book): Promise<{ success: boolea
               size: book.size
             });
           }).catch((err) => {
-            console.error("Capacitor write error, falling back to browser save", err);
-            doc.save(sanitizedFilename);
-            resolve({
-              success: true,
-              filepath: absoluteFilepath,
-              size: book.size
-            });
+            console.error("Capacitor write error", err);
+            // Critical fallback: DO NOT trigger doc.save() on native platform since it crashes WebViews
+            reject(err);
           });
         } catch (err) {
-          console.error("Capacitor write exception, falling back", err);
-          doc.save(sanitizedFilename);
-          resolve({
-            success: true,
-            filepath: absoluteFilepath,
-            size: book.size
-          });
+          console.error("Capacitor write exception", err);
+          reject(err);
         }
       } else {
         doc.save(sanitizedFilename);
