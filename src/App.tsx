@@ -358,26 +358,6 @@ export default function App() {
     return () => clearInterval(slideInterval);
   }, [books.length]);
 
-  // Dynamic Status Bar Theme Color Synchronizer
-  useEffect(() => {
-    const metaTag = document.getElementById('status-bar-theme-color');
-    if (metaTag) {
-      let hexColor = '#020617'; // Default Slate dark
-      if (selectedTheme.id === 'ivory-day') {
-        hexColor = '#fafaf9'; // Peshawar white-cream (stone-50)
-      } else if (selectedTheme.id === 'kabul-emerald') {
-        hexColor = '#022c22'; // Kabul Emerald (emerald-950)
-      } else if (selectedTheme.id === 'helmand-sand') {
-        hexColor = '#1c1917'; // Helmand Sand or matching background specifier
-      } else if (selectedTheme.isDark) {
-        hexColor = '#020617';
-      } else {
-        hexColor = '#ffffff';
-      }
-      metaTag.setAttribute('content', hexColor);
-    }
-  }, [selectedTheme]);
-
   // Sync Storage
   useEffect(() => {
     try {
@@ -685,7 +665,7 @@ export default function App() {
             </div>
 
             <div className="text-amber-500/80 text-[10.5px] py-2 animate-pulse font-medium font-sans">
-              د کتابتون د بشپړ افلاین منځپانګې د بارولو بهیر...
+              د المکتبة المدنیة د بشپړ افلاین منځپانګې د بارولو بهیر...
             </div>
           </div>
         </div>
