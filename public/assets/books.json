@@ -1,477 +1,424 @@
 [
   {
-    "id": "khushal-kulliyat",
-    "title": "Kulliyat-e-Khushal Khan Khattak",
-    "pashtoTitle": "د خوشحال خان خټک کلیات",
-    "author": "خوشحال خان خټک",
-    "category": "literature",
-    "categoryLabel": "ادب او هنر",
-    "description": "د شاعرۍ، فلسفې، ملي ننګ او مبارزې يو بې‌سارې ټولګه چې د پښتو ادبیاتو تر ټولو غني او ستر لاسي ليکل شوی ثروت ګڼل کیږي.",
-    "size": "4.8 MB",
-    "publishedYear": "۱۳۹۸ (اکاډمي)",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-amber-800 to-amber-950",
-    "coverPattern": "crest",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د کتاب سریزه او پېژندنه",
-        "content": "خوشحال خان خټک د پښتو ادب ستر لاروی، شاعر او توره وال مشر دی. په دې کلیات کې د هغه ټولې ادبي پنځونې لکه غزلونه، قصیدې، مثنوۍ او رباعي شامل دي.\n\n[د چیني خطاطۍ او پخواني چاپ تصوير لوړ کیفیت لرونکی] زما توره زما قلم دی او زما قلم زما د مړانې نښان."
-      },
-      {
-        "pageNumber": 2,
-        "chapterTitle": "باب اول: د مېړانې او ننګ غزلونه",
-        "content": "زه هغه تورزن افغان یم چې په هر ډګر کې مې خپل نوم ګټلی دی. زما قلم زما توره دی او زما توره زما قلم دی.\n\nنه مې هېر شي ستا هغه جګې سترګې،\nچې په ناز او په نخرو مو زړونه وړینه.\nعرش ته به پورته شي غږ زما د مېړانې..."
-      },
-      {
-        "pageNumber": 3,
-        "chapterTitle": "باب دویم: د هوډ او مبارزې فلسفه",
-        "content": "د افغان په غاړه کې تل توره ځلیږي. اراده مې غره غوندې کلکه ده او د باطل په وړاندې سر ورکول منم خو غاړه ایښودل نه منم. د ژوند حق یوازې د هغو خلکو دی چې د خپلې آزادۍ او وقار لپاره جګړه کوي."
-      }
-    ]
-  },
-  {
-    "id": "rahman-diwan",
-    "title": "Diwan-e-Rahman Baba",
-    "pashtoTitle": "د رحمان بابا دیوان",
-    "author": "عبدالرحمن بابا",
+    "id": "tanwir-ul-muslimeen-pashto",
+    "title": "Tanwir-ul-Muslimeen Pashto",
+    "pashtoTitle": "تنوير المسلمین پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
     "category": "islamic",
     "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "عرفاني او تصوفي شاعري چې د افغانانو په زړونو او کلتور کې خورا ژور ريښې لري او زړونو ته د سولې او تقوا پیغام لېږدوي.",
-    "size": "3.2 MB",
-    "publishedYear": "۱۴۰۰ (عرفان ټولنه)",
-    "language": "pashto",
-    "difficulty": "medium",
-    "difficultyLabel": "منځنی",
-    "coverGradient": "from-emerald-800 to-emerald-950",
-    "coverPattern": "islamic",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د ديوان پېژندنه او عرفان معرفي",
-        "content": "عبدالرحمان بابا د زړونو پاچا او د پښتو ژبې تر ټولو نامتو صوفي شاعر دی. د هغه هره خبره د مینې، درناوي، تواضع او الهي معرفت درس ورکوي."
-      },
-      {
-        "pageNumber": 2,
-        "chapterTitle": "باب لومړی: د پنا او بقا معما",
-        "content": "دا دنیا فاني ده، بقا یوازې د الله تعالی ذات ته ده. لکه څنګه چې بوټی خاوره کیږي، انسان هم د مرګ په لور درومي.\n\nچې عمل یې وي د سم غوندې سیده،\nهغه به ناست وي په ارام غوندي مېلمنه."
-      }
-    ]
-  },
-  {
-    "id": "pashto-history-raat",
-    "title": "Pashtuns in the Light of History",
-    "pashtoTitle": "پښتانه د تاریخ په رڼا کې",
-    "author": "سید بهادر شاه ظفر کاکاخیل",
-    "category": "history",
-    "categoryLabel": "تاریخ او پېښلیک",
-    "description": "د پښتنو د اصل او نسل، کډوالۍ، امپراتوریو او د دوی د ژوندانه د هر پړاو مستند تاریخي کتنه.",
-    "size": "6.1 MB",
-    "publishedYear": "۱۳۹۵ (پښتو اکاډمي)",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-stone-800 to-stone-950",
-    "coverPattern": "geometric",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د پښتنو د نژاد او اصلي هستوګنې آندونه",
-        "content": "تاریخ پوهان د افغانانو یا پښتنو د اصلي سرچينو په اړه بېل بېل اندونه لري. ځینې یې آریایان، ځینې یې د سامي نژاد او ځینې یې نور کلتورونه بولي."
-      }
-    ]
-  },
-  {
-    "id": "tazkirat-awliya",
-    "title": "Tazkirat al-Awliya",
-    "pashtoTitle": "تذکرة الاولیاء پښتو ترجمه",
-    "author": "شیخ فرید الدین عطار نیشابوري",
-    "category": "islamic",
-    "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "د لویو ديني عالمانو، صوفیانو او صالحو بندګانو ارشادات، مناقب او عبرتناک ژوندلیکونه د زړونو د اصلاح لپاره.",
-    "size": "5.2 MB",
-    "publishedYear": "۱۳۹۱ (اصلاح ټولنه)",
-    "language": "pashto",
-    "difficulty": "medium",
-    "difficultyLabel": "منځنی",
-    "coverGradient": "from-teal-800 to-teal-950",
-    "coverPattern": "islamic",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د تذکرة الاولیاء منځپانګه او پیغام",
-        "content": "د اولیاء الله ذکر زړونه ویښوي او په روح کې د زهد او تقوا ډیوې بلوي. عطار نیشابوري د سلو څخه د زیاتو هغو متقیانو او سالکانو تذکره راټوله کړې ده."
-      }
-    ]
-  },
-  {
-    "id": "sher-shah-history",
-    "title": "History of Sher Shah Suri",
-    "pashtoTitle": "د شیر شاه سوري تاریخ او کارنامې",
-    "author": "ډاکټر لطیف یاد",
-    "category": "history",
-    "categoryLabel": "تاریخ او پېښلیک",
-    "description": "د پښتون تاریخ د مېړني او نوښتګر واکمن شیر شاه سوري د حکومتولۍ، رغنیزو پروژو او نظامي سټراټیژیو جامع څېړنه.",
-    "size": "4.1 MB",
-    "publishedYear": "۱۳۹۷",
-    "language": "pashto",
-    "difficulty": "medium",
-    "difficultyLabel": "منځنی",
-    "coverGradient": "from-amber-900 to-yellow-950",
-    "coverPattern": "geometric",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د سوري واکمنۍ پیل او شالید",
-        "content": "فريد چې وروسته په شير شاه مشهور شو، د هند په خاوره کې د يوې خورا منظمې پښتون سترواکۍ بنسټ کېښود چې په ډېر کم وخت کې یې ستر بدلونونه پلي کړل."
-      }
-    ]
-  },
-  {
-    "id": "ahmad-shah-baba",
-    "title": "Ahmad Shah Baba Durrani Biography",
-    "pashtoTitle": "احمد شاه بابا د افغانستان بنسټ اېښودونکی",
-    "author": "غلام محمد غبار",
-    "category": "history",
-    "categoryLabel": "تاریخ او پېښلیک",
-    "description": "د هېواد د ستر بنسټ اېښودونکي او غازي امپراتور احمد شاه بابا درانې د ژوند لیک، جهادونو او ستر ملي کلتور برابروونکی پلار پېژندنه.",
-    "size": "5.5 MB",
-    "publishedYear": "۱۳۹۴",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-sky-900 to-slate-950",
-    "coverPattern": "crest",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د ۱۷۴۷ جرګه او د پاچاهۍ ټاکل",
-        "content": "په شېر سرخ مزار کې د غونډې له پرانیستلو وروسته، صابر شاه ملنګ د احمدشاه په سر باندې د غنمو وږي کښېښودل او هغه یې د افغان امپراتورۍ د مشر په توګه وټاکه."
-      }
-    ]
-  },
-  {
-    "id": "pashto-grammar",
-    "title": "Comprehensive Pashto Grammar",
-    "pashtoTitle": "د پښتو ژبي پښویه او ستایل پوهنه",
-    "author": "حبیب الله تږی",
-    "category": "language",
-    "categoryLabel": "ژبپوهنه او ادبیات",
-    "description": "د پښتو ګرامر، د غږونو جوړښت، نحوه، او د لیکدود د اصولو پېژندلو لپاره یوازینی معتبر او تدریسي تحلیلي کتاب.",
-    "size": "3.8 MB",
-    "publishedYear": "۱۳۹۶",
-    "language": "pashto",
-    "difficulty": "beginner",
-    "difficultyLabel": "مبتدي",
-    "coverGradient": "from-red-900 to-rose-950",
-    "coverPattern": "geometric",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د پښتو تورو غږیزه ځانګړتیا",
-        "content": "پښتو ژبه د ځانګړو تورو (لکه ښ، څ، ځ، ږ، ډ، ړ) په درلودلو سره له نورو هندو آریایي ژبو جلا والي او خوږ غږيز غنا رامنځته کوي."
-      }
-    ]
-  },
-  {
-    "id": "mirwais-nika",
-    "title": "Mirwais Nika and the Kandahar Revolution",
-    "pashtoTitle": "میرویس نیکه او د کندهار ملي پاڅون",
-    "author": "عبد الرؤوف بېنوا",
-    "category": "history",
-    "categoryLabel": "تاریخ او پېښلیک",
-    "description": "د افغاني ننګ او لومړنۍ خپلواکۍ د سپاهي مشر حاجي میرویس خان نیکه هوښیار مبارزه او د ګورګین د ظلم پر وړاندې د ولس قیام.",
-    "size": "3.9 MB",
-    "publishedYear": "۱۳۹۰",
-    "language": "pashto",
-    "difficulty": "medium",
-    "difficultyLabel": "منځنی",
-    "coverGradient": "from-blue-900 to-indigo-950",
-    "coverPattern": "crest",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د کندهار بحران او مذهبي فتوا",
-        "content": "میرویس خان نیکه حج ته د سفر پر مهال د افغان ملت د خلاصون لپاره له علماوو څخه د پاڅون اجازه او شرعي جواز تر لاسه کړ."
-      }
-    ]
-  },
-  {
-    "id": "modern-philosophy-pash",
-    "title": "Modern Philosophy in Pashto Perspective",
-    "pashtoTitle": "فلسفه په زړه پورې اصطلاحاتو کې",
-    "author": "استاد بهاء الدین مجروح",
-    "category": "philosophy",
-    "categoryLabel": "فلسفه او منطق",
-    "description": "د کایناتو د پیدایښت، د عقل د پرمختګ، او د بشري شعور د لوړو پړاوونو د فلسفي پوښتنو ځواب موندلو هڅه په خوږه پښتو ژبه.",
-    "size": "4.5 MB",
-    "publishedYear": "۱۳۹۲",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-gray-800 to-gray-950",
-    "coverPattern": "stellar",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "نه حل کېدونکې سوالونه او د انسان روحي پلوه",
-        "content": "د ژوند بنسټ څه شی دی؟ ایا انسان د خپل برخلیک ټاکونکی دی که مجبور زیږېدلی؟ مجروح په دې کتاب کې مړه کجرې او ځانځاني ته لاره ښيي."
-      }
-    ]
-  },
-  {
-    "id": "seerat-ul-nabi",
-    "title": "Seerat-un-Nabi",
-    "pashtoTitle": "د خوږ پیغمبر ﷺ مبارک سیرت",
-    "author": "مولانا صفي الرحمن مبارکپوري",
-    "category": "islamic",
-    "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "الرحیق المختوم نامتو معتبر کتاب پښتو ترجمه د رسول اکرم ص د زیږیدنې، رسالت، مبارزو او وفات بشپړ د ژوند تاریخ.",
-    "size": "6.5 MB",
+    "description": "د معاصر وخت له مهمو موضوعاتو څخه د تلویزیون، موسیقۍ، سندرو او رسنیو شرعي احکام دي. «تنویر المسلمین فی حکم التلفزيون» یو ارزښتناک علمي اثر دی چې یاد مسائل د قرآن، سنتو او د فقهاوو د اقوالو په رڼا کې څېړي. په دې کتاب کې د تلویزیون تاریخ، د موسیقۍ او سندرو شرعي حکم، د «لهو الحدیث» مفهوم، د موسیقۍ د ضررونو او علاج لارې، د پردې او عریانۍ احکام، او د عکسونو او تصویرونو فقهي څېړنه په مستند او علمي ډول وړاندې شوې ده.",
+    "size": "3.5 MB",
     "publishedYear": "۱۴۰۲",
     "language": "pashto",
     "difficulty": "medium",
     "difficultyLabel": "منځنی",
-    "coverGradient": "from-emerald-900 to-teal-950",
+    "coverGradient": "from-[#87CEEB] to-[#4682B4]",
     "coverPattern": "islamic",
     "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د بعثت نه مخکې د عربو کلتوري او ټولنیز ژوند",
-        "content": "د اسلام د رڼا له بلېدو وړاندې جزیرة العرب د بدبختۍ، جهالت، وحشت او خرافاتو تر ټولو ستر مرکز و، چې رسول الله مبارک یې نجات ورکونکی شو."
-      }
+      { "pageNumber": 1, "chapterTitle": "سریزه (پېژندنه)", "content": "د کتاب پیل او لومړنۍ شرحه دلته ځای پر ځای کېږي." },
+      { "pageNumber": 2, "chapterTitle": "مضمون اول", "content": "د مبارک کتاب لومړی تفصیلي بحث او شرعي دلایل." },
+      { "pageNumber": 3, "chapterTitle": "شرحه او پایله", "content": "د بحث پای او د مؤلف وروستۍ دعاګانې." }
     ]
   },
   {
-    "id": "pashto-folklore",
-    "title": "Pashto Folk Tales & Oral Tradition",
-    "pashtoTitle": "د پښتو ولسي کیسې او متلونه",
-    "author": "پروفیسور راج ولي شاه خټک",
-    "category": "literature",
-    "categoryLabel": "ادب او هنر",
-    "description": "د پېړیو راهیسې سینه په سینه راغلې پښتو لنډۍ، ولسي سندرې، کیسې او د ژوند خوږو متلونو علمي کره کتنه او پرتلنه.",
-    "size": "3.5 MB",
-    "publishedYear": "۱۳۹۹",
-    "language": "pashto",
-    "difficulty": "beginner",
-    "difficultyLabel": "مبتدي",
-    "coverGradient": "from-orange-850 to-amber-950",
-    "coverPattern": "poetry",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د لنډیو بنسټیزه صنف پیژندنه",
-        "content": "لنډۍ د پښتو کلتور بې بېلګې کلتوري هینداره ده چې دوه سطرې مګر د پښتني احساس بې انتها جذبه او د زړه خبره پکې خوندي ده."
-      }
-    ]
-  },
-  {
-    "id": "hamid-बाबा-دیوان",
-    "title": "Diwan-e-Hamid Baba",
-    "pashtoTitle": "د حمید بابا شعرونو دیوان",
-    "author": "عبدالحمید مومند (حمید بابا)",
-    "category": "literature",
-    "categoryLabel": "ادب او هنر",
-    "description": "د نازکخیال شاعر حمید بابا عشق او عرفان ته نږدې رنګین غزلونه، قصیدې او باريک بینه ادبي بېلګې.",
-    "size": "3.1 MB",
-    "publishedYear": "۱۳۹۳",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-purple-900 to-slate-950",
-    "coverPattern": "poetry",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د حمید بابا د ادبي مکتب ځانګړنه",
-        "content": "حمید بابا په پښتو شاعرۍ کې د نازک خیالو او مضمون آفرینۍ پلار بلل کیږي، د هغه په هره لنډۍ او بیت کې تصوفي اشارات او تخیلي ښکلا نغښتې ده."
-      }
-    ]
-  },
-  {
-    "id": "baznama-khushal",
-    "title": "Baznama - Khushal Khan Khattak",
-    "pashtoTitle": "بازنامه: د ښکاري بازانو پېژندنه",
-    "author": "خوشحال خان خټک",
-    "category": "science",
-    "categoryLabel": "تجربي علوم او هنرونه",
-    "description": "د ښې ښکارګرۍ، د مرغانو د روزنې او د ښکاري بازانو بېلابېلو نسلونو په هکله يو په زړه پورې منځګړی تجربي اثر.",
-    "size": "2.9 MB",
-    "publishedYear": "۱۳۸۹",
+    "id": "al-jami-ul-latif-pashto",
+    "title": "Al-Jami-ul-Latif Pashto",
+    "pashtoTitle": "الجامع اللطیف پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "د ولاء او براء د موضوع په اړه يو ارزښتمن او ګټور اثر دی، چې د قرآن او سنتو په رڼا کې د دوستۍ او دښمنۍ شرعي اصول بيانوي. په دې کتاب کې د ولاء او براء حقيقت، د هغې دلائل، له منافقانو، مرتدينو، بدعتيانو، ګنهګارانو او باغيانو سره د شرعي تعامل احکام، او همدارنګه اسلام ته د بلنې مهمې لارې او وسيلې په علمي او مستند ډول څېړل شوې دي.",
+    "size": "4.1 MB",
+    "publishedYear": "۱۴۰۱",
     "language": "pashto",
     "difficulty": "medium",
     "difficultyLabel": "منځنی",
-    "coverGradient": "from-violet-900 to-indigo-950",
-    "coverPattern": "science",
+    "coverGradient": "from-blue-850 to-indigo-950",
+    "coverPattern": "islamic",
     "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د باز د تربیې لومړني پړاوونه",
-        "content": "باز د طبیعي ازادۍ او غرور سمبول دی. د هغه په بند راوستلو، په ښه توګه مایل کولو او په لاس کښېنولو اصولو په اړه خوشحال خان ګټور معلومات ترتیب کړي."
-      }
+      { "pageNumber": 1, "chapterTitle": "شرحه او سریزه", "content": "د مبارک اثر لومړۍ برخه او اهداف." },
+      { "pageNumber": 2, "chapterTitle": "مسایل او احکام", "content": "د فقهي او عقیدوي احکامو ارزښتناکه بحث." }
     ]
   },
   {
-    "id": "astronomy-basics-pashto",
-    "title": "Astronomy and Cosmos in Pashto",
-    "pashtoTitle": "کاینات پېژندنه او ستوري پوهنه",
-    "author": "ډاکټر محمد حنیف",
-    "category": "science",
-    "categoryLabel": "تجربي علوم او هنرونه",
-    "description": "د ستورپوهنې اساسات، د کهکشانونو نقشه، د لمریز نظام حرکت، تور سوري او د کایناتو د پرمختګ عصري نظريې په پښتو کې.",
-    "size": "4.9 MB",
-    "publishedYear": "۱۴۰۱",
-    "language": "pashto",
-    "difficulty": "beginner",
-    "difficultyLabel": "مبتدي",
-    "coverGradient": "from-cyan-900 to-blue-950",
-    "coverPattern": "stellar",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د لمریز کالبد او د سیارو د الوت تګلاره",
-        "content": "زموږ کاینات میلیاردونه ستوري لري، او په دې برخه کې موږ د ځمکې، لمر او د کهکشان د ګرځېدو په زړه پورې سیسټم په ساده ژبه شاربو."
-      }
-    ]
-  },
-  {
-    "id": "tarikh-murassa",
-    "title": "Tarikh-e-Murassa",
-    "pashtoTitle": "تاریخ مرصع: د افغان پاچاهانو تاریخ",
-    "author": "افضل خان خټک",
-    "category": "history",
-    "categoryLabel": "تاریخ او پېښلیک",
-    "description": "د خوشحال خان خټک د لمسي افضل خان خټک مشهور تاریخي اثر چې د بېلا بېلو خټکو جګړو او افغان پرګنو احوال روښانه کوي.",
-    "size": "6.0 MB",
-    "publishedYear": "۱۳۸۸",
-    "language": "pashto",
-    "difficulty": "advanced",
-    "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-amber-950 to-stone-900",
-    "coverPattern": "geometric",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د کتاب د لومړي مخ پېژندنه",
-        "content": "دا تاریخ خورا لوړ ارزښت لري چې د مغل امپراتورۍ پر مهال د افغانانو مېړني غبرګونونه او سیمه ییز کلتور په تفصیل بیانوي."
-      }
-    ]
-  },
-  {
-    "id": "islamic-jurisprudence",
-    "title": "Hanifi Islamic Fiqh",
-    "pashtoTitle": "د حنفي فقهي لارښود او احکام",
-    "author": "شیخ الحدیث نقيب الله خطیب",
+    "id": "tuhfat-ul-mubaraka-pashto",
+    "title": "Tuhfat-ul-Mubaraka Pashto",
+    "pashtoTitle": "تحفة المباركة پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
     "category": "islamic",
     "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "په ورځني ژوند کې د دیني احکامو، عباداتو، معاملاتو او د شریعت د تطبیق کوونکو روښانه لارو حنفي لیدلوری.",
-    "size": "5.0 MB",
+    "description": "دا کتاب د رسول الله ﷺ د مبارکو نومونو او القابو په اړه یو ارزښتناک او روحاني اثر دی. مؤلف په دې کتاب کې هغه مبارک نومونه راټول کړي دي چې د مدینې منورې د باب السلام څخه تر باب البقیع پورې لیکل شوي دي، او د هر نوم تر شا د نبوي عظمت, فضیلت او لوړ مقام ښکلي رازونه بیانوي.",
+    "size": "2.8 MB",
     "publishedYear": "۱۴۰۰",
     "language": "pashto",
     "difficulty": "medium",
     "difficultyLabel": "منځنی",
-    "coverGradient": "from-emerald-950 to-green-900",
+    "coverGradient": "from-teal-850 to-teal-950",
     "coverPattern": "islamic",
     "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د طهارت او اودس بنسټیز مسائل",
-        "content": "پاکوالی د مؤمن پاخه بنسټ او د هر عبادت د قبولیت لومړی شرط دی. په دې باب کې موږ د فرائضو، واجباتو او سنت د تطبیق اړخونه بیانوو."
-      }
+      { "pageNumber": 1, "chapterTitle": "تحفة المباركة پېژندنه", "content": "د کتاب موضوع او ګټې په ساده ژبه بیان شوې دي." }
     ]
   },
   {
-    "id": "tazkiyah-heart",
-    "title": "Purification of the Heart - Pashto",
-    "pashtoTitle": "تزکیه او د زړه د رنځونو علاج",
-    "author": "مولانا عبدالکریم زاهد",
+    "id": "al-risalat-ul-haqqaniyyah",
+    "title": "Al-Risalat-ul-Haqqaniyyah",
+    "pashtoTitle": "الرسالة الحقانية",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "philosophy",
+    "categoryLabel": "عقلي او فلسفي منطق",
+    "description": "الرسالة الحقانية د شیخ ګل الرحمن حقاني عقیدوي او فکري ځوابیه اثر دی چې د اسلامي اصولو او شریعت په رڼا کې بېلابېل تفصیلي موضوعات په مستند، کره او باوري علمي طریقه څېړي.",
+    "size": "3.2 MB",
+    "publishedYear": "۱۴۰۳",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-purple-800 to-indigo-950",
+    "coverPattern": "crest",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د رسالې ارزښت", "content": "په دې برخه کې د کتاب عقلي او دلایلو پر بنسټ شالید روښانه شوی دی." }
+    ]
+  },
+  {
+    "id": "miraj-ul-tasawwuf-pashto",
+    "title": "Miraj-ul-Tasawwuf Pashto",
+    "pashtoTitle": "معراج التصوف پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
     "category": "islamic",
     "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "د باطني اصلاح، تواضع، د کبر، کینې او حسد لرې کولو، او د معنوي سکون د حصول لپاره غوره اسلامي لارښود.",
-    "size": "4.2 MB",
+    "description": "د معراج التصوف د مبارک اثر پېژندنه او شرحه دلته ولولئ. دا کتاب د تصوف او د زړه د تصفیې روحاني احوال په ډېره ښکلې او پښتو فصیحه ژبه څېړي او د معنويت لوړو مدارجو ته لاره پرانیزي.",
+    "size": "4.5 MB",
+    "publishedYear": "۱۳۹۹",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-rose-800 to-slate-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د تصوف عرفاني مانا", "content": "د زړه پاکوالي او الوهیت پېژندلو تصوفي مرتبې او د روح معراج." }
+    ]
+  },
+  {
+    "id": "saif-ul-qahhar-farsi",
+    "title": "Saif-ul-Qahhar Farsi",
+    "pashtoTitle": "سيف القهار فارسی",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "philosophy",
+    "categoryLabel": "عقلي او فلسفي منطق",
+    "description": "این کتاب ارزشمند علمی پیرامون مقام، فضایل و حقوق خاتم الانبیاء حضرت محمد ﷺ نگاشته شده است. مؤلف با دلایل مستند عظمت رسول الله ﷺ، کمالات نبوت و اهمیت احترام به ذات مبارک ایشان را به شیوه ای علمی و زیبا بیان کرده است.",
+    "size": "5.0 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "dari",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-red-800 to-rose-950",
+    "coverPattern": "geometric",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "مقدمه سیف القهار", "content": "دفاع حقه او مباحث فکری و کلامی در روشنگری اذهان سالم." }
+    ]
+  },
+  {
+    "id": "tanwir-ul-muslimeen-farsi",
+    "title": "Tanwir-ul-Muslimeen Farsi",
+    "pashtoTitle": "تنوير المسلمین فارسی",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "این اثر ارزشمند علمی به بررسی احکام شرعی تلویزیون، موسیقی، سرودها و رسانه ها در پرتو قرآن، سنت و اقوال فقها می پردازد و یک رهنمود مفید برای خوانندگانی است که مایل به شناخت احکام موضوعات رسانه ای معاصر هستند.",
+    "size": "3.7 MB",
+    "publishedYear": "۱۴۰۱",
+    "language": "dari",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-cyan-800 to-slate-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "مقدمه تنویر المسلمین", "content": "بیان راه رهایی و هدایت جامعه در پرتو شریعت ناب اسلامی." }
+    ]
+  },
+  {
+    "id": "zubdat-ul-masail-pashto",
+    "title": "Zubdat-ul-Masail Pashto",
+    "pashtoTitle": "زبدة المسائل پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "د کتاب د اسلامي اقتصاد او شرعي معاملات هغه مهم اصول بیانوي چې د نن عصر سوداګرۍ او مالي چارو ته روښانه لار ښيي. دا کتاب په ساده، علمي او د باور وړ انداز د شرکتونو، مضاربت، اجارې او سود اړوند مسئلې څېړي.",
+    "size": "3.9 MB",
+    "publishedYear": "۱۴۰۰",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-lime-800 to-emerald-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د میاشتې مسائل", "content": "د لومړنیو فقهي احکامو او ورځنیو مسایلو خالص غبرګون او لارښود." }
+    ]
+  },
+  {
+    "id": "miraj-ul-islam-pashto",
+    "title": "Miraj-ul-Islam Pashto",
+    "pashtoTitle": "معراج الإسلام پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "اسلامي علوم او تصوف",
+    "description": "دا کتاب د اسلامي سیاست، اسلامي حکومت او د امت د سیاسي او ټولنیز پرمختګ په اړه یو مهم او فکري اثر دی. مؤلف په دې کتاب کې د اسلام د سیاسي نظام بنسټونه، د اسلامي حکومت اصول او د اسلامي پالیسۍ مهم اړخونه د قرآن کریم او سنتو په رڼا کې څېړلي دي.",
+    "size": "4.6 MB",
     "publishedYear": "۱۳۹۸",
     "language": "pashto",
     "difficulty": "medium",
     "difficultyLabel": "منځنی",
-    "coverGradient": "from-teal-900 to-teal-950",
+    "coverGradient": "from-purple-900 to-indigo-950",
     "coverPattern": "islamic",
     "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د نیت سمون او د اخلاص ارزښت",
-        "content": "د هر مذهبي او دنیاوي کار بریا په نیت پورې تړلې ده، که انسان مخلص نه وي، عمل یې بې ثمره او د الله وړاندې په اوبو لاهو کیږي."
-      }
+      { "pageNumber": 1, "chapterTitle": "معراج الإسلام پیل", "content": "د اسلام د عظیم الشان لوړو مراتب معرفي او تشریحي بحث." }
     ]
   },
   {
-    "id": "stories-of-prophets",
-    "title": "Stories of the Prophets in Pashto",
-    "pashtoTitle": "د علیهم السلام الانبیاوو په زړه پورې کیسې",
-    "author": "مولانا حامد حسن الکوټی",
-    "category": "islamic",
-    "categoryLabel": "اسلامي علوم او تصوف",
-    "description": "د ابوالبشر معزز حضرت آدم ع څخه نیولې تر خاتم الانبیاء حضرت محمد ص پورې د پیغامبرانو عبرتناکې او د دعوت ترخې کیسې.",
-    "size": "5.7 MB",
-    "publishedYear": "۱۴۰۱",
-    "language": "pashto",
-    "difficulty": "beginner",
-    "difficultyLabel": "مبتدي",
-    "coverGradient": "from-lime-900 to-emerald-950",
-    "coverPattern": "islamic",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د حضرت ابراهیم ع مېړانه او د توحید بلنه",
-        "content": "ابراهیم علیه السلام د کفر او بت پرستۍ په یو خورا سخت چاپیریال کې پاڅون وکړ او په پوره هوډ سره یې د نمرود باطل نظام ننګ کړ."
-      }
-    ]
-  },
-  {
-    "id": "pashto-poetry-anthology",
-    "title": "Modern Pashto Poetry Selection",
-    "pashtoTitle": "د نوې پښتو شاعرۍ ګلدسته",
-    "author": "شاعرانو ګډه غونډه",
-    "category": "literature",
-    "categoryLabel": "ادب او هنر",
-    "description": "د معاصرې دورې د وتلو شاعرانو د انتخابي غزلو او ازادو نظمونو ستره ټولګه، چې د افغانانو مینه او درد انځوروي.",
-    "size": "3.3 MB",
-    "publishedYear": "۱۳۹۹",
-    "language": "pashto",
-    "difficulty": "beginner",
-    "difficultyLabel": "مبتدي",
-    "coverGradient": "from-rose-900 to-grey-950",
-    "coverPattern": "poetry",
-    "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د نوو زمانې غزلونو او افکارو سپړنه",
-        "content": "دا شعرونه د جګړې پر غندنې، د سولې او ملي همغږۍ په تودو هیلو او هلو ځلو باندې ترتیب شوي، چې زړونه مړاوي نشي."
-      }
-    ]
-  },
-  {
-    "id": "physics-cosmos",
-    "title": "Fundamentals of Physics in Pashto",
-    "pashtoTitle": "د فزیک بنسټونه او بنسټیز قوانین",
-    "author": "پوهاند غلام رسول خان",
-    "category": "science",
-    "categoryLabel": "تجربي علوم او هنرونه",
-    "description": "د نیوټن له قوانینو نیولې تر کوانټمي تیورۍ او هستوي فزیک اساسات چې په ښوونیز طریقه پوهنتوني نصاب ته ورته دی.",
-    "size": "4.7 MB",
-    "publishedYear": "۱۳۹۶",
+    "id": "saif-ul-qahhar-ala-al-mustahzi-ul-kuffar-pashto",
+    "title": "Saif-ul-Qahhar ala al-Mustahzi-ul-Kuffar Pashto",
+    "pashtoTitle": "سيف القهار على المستهزين الکفار پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "philosophy",
+    "categoryLabel": "عقلي او فلسفي منطق",
+    "description": "دا کتاب د خاتم الانبیاء، رحمة للعالمین حضرت محمد ﷺ د مقام، فضیلتونو او حقوقو په اړه یو ارزښتناک علمي اثر دی. مؤلف په مستندو دلایلو د رسول الله ﷺ عظمت، د نبوت کمالات او د هغه مبارک ذات د درناوي اهمیت په ښکلي او علمي انداز بیان کړی دی.",
+    "size": "5.4 MB",
+    "publishedYear": "۱۴۰۳",
     "language": "pashto",
     "difficulty": "advanced",
     "difficultyLabel": "پرمختللی",
-    "coverGradient": "from-indigo-900 to-slate-950",
-    "coverPattern": "science",
+    "coverGradient": "from-red-900 to-amber-955",
+    "coverPattern": "geometric",
     "pages": [
-      {
-        "pageNumber": 1,
-        "chapterTitle": "د نسبیت تیوري او زموږ کائیناتي فهم",
-        "content": "د آلبرټ اینشټاین پیړۍ جوړونکی نسبیت تیوري زمان او مکان ته یو نوی تعریف بښي چې د تجربي ساینس یو له بنسټونو څخه شمیرل کیږي."
-      }
+      { "pageNumber": 1, "chapterTitle": "دفاع او رد عمل هڅې", "content": "د دښمنانو د تبلیغاتو شننه او د حق پلوه روښانه عقايدو خپرونه." }
+    ]
+  },
+  {
+    "id": "al-minhaj-al-jalil-pashto",
+    "title": "Al-Minhaj-al-Jalil Pashto",
+    "pashtoTitle": "المنهاج الجليل في حكم القتيل پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "د اسلامي جنایي فقهې یو ارزښتناک اثر چې د انساني ژوند د حرمت، د قتل د احکامو، د قصاص او دیت د مسائلو او د شهادت د مقام په اړه مهم بحثونه وړاندې کوي. دا کتاب د اسلامي شریعت د عدلي نظام حکمتونه روښانه کوي.",
+    "size": "4.8 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "pashto",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-amber-900 to-stone-950",
+    "coverPattern": "crest",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د احکامو لومړنی باب", "content": "په قتل او شرعي قصاص کې د لارښوونو او پلوه قوانین." }
+    ]
+  },
+  {
+    "id": "miraj-ul-hujjaj-pashto",
+    "title": "Miraj-ul-Hujjaj Pashto",
+    "pashtoTitle": "معراج الحجاج پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "islamic",
+    "description": "«معراج الحجاج والمعتمرین» د شیخ ګل الرحمن حقاني یو ارزښتناک اثر دی، چې د حج او عمرې د سپېڅلي سفر لپاره یو جامع لارښود ګڼل کېږي. په دې کتاب کې د حج فضایل، آداب، د مناسکو د ادا کولو ترتیب او د عمرې اړوند مسایل په ډېر دقت سره بیان شوي دي.",
+    "size": "3.4 MB",
+    "publishedYear": "۱۴۰۱",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-stone-830 to-slate-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د حج طریقې", "content": "د حاجیانو لپاره د مناسکو اسانه تشرېحات او عملي طریقې." }
+    ]
+  },
+  {
+    "id": "al-jami-ul-latif-arabic",
+    "title": "Al-Jami-ul-Latif Arabic",
+    "pashtoTitle": "الجامع اللطیف عربي",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "islamic",
+    "description": "هو كتاب قيم وبديع حول مبدأ الولاء والبراء، يوضح الأحكام والضوابط الشرعية في موالاة المؤمنين والبراءة من أهل البدع والضلال والدجالين بما يوافق الكتاب والسنة النبوية الشريفة.",
+    "size": "4.0 MB",
+    "publishedYear": "۱۴۰۰",
+    "language": "english",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-cyan-900 to-indigo-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "الخطبة والمقدمة", "content": "نحمده ونسأله من فضل العظيم في تيسير الفقه في ربوع الإسلام." }
+    ]
+  },
+  {
+    "id": "al-minhaj-al-jalil-arabic",
+    "title": "Al-Minhaj-al-Jalil Arabic",
+    "pashtoTitle": "المنهاج الجليل في حكم القتيل عربي",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "history",
+    "categoryLabel": "تاریخ او پېښلیک",
+    "description": "مؤلف فقهي جليل حول أحكام القتل والقصاص والديات في الشريعة الإسلامية يوضح صون الدماء والعدالة وحرمة الأنفس والحدود الشرعية.",
+    "size": "4.9 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "english",
+    "difficulty": "advanced",
+    "difficultyLabel": "پرمختللی",
+    "coverGradient": "from-stone-900 to-amber-955",
+    "coverPattern": "crest",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "رسالة فی الدیات والقصاص", content: "الحمد لله رب العالمين والصلاة والسلام على نبينا محمد الضحوك القتال." }
+    ]
+  },
+  {
+    "id": "zad-ul-musafir-pashto",
+    "title": "Zad-ul-Musafir Pashto",
+    "pashtoTitle": "زاد المسافر پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "«زاد المسافر» د شیخ ګل الرحمن حقاني یو جامع اثر دی چې د سفر شرعي او اخلاقي مسایل پکې په تفصیل بیان شوي. په دې کتاب کې د سفر آداب، د مسافاتو مقدار، د وطن اصلي او اقامت احکام او د سفر اړوند نور مهم مسایل څېړل شوي دي.",
+    "size": "3.1 MB",
+    "publishedYear": "۱۳۹۷",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "مبتدي",
+    "coverGradient": "from-orange-850 to-amber-952",
+    "coverPattern": "poetry",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "زاد المسافر زېرمه", "content": "د سفر په زړو او نویو کلتوري او معنوي احوالو غوره توتیا او ګوروان." }
+    ]
+  },
+  {
+    "id": "talkhis-miraj-ul-hujjaj",
+    "title": "Talkhis Miraj-ul-Hujjaj wal-Mutamireen",
+    "pashtoTitle": "تلخيص معراج الحجاج والمعتمرين",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "islamic",
+    "description": "دا کتاب د عمرې د مبارک سفر په اړه یو ګټور او ارزښتناک لارښود دی چې د معتمرینو لپاره د سفر له پیل څخه تر راستنېدو پورې اړین معلومات په روانه او علمي بڼه وړاندې کوي. مؤلف په دې اثر کې د عمرې فضیلتونه، د عمرې د صحیح ادا کولو طریقه بيانوي.",
+    "size": "2.9 MB",
+    "publishedYear": "۱۴۰۳",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-teal-900 to-slate-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "تلخيص اول", "content": "د عمرې او د حج د اسانه تشرېحاتو خورا ساده خلاصه او راټولونه." }
+    ]
+  },
+  {
+    "id": "miraj-ul-waizin",
+    "title": "Miraj-ul-Waizin",
+    "pashtoTitle": "معراج الواعظين",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "literature",
+    "categoryLabel": "ادب او هنر",
+    "description": "«معراج الواعظین» د شیخ القرآن والحدیث الحاج ګل الرحمن حقاني المهاجر المدني یو له هغو ارزښتناکو تالیفاتو څخه دی چې د اسلامي علم او اخلاقو په برخه کې د واعظانو او خطیبانو لپاره یوه مهمه سرچینه ګڼل کېږي.",
+    "size": "3.8 MB",
+    "publishedYear": "۱۴۰۱",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-emerald-950 to-emerald-900",
+    "coverPattern": "poetry",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "واعظ همکار لارښود", "content": "د واعظینو او مخلصینو لپار وعظونو منځپانګې پېژندنه او لارښودونه." }
+    ]
+  },
+  {
+    "id": "minhaj-ul-firqa-al-najiya-pashto",
+    "title": "Minhaj-ul-Firqa al-Najiya Pashto",
+    "pashtoTitle": "منهاج الفرقة الناجية پښتو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "islamic",
+    "description": "په دې کتاب کې لیکوال د توحید د سپېڅلي اصل په بیانولو سره، د ختم نبوت د عقیدې پر اهمیت ټینګار کړی دی. د دې ترڅنګ، د تقلید، تصوف، توسل، سماع موتی، ذکر جهري او د حیلې اسقاط په څېر موضوعات په ډېر علمي او تحقیقي ډول څېړل شوي دي.",
+    "size": "3.6 MB",
+    "publishedYear": "۱۴۰۰",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-blue-900 to-slate-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "منهاج النجاح", "content": "هغه لاره او عقیده چې مخلص مسلمان په دغه دنیا او اخرت کې له ګناه خلاصوي او خلاصون ورکوي." }
+    ]
+  },
+  {
+    "id": "zubdat-ul-salat",
+    "title": "Zubdat-ul-Salat ala Ashraf al-Makhluqat",
+    "pashtoTitle": "زبدة الصلوة علی اشرف المخلوقات",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "تصوف او عرفان",
+    "description": "یوازې یو کتاب نه، بلکې د نبوي مینې او د مصطفی (ص) د سیرت د پیروۍ یو روحاني سفر دی. دا اثر د ایمان په رڼا کې د رسول الله (ص) د شخصیت لوړوالی، د هغه اطاعت, او د هغه د سپېڅلي ذات سره د مینې او اقتدا په ارزښتونو بحث کوي.",
+    "size": "4.2 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-[#0b0c10] to-indigo-950",
+    "coverPattern": "islamic",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "درودونه فضیلتونه", "content": "پر سرور کائنات حضرت محمد مصطفی ﷺ د درود لوستلو او ثوابونو بېسارې مجموعې او بحث." }
+    ]
+  },
+  {
+    "id": "zubdat-ul-nahw-sharh-hidayat-ul-nahw",
+    "title": "Zubdat-ul-Nahw Sharh Hidayat-ul-Nahw",
+    "pashtoTitle": "زبدة النحو شرح هداية النحو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "language",
+    "categoryLabel": "ژبه او نحوي ضوابط",
+    "description": "دا کتاب د علمِ نحو په برخه کې یو مهم او ګټور شرح دی، چې د نحوي قواعدو د ښه فهم لپاره ځانګړی ارزښت لري. په دې کتاب کې د عربي نحو بنسټیز اصول، دقیق قواعد او باریک نحوي نکات په واضح او منظم انداز بیان شوي دي.",
+    "size": "3.0 MB",
+    "publishedYear": "۱۴۰۲",
+    "language": "pashto",
+    "difficulty": "medium",
+    "difficultyLabel": "منځنی",
+    "coverGradient": "from-[#1a2e40] to-slate-900",
+    "coverPattern": "geometric",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "مقدمة علم النحو", "content": "د عربي نحوې بنسټیز اصول، د کلیمې وېش او د اسم، فعل او حرف ځانګړتیاوې او تعریفونه چمتو شوي دي." },
+      { "pageNumber": 2, "chapterTitle": "اعراب او د جملو جوړښت", "content": "د معرب او مبني بحث، د عاملونو اغېزه او په کلام کې د هر رکن نحوي تحلیل او دقیق اعرابونه پورتني لوست ته شرحه شوي دي." }
+    ]
+  },
+  {
+    "id": "miraj-ul-nahw",
+    "title": "Miraj-ul-Nahw",
+    "pashtoTitle": "معراج النحو",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "language",
+    "categoryLabel": "ژبه او نحوي ضوابط",
+    "description": "د عربي نحوې له ګټورو او ارزښتناکو کتابونو څخه دی، چې د نحوې مهم قواعد، ضوابط او علمي فوائد په روان او آسانه انداز وړاندې کوي. دا کتاب د نحوې زدهکوونکو لپاره یو غوره مرجع ده او د عربي عباره مینه والو سره مرسته کوی.",
+    "size": "2.5 MB",
+    "publishedYear": "۱۴۰۳",
+    "language": "pashto",
+    "difficulty": "beginner",
+    "difficultyLabel": "پیلیونکی",
+    "coverGradient": "from-[#0a3622] to-slate-950",
+    "coverPattern": "poetry",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "د معراج النحو پیلیزه", "content": "د عربي کلیمې پېژندنه او د عامل او معمول بحث چې په علم نحو کې خورا ارزښت لري او لومړی علمي مبحث ګڼل کېږي." }
+    ]
+  },
+  {
+    "id": "miraj-ul-waizin-farsi",
+    "title": "Miraj-ul-Waizin Farsi",
+    "pashtoTitle": "معراج الواعظين فارسي",
+    "author": "شيخ القرآن والحدیث الحاج ګل الرحمن حقاني (المهاجر المدني)",
+    "category": "islamic",
+    "categoryLabel": "islamic",
+    "description": "«معراج الواعظین» یکی از آثار ارزشمند شیخ القرآن والحدیث الحاج گلالرحمن حقانی المهاجر المدنی است که در زمینهٔ علوم اسلامی و اخلاق، بهویژه برای واعظان، خطیبان و دعوتگران، جایگاه ویژهای دارد.",
+    "size": "4.5 MB",
+    "publishedYear": "۱۴۰۰",
+    "language": "dari",
+    "difficulty": "medium",
+    "difficultyLabel": "متوسط",
+    "coverGradient": "from-[#321345] to-[#12051a]",
+    "coverPattern": "crest",
+    "pages": [
+      { "pageNumber": 1, "chapterTitle": "مقدمه معراج الواعظین (فارسی)", "content": "بیان ضرورت وعظ و ارشاد برای جامعه اسلامی، فضایل مبلغان دین مبین اسلام و صفات داعی مخلص و راهکارهای ترویج عقیده صحیحه." }
     ]
   }
 ]
