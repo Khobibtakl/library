@@ -260,10 +260,30 @@ export default function App() {
   const [showAuthorBioModal, setShowAuthorBioModal] = useState<boolean>(false);
   const [showStoragePermissionDialog, setShowStoragePermissionDialog] = useState<boolean>(false);
   const [bookToExport, setBookToExport] = useState<Book | null>(null);
+  const [showExitDialog, setShowExitDialog] = useState<boolean>(false);
+  const [readerMode, setReaderMode] = useState<'pdf' | 'text'>('pdf');
 
   // Audio / Speech
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const timerRef = useRef<any | null>(null);
+
+  // Load books data dynamically from public/assets/books.json when app starts per user request #3
+  useEffect(() => {
+    fetch('/assets/books.json')
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error("Could not load /assets/books.json");
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setBooks(data);
+          console.log("Loaded books dynamically from public/assets/books.json successfully!");
+        }
+      })
+      .catch(err => {
+        console.warn("Using fallback booksData as books.json loading failed:", err);
+      });
+  }, []);
 
   // Splash Timer (Automatically transition after exactly 4 seconds)
   useEffect(() => {
@@ -326,14 +346,10 @@ export default function App() {
             setShowContactDialog(false);
           } else if (showAuthorBioModal) {
             setShowAuthorBioModal(false);
+          } else if (showExitDialog) {
+            setShowExitDialog(false);
           } else {
-            // Otherwise, we have no history/modals open, let browser handle it or minimize
-            if (window.history.length > 1) {
-              window.history.back();
-            } else {
-              // exit the app
-              CapApp.minimizeApp().catch(() => {});
-            }
+            setShowExitDialog(true);
           }
         });
       } catch (e) {
@@ -348,7 +364,7 @@ export default function App() {
         activeHandler.remove();
       }
     };
-  }, [activeReadingBook, activeBook, showSettingsModal, showContactDialog, showAuthorBioModal]);
+  }, [activeReadingBook, activeBook, showSettingsModal, showContactDialog, showAuthorBioModal, showExitDialog]);
 
   // Carousel 10-Second Transition
   useEffect(() => {
@@ -925,13 +941,7 @@ export default function App() {
                       تفصیل
                     </button>
 
-                    <button
-                      onClick={() => handleExportBook(book)}
-                      className={`p-1 rounded ${selectedTheme.cardBg} border ${selectedTheme.border} text-current hover:opacity-100 transition`}
-                      title="خوندي کول موبایل کې"
-                    >
-                      <Download className="w-3 h-3" />
-                    </button>
+                    {/* Download section removed per user request */}
 
                     <button
                       onClick={() => handleStartReading(book)}
@@ -991,13 +1001,7 @@ export default function App() {
                       </button>
 
                       <div className="flex gap-1.5">
-                        <button
-                          onClick={() => handleExportBook(book)}
-                          className={`p-1 rounded ${selectedTheme.cardBg} border ${selectedTheme.border} text-current opacity-70 hover:opacity-100`}
-                          title="خوندي کول موبایل کې"
-                        >
-                          <Download className="w-2.5 h-2.5" />
-                        </button>
+                        {/* Download section removed per user request */}
                         <button
                           onClick={() => handleStartReading(book)}
                           className="px-2 py-0.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-[8.5px] font-bold rounded-md flex items-center gap-0.5 cursor-pointer"
@@ -1067,16 +1071,10 @@ export default function App() {
               {activeBook.description}
             </p>
 
-            <div className="pt-2 flex gap-2">
-              <button
-                onClick={() => handleExportBook(activeBook)}
-                className={`flex-1 py-1 px-2 border ${selectedTheme.border} ${selectedTheme.cardBg} hover:opacity-80 rounded-lg text-[10px] font-bold text-current transition cursor-pointer`}
-              >
-                کښته کول (ډاونلوډ)
-              </button>
+            <div className="pt-2">
               <button
                 onClick={() => handleStartReading(activeBook)}
-                className="flex-1 py-1 px-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-[10px] transition cursor-pointer"
+                className="w-full py-2 px-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg text-[11px] transition cursor-pointer text-center"
               >
                 مطالعه پیل کړه
               </button>
@@ -1414,23 +1412,23 @@ export default function App() {
             </div>
 
             {/* Scrollable Content */}
-            <div className="p-4 overflow-y-auto space-y-4 text-slate-200 text-xs leading-relaxed dir-rtl max-h-[calc(85vh-120px)] space-y-3">
+            <div className="p-4 overflow-y-auto space-y-4 text-slate-200 text-xs leading-relaxed dir-rtl max-h-[calc(85vh-120px)] space-y-3 font-sans">
               
               {/* Profile Bio Cover style */}
               <div className="bg-gradient-to-l from-slate-950 to-slate-900 p-4 rounded-xl border border-amber-500/10 text-right space-y-2 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-24 h-24 bg-amber-500/5 rounded-full blur-xl pointer-events-none"></div>
                 
                 <h4 className="text-sm font-bold text-amber-400">
-                  څېړنوال شیخ القرآن والحدیث الحاج ګل الرحمن حقاني «الهماجر المدني»
+                  د علم او تحقیق په ډګر کې یو ځلانده ستوری: څېړنوال  شیخ القرآن والحدیث الحاج ګل الرحمن  حقاني «الهماجر المدني»
                 </h4>
                 
                 <p className="text-[11px] text-slate-300">
-                  د پوهې او فضیلت په دې کاروان کې، د پکتیا د ځاځي اریوب د خیرمینې د سیمې یو علمي شخصیت، څېړنوال شیخ القرآن والحدیث الحاج ګل الرحمن حقاني «الهماجر المدني» د خپلو دیني او علمي هڅو په مټ د ټولنې د خدمت لپاره ملا تړلې ده. نوموړی چې د حافظ تراب خان لمسی او د حاجي عبد الرحمن زوی دی، په ۱۳۴۸ هجري لمریز کال کې دې نړۍ ته سترګې پرانیستې.
+                  د پوهې او فضیلت په دې کاروان کې، د پکتیا د ځاځي اریوب د خیرمینې د سیمې یو علمي شخصیت، څېړنوال  شیخ القرآن والحدیث الحاج ګل الرحمن  حقاني«الهماجر المدني» د خپلو دیني او علمي هڅو په مټ د ټولنې د خدمت لپاره ملا تړلې ده. نوموړی چې د حافظ تراب خان لمسی او د حاجي عبد الرحمن زوی دی، په ۱۳۴۸ هجري لمریز کال کې دې نړۍ ته سترګې پرانیستې.
                 </p>
               </div>
 
               {/* Journey details */}
-              <div className="space-y-1.5 p-3 bg-slate-950/40 rounded-lg border border-slate-800/80">
+              <div className="space-y-1.5 p-3 bg-slate-950/40 rounded-lg border border-slate-800/80 text-right font-sans">
                 <h5 className="font-bold text-amber-400 text-xs border-b border-slate-800 pb-1 flex items-center gap-1 justify-end">
                   <span>علمي او دیني سفر</span>
                   <Compass className="w-3.5 h-3.5 text-amber-500" />
@@ -1441,37 +1439,56 @@ export default function App() {
               </div>
 
               {/* Created Works (Taleefat) */}
-              <div className="space-y-2 p-3 bg-slate-950/40 rounded-lg border border-slate-800/80">
+              <div className="space-y-3 p-3 bg-slate-950/40 rounded-lg border border-slate-800/80 text-right">
                 <h5 className="font-bold text-amber-400 text-xs border-b border-slate-800 pb-1 flex items-center gap-1 justify-end">
                   <span>د لیکوال علمي آثار</span>
                   <FileText className="w-3.5 h-3.5 text-amber-500" />
                 </h5>
-                <ul className="space-y-1.5 text-[11px] text-slate-300 text-right pr-2">
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>تفسیر اریوبي (زبدة التفاسیر):</strong> په عربي ژبه کې په شلو ۲۰ جلدونو کې.</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>معراج الاسلام:</strong> د حکومت او سیاست په اړه (پښتو او فارسي).</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>معراج التصوف:</strong> (پښتو).</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>معراج الحجاج والمعتمرین:</strong> (پښتو او فارسي).</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>معراج الواعظین:</strong> (پښتو او فارسي).</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                  <li className="flex items-start justify-end gap-1.5">
-                    <span className="text-right"><strong>کتابخانې نور آثار:</strong> زبدة المسائل، سیف القهار، تنویر المسلمین، زاد المسافر، آداب الزیارت او زبدة الصلوة.</span>
-                    <span className="text-amber-500 mt-1 shrink-0">🔸</span>
-                  </li>
-                </ul>
+                
+                {/* A. Printed works */}
+                <div className="space-y-1">
+                  <h6 className="text-[11px] font-bold text-amber-500/90 pr-1">الف: چاپ شوي آثار:</h6>
+                  <ul className="grid grid-cols-1 gap-1 text-[10.5px] text-slate-300 pr-2">
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱) تفسير اريوبي المسمى بزبدة التفاسير:</strong> عربي اوه جلده.</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲) معراج الاسلام (حکومت اوسیاست):</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۳) معراج التصوف:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۴) معراج الحجاج والمعتمرین:</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۵) تلخیص معراج الحجاج والمعتمرین:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۶) معراج الواعظین:</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۷) زبدة المسائل:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۸) سيف القهار على المستهزئین الكفار:</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۹) تنوير المسلمين في حکم تلفزيون:</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۰) زاد المسافر:</strong> (پښتو، فارسي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۱) اداب الزيارت المشاهده في المدينة المنوره:</strong> (عربي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۲) زبدة الصلوة على اشرف المخلوقات صلى الله عليه وسلم:</strong> (عربي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۳) معراج الصرف:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱十四) معراج النحوا:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۵) معراج المنطق:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۶) معراج العقائد شرحه شرح العقائد:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۷) معراج الاصول شرح حسامي:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۱۹) زبدة النحوا شرح هداية النحوا:</strong> (عربي).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲۰) الرسالة الحقانية العالية:</strong> (عربي، پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲۱) ملفوظات:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲۲) تحفة المباركة من مدينة المنورة الى الائمة المسلمة:</strong> (عربي، پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲۳) جامع اللطيف في تحذير المسلمين من موالاة الكفار والملحدين:</strong> (عربي، پښتو).</span><span className="text-amber-500">🔸</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>(۲۴) الوصية في العقائد اهل السنة والجماعة:</strong> (پښتو).</span><span className="text-amber-500">🔸</span></li>
+                  </ul>
+                </div>
+
+                {/* B. Unprinted works */}
+                <div className="space-y-1 pt-1 border-t border-slate-800/60 font-sans">
+                  <h6 className="text-[11px] font-bold text-amber-500/90 pr-1">ب: ناچاپ آثار:</h6>
+                  <ul className="grid grid-cols-1 gap-1 text-[10.5px] text-slate-300 pr-2">
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۱-: تفسير اريوبي المسمى بزبدة التفاسير (عربي):</strong> پځه جلد.</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۲-: تفسير اريوبي المسمى بزبدة التفاسير (پښتو):</strong> دوه جلد.</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۳-: معراج الحجاج والمعتمرین:</strong> (اردو).</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۴-: زبدة الصلوة على اشرف المخلوقات صلى الله عليه وسلم:</strong> (پښتو).</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۵-: الواقعات النادارت:</strong> (عربي).</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۶-: الرسالة الفقهية في حکم المسحي بالجوربية:</strong> (عربي).</span><span className="text-amber-500">🔹</span></li>
+                    <li className="flex items-start justify-end gap-1.5"><span className="text-right"><strong>۷-: سفرنامه سیایند:</strong> (پښتو).</span><span className="text-amber-500">🔹</span></li>
+                  </ul>
+                </div>
+
               </div>
 
               {/* End Note */}
@@ -1709,6 +1726,51 @@ export default function App() {
                 </button>
               </div>
 
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* 9. NATIVE APP EXIT CONFIRMATION DIALOG */}
+      {showExitDialog && (
+        <div className="fixed inset-0 z-55 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-xs overflow-hidden animate-slow-fade-in text-right shadow-[0_0_20px_rgba(245,158,11,0.15)]">
+            
+            <div className="bg-slate-950 p-4 border-b border-slate-850 flex items-center justify-between text-right">
+              <span className="text-sm">🚪</span>
+              <h3 className="font-bold text-xs text-amber-500">له اپلیکیشن څخه وتل</h3>
+            </div>
+
+            <div className="p-4 text-center space-y-4 font-sans">
+              <p className="text-[11px] text-slate-300 leading-relaxed text-right">
+                ايا غواړئ له اپلکيشن څخه ووځئ؟
+              </p>
+
+              <div className="flex gap-2 justify-end pt-2">
+                {/* 1: نه */}
+                <button
+                  onClick={() => setShowExitDialog(false)}
+                  className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white rounded-lg text-[10px] font-bold transition cursor-pointer"
+                >
+                  نه
+                </button>
+                {/* 2: هو */}
+                <button
+                  onClick={() => {
+                    try {
+                      CapApp.exitApp();
+                    } catch (e) {
+                      console.warn("CapApp.exitApp() only works in native environments.", e);
+                      setShowExitDialog(false);
+                      triggerToast("له کاريال څخه وتل په موبایل کې تایید کړئ.", "info");
+                    }
+                  }}
+                  className="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[10px] font-bold transition cursor-pointer"
+                >
+                  هو
+                </button>
+              </div>
             </div>
 
           </div>
