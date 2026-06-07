@@ -267,6 +267,25 @@ export default function App() {
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const timerRef = useRef<any | null>(null);
 
+  // Load books data dynamically from public/assets/books.json when app starts per user request #3
+  // This resolves the issue where changed/updated books in assets did not show up in the application
+  useEffect(() => {
+    fetch('/assets/books.json')
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error("Could not load /assets/books.json");
+      })
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setBooks(data);
+          console.log("Loaded books dynamically from public/assets/books.json successfully!");
+        }
+      })
+      .catch(err => {
+        console.warn("Using fallback booksData as books.json loading failed:", err);
+      });
+  }, []);
+
   // Splash Timer (Automatically transition after exactly 4 seconds)
   useEffect(() => {
     const timeout = setTimeout(() => {
