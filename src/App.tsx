@@ -522,9 +522,31 @@ export default function App() {
       }
 
       triggerToast("د کتاب کښته کولو چمتووالی...", "info");
-      const result = await exportBookToPublicStorage(bookToExport);
-      if (result.success) {
-        triggerToast(`«${bookToExport.pashtoTitle}» کتاب ډاونلوډ او په بریا سره ستاسو په آلې کې خوندي شو!`, 'success');
+      
+      const pdfUrl = `/assets/${bookToExport.id}.pdf`;
+      let downloadSuccess = false;
+
+      try {
+        const checkRes = await fetch(pdfUrl, { method: 'HEAD' });
+        if (checkRes.ok) {
+          const downloadLink = document.createElement('a');
+          downloadLink.href = pdfUrl;
+          downloadLink.download = `${bookToExport.pashtoTitle || bookToExport.title}.pdf`;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+          downloadSuccess = true;
+          triggerToast(`«${bookToExport.pashtoTitle}» اصلي هېښوونکی پی‌ډي‌اف ډاونلوډ او په بریا سره خوندي شو!`, 'success');
+        }
+      } catch (errCheck) {
+        console.warn("Check for actual asset PDF failed, trying fallback export:", errCheck);
+      }
+
+      if (!downloadSuccess) {
+        const result = await exportBookToPublicStorage(bookToExport);
+        if (result.success) {
+          triggerToast(`«${bookToExport.pashtoTitle}» کتاب ډاونلوډ او په بریا سره ستاسو په آلې کې خوندي شو!`, 'success');
+        }
       }
     } catch (exportErr: any) {
       console.error("Failed book export", exportErr);
@@ -1111,6 +1133,36 @@ export default function App() {
               </div>
             </div>
 
+            {/* C. SWITCH BETWEEN ORIGINAL PDF EMBED & SIMULATED VINTAGE TEXT */}
+            <div className="flex bg-slate-900 p-0.5 rounded-lg border border-slate-800 text-[9px] sm:text-[10px] shrink-0">
+              <button
+                onClick={() => {
+                  setReaderMode('pdf');
+                  triggerToast("د کتاب اصلي پی‌ډي‌ایف بڼه فعاله شوه", "info");
+                }}
+                className={`px-2.5 py-1 rounded-md font-bold transition cursor-pointer ${
+                  readerMode === 'pdf' 
+                    ? 'bg-amber-500 text-slate-950 shadow-sm' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                اصلي PDF کتل
+              </button>
+              <button
+                onClick={() => {
+                  setReaderMode('text');
+                  triggerToast("د غږیز او لوستلو متن بڼه فعاله شوه", "info");
+                }}
+                className={`px-2.5 py-1 rounded-md font-bold transition cursor-pointer ${
+                  readerMode === 'text' 
+                    ? 'bg-amber-500 text-slate-950 shadow-sm' 
+                    : 'text-slate-400 hover:text-white'
+                }`}
+              >
+                متن + غږونګی
+              </button>
+            </div>
+
             {/* B. MID ZONE: COMPACT CENTRALIZED SLICK CONTROL DECK */}
             <div className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto flex-nowrap max-w-[65%] sm:max-w-none scrollbar-none justify-end pb-0.5">
               
@@ -1308,60 +1360,83 @@ export default function App() {
                 style={{ opacity: `${(100 - brightnessLevel) / 100 * 0.7}` }}
               ></div>
 
-              <div 
-                className={`w-full max-w-xl rounded-xl relative shadow-2xl overflow-hidden text-slate-950 leading-relaxed text-right transition-all duration-300 ${
-                  cropMargins ? 'p-3 md:p-5' : 'p-6 md:p-8'
-                } ${
-                  invertedScan 
-                  ? 'bg-zinc-950 text-slate-100 border border-zinc-900' 
-                  : 'scanned-vintage-paper' // default cream vintage look
-                }`}
-                style={getSimulatedReaderStyle()}
-                id="physical_paper_sheet"
-              >
-                
-                {/* Vintage scanner elements */}
-                <div className="absolute top-0 bottom-0 left-3 w-px bg-rose-500/20 pointer-events-none"></div>
+              {readerMode === 'pdf' ? (
+                /* NATIVE EMBEDDED ORIGINAL PDF VIEWER */
+                <div className="w-full h-full min-h-[75vh] rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative bg-slate-950 flex flex-col justify-between">
+                  {/* Floating helpful banner */}
+                  <div className="bg-slate-950 border-b border-slate-800 p-2 text-right flex justify-between items-center text-[10px] text-slate-400">
+                    <span className="text-amber-500 font-bold">اصلي نسخه (PDF لوستونکی)</span>
+                    <span className="text-[9.5px]">تاسو د کتاب اصلي پورته شوی پی‌ډي‌اف لولئ</span>
+                  </div>
 
-                {/* Running head of the page */}
-                <div className="flex items-center justify-between border-b border-black/10 pb-2 mb-4 font-mono text-[9px] opacity-75">
-                  <span>المکتبة المدنیة الشیخ المهاجر المدني</span>
-                  <span className="font-bold">مخ: {readerPage} د {activeReadingBook.pages.length}</span>
+                  {/* Embedded original PDF from assets */}
+                  <iframe 
+                    src={`/assets/${activeReadingBook.id}.pdf`}
+                    className="w-full flex-1 min-h-[70vh] border-0 bg-slate-900"
+                    title={activeReadingBook.pashtoTitle}
+                  />
+
+                  {/* PDF Viewer help tip */}
+                  <div className="bg-slate-950 border-t border-slate-800 p-2 text-center text-[9px] text-slate-400">
+                    که د پی داس ایف د بار بندۍ یا لوډ ستونزه لرله، د پورتني ټب مینو څخه د <span className="text-amber-500 font-bold">«متن + غږونګی»</span> حالت څخه ګټه واخلئ.
+                  </div>
                 </div>
-
-                {/* Unique scan certification imprint */}
-                <div className="absolute top-20 right-8 w-16 h-16 border-2 border-rose-500/20 rounded-full flex items-center justify-center text-rose-550/20 font-extrabold text-[7px] rotate-12 pointer-events-none z-10 select-none uppercase">
-                  د تفتیش نښان
-                </div>
-
-                {/* Scanned manuscript text displaying */}
-                <div className="space-y-4">
-                  <h2 className="text-md md:text-lg font-bold border-r-3 border-amber-500 pr-2 leading-snug">
-                    {activeReadingBook.pages.find(p => p.pageNumber === readerPage)?.chapterTitle}
-                  </h2>
-                  <p className="text-[9px] text-slate-400 select-none leading-none">
-                    [د انځور د پکسلو کیفیت چمتو دی - د لوستلو ښه والي لپاره د تضاد د کنټرول ټنبو څخه ګټه واخلئ]
-                  </p>
+              ) : (
+                <div 
+                  className={`w-full max-w-xl rounded-xl relative shadow-2xl overflow-hidden text-slate-950 leading-relaxed text-right transition-all duration-300 ${
+                    cropMargins ? 'p-3 md:p-5' : 'p-6 md:p-8'
+                  } ${
+                    invertedScan 
+                    ? 'bg-zinc-950 text-slate-100 border border-zinc-900' 
+                    : 'scanned-vintage-paper' // default cream vintage look
+                  }`}
+                  style={getSimulatedReaderStyle()}
+                  id="physical_paper_sheet"
+                >
                   
-                  {/* Text Container stylized with scanned ink look */}
-                  <p className="text-[13px] md:text-[14px] leading-loose text-justify whitespace-pre-line pr-1 font-serif tracking-wide text-[#160e05]" 
-                     style={{ color: invertedScan ? '#eceff4' : '#140c03' }}>
-                    {activeReadingBook.pages.find(p => p.pageNumber === readerPage)?.content}
-                  </p>
+                  {/* Vintage scanner elements */}
+                  <div className="absolute top-0 bottom-0 left-3 w-px bg-rose-500/20 pointer-events-none"></div>
+
+                  {/* Running head of the page */}
+                  <div className="flex items-center justify-between border-b border-black/10 pb-2 mb-4 font-mono text-[9px] opacity-75">
+                    <span>المکتبة المدنیة الشیخ المهاجر المدني</span>
+                    <span className="font-bold">مخ: {readerPage} د {activeReadingBook.pages.length}</span>
+                  </div>
+
+                  {/* Unique scan certification imprint */}
+                  <div className="absolute top-20 right-8 w-16 h-16 border-2 border-rose-500/20 rounded-full flex items-center justify-center text-rose-550/20 font-extrabold text-[7px] rotate-12 pointer-events-none z-10 select-none uppercase">
+                    د تفتیش نښان
+                  </div>
+
+                  {/* Scanned manuscript text displaying */}
+                  <div className="space-y-4">
+                    <h2 className="text-md md:text-lg font-bold border-r-3 border-amber-500 pr-2 leading-snug">
+                      {activeReadingBook.pages.find(p => p.pageNumber === readerPage)?.chapterTitle}
+                    </h2>
+                    <p className="text-[9px] text-slate-400 select-none leading-none">
+                      [د انځور د پکسلو کیفیت چمتو دی - د لوستلو ښه والي لپاره د تضاد د کنټرول ټنبو څخه ګټه واخلئ]
+                    </p>
+                    
+                    {/* Text Container stylized with scanned ink look */}
+                    <p className="text-[13px] md:text-[14px] leading-loose text-justify whitespace-pre-line pr-1 font-serif tracking-wide text-[#160e05]" 
+                       style={{ color: invertedScan ? '#eceff4' : '#140c03' }}>
+                      {activeReadingBook.pages.find(p => p.pageNumber === readerPage)?.content}
+                    </p>
+                  </div>
+
+                  {/* Stamp visual corner markers */}
+                  <div className="absolute top-2 left-2 border-t-2 border-l-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
+                  <div className="absolute top-2 right-2 border-t-2 border-r-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
+                  <div className="absolute bottom-2 left-2 border-b-2 border-l-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
+                  <div className="absolute bottom-2 right-2 border-b-2 border-r-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
+
+                  {/* Running Footer within paper */}
+                  <div className="border-t border-black/10 pt-3 mt-6 opacity-60 text-[9px] text-center">
+                    تصویري کتاب د لوستلو مخ • ټول حقوق کاريال جوړونکی : خبيب تکل سره خوندي دي
+                  </div>
+
                 </div>
-
-                {/* Stamp visual corner markers */}
-                <div className="absolute top-2 left-2 border-t-2 border-l-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
-                <div className="absolute top-2 right-2 border-t-2 border-r-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
-                <div className="absolute bottom-2 left-2 border-b-2 border-l-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
-                <div className="absolute bottom-2 right-2 border-b-2 border-r-2 border-black/10 w-2.5 h-2.5 pointer-events-none"></div>
-
-                {/* Running Footer within paper */}
-                <div className="border-t border-black/10 pt-3 mt-6 opacity-60 text-[9px] text-center">
-                  تصویري کتاب د لوستلو مخ • ټول حقوق کاريال جوړونکی : خبيب تکل سره خوندي دي
-                </div>
-
-              </div>
+              )}
 
             </div>
 
