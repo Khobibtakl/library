@@ -272,6 +272,15 @@ export default function App() {
   const [customBookIds, setCustomBookIds] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Dynamic in-app PDF.js state integration
+  const [pdfjsLoaded, setPdfjsLoaded] = useState<boolean>(false);
+  const [loadingPdf, setLoadingPdf] = useState<boolean>(false);
+  const [pdfRenderError, setPdfRenderError] = useState<string | null>(null);
+  const [pdfTotalPages, setPdfTotalPages] = useState<number>(1);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const pdfDocRef = useRef<any>(null);
+  const activeRenderTaskRef = useRef<any>(null);
+
   // Form states for registering new books
   const [custBookId, setCustBookId] = useState<string>('');
   const [custBookPashtoTitle, setCustBookPashtoTitle] = useState<string>('');
@@ -337,6 +346,129 @@ export default function App() {
         setBooks(merged);
       });
   }, []);
+
+  // PDF.JS SCRIPT LOADING EFFECT (LOCAL / OFFLINE SUPPORT)
+  useEffect(() => {
+    if ((window as any).pdfjsLib) {
+      setPdfjsLoaded(true);
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = '/assets/pdf.min.js';
+    script.async = true;
+    script.onload = () => {
+      const pdfjs = (window as any).pdfjsLib;
+      if (pdfjs) {
+        pdfjs.GlobalWorkerOptions.workerSrc = '/assets/pdf.worker.min.js';
+        setPdfjsLoaded(true);
+        console.log("Local PDF.js library loaded and worker initialized!");
+      }
+    };
+    script.onerror = () => {
+      setPdfRenderError("د پی ډي ایف د لوډلو محلي کتابتون (pdf.min.js) په پورته کولو کې ستونزه راغله. مهرباني وکړئ ډاډ ترلاسه کړئ چې دغه فایلونه په assets فولډر کې شتون لري.");
+    };
+    document.body.appendChild(script);
+  }, []);
+
+  // PDF DOCUMENT FETCHING & SYNCHRONIZATION EFFECT
+  useEffect(() => {
+    if (!pdfjsLoaded || !activeReadingBook || readerMode !== 'pdf') {
+      return;
+    }
+
+    const pdfUrl = (activeReadingBook as any).localUrl || `/assets/${activeReadingBook.id}.pdf?v=${pdfCacheBuster}`;
+    
+    setLoadingPdf(true);
+    setPdfRenderError(null);
+    setPdfTotalPages(1);
+    pdfDocRef.current = null;
+
+    const pdfjsLib = (window as any).pdfjsLib;
+    if (!pdfjsLib) {
+      setLoadingPdf(false);
+      setPdfRenderError("د پی ډي ایف د لوډلو سیسټم چمتو نه دی.");
+      return;
+    }
+
+    const loadingTask = pdfjsLib.getDocument(pdfUrl);
+    loadingTask.promise.then(
+      (pdfDoc: any) => {
+        pdfDocRef.current = pdfDoc;
+        setPdfTotalPages(pdfDoc.numPages);
+        setLoadingPdf(false);
+        // Ensure readerPage doesn't overflow total pages
+        if (readerPage > pdfDoc.numPages) {
+          setReaderPage(1);
+        }
+      },
+      (error: any) => {
+        console.error("Error loading PDF via PDF.js:", error);
+        setLoadingPdf(false);
+        setPdfRenderError(`د دې کتاب لپاره د پی ډي ایف فایل ونه موندل شو یا په کې ستونزه ده. ډاډ ترلاسه کړئ چې د "${activeReadingBook.id}.pdf" په نوم فایل په "public/assets" فولډر کې موجود دی او په المارۍ کې ثبت شوی دی.`);
+      }
+    );
+
+    return () => {
+      if (loadingTask && loadingTask.destroy) {
+        loadingTask.destroy();
+      }
+    };
+  }, [pdfjsLoaded, activeReadingBook, pdfCacheBuster, readerMode]);
+
+  // PDF PAGE CANVAS RENDERING RE-RUN EFFECT
+  const renderPdfPage = () => {
+    const pdfDoc = pdfDocRef.current;
+    if (!pdfDoc || !canvasRef.current) return;
+
+    if (activeRenderTaskRef.current) {
+      activeRenderTaskRef.current.cancel();
+      activeRenderTaskRef.current = null;
+    }
+
+    pdfDoc.getPage(readerPage).then((page: any) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const context = canvas.getContext('2d');
+      if (!context) return;
+
+      // Crisp rendering multiplier
+      const scale = (readerZoom / 100) * 1.5;
+      const viewport = page.getViewport({ scale: scale, rotation: rotationAngle });
+
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+
+      const renderContext = {
+        canvasContext: context,
+        viewport: viewport
+      };
+
+      const renderTask = page.render(renderContext);
+      activeRenderTaskRef.current = renderTask;
+
+      renderTask.promise.then(
+        () => {
+          activeRenderTaskRef.current = null;
+        },
+        (err: any) => {
+          if (err && err.name === 'RenderingCancelledException') {
+            // Normal abort
+          } else {
+            console.error("Page render error:", err);
+          }
+        }
+      );
+    }).catch((err: any) => {
+      console.error("Error fetching PDF page:", err);
+    });
+  };
+
+  useEffect(() => {
+    if (pdfDocRef.current && readerMode === 'pdf') {
+      renderPdfPage();
+    }
+  }, [readerPage, pdfTotalPages, readerZoom, rotationAngle, loadingPdf, readerMode]);
 
   // Splash Timer (Automatically transition after exactly 4 seconds)
   useEffect(() => {
@@ -542,7 +674,7 @@ export default function App() {
         custBookCategory === 'philosophy' ? 'عقلي او فلسفي منطق' :
         custBookCategory === 'history' ? 'تاریخ او پېښلیک' :
         custBookCategory === 'language' ? 'ژبه او نحوي ضوابط' : 'نور علوم',
-      description: custBookDesc.trim() || "د المکتبة المدنیة اړوند د کاروونکي لخوا اضافه شوی پی ډي ایف اثر.",
+      description: custBookDesc.trim() || "د المکتبة المدنية للشيخ المهاجر المدني اړوند د کاروونکي لخوا اضافه شوی پی ډي ایف اثر.",
       size: custBookSize.trim() || "3.5 MB",
       publishedYear: custBookYear.trim() || "۱۴۰۵",
       language: "pashto",
@@ -635,7 +767,9 @@ export default function App() {
 
   const handlePageChange = (pageNum: number) => {
     if (!activeReadingBook) return;
-    const maxPages = activeReadingBook.pages.length;
+    const maxPages = (readerMode === 'pdf' && pdfTotalPages > 0)
+      ? pdfTotalPages
+      : activeReadingBook.pages.length;
     if (pageNum < 1 || pageNum > maxPages) return;
 
     if (isSpeaking) handleStopTTS();
@@ -834,6 +968,11 @@ export default function App() {
     };
   };
 
+  // Dynamic page bounds computation for active viewer
+  const totalPagesCount = (activeReadingBook && readerMode === 'pdf' && pdfTotalPages > 0)
+    ? pdfTotalPages
+    : (activeReadingBook?.pages?.length || 1);
+
   return (
     <div className={`min-h-screen ${selectedTheme.bg} ${selectedTheme.text} flex flex-col font-sans transition-all duration-300 antialiased selection:bg-amber-500 selection:text-black`} id="main_wrapper">
       
@@ -859,7 +998,7 @@ export default function App() {
 
             <div className="space-y-1 text-center">
               <h1 className="text-xl font-bold tracking-tight bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 bg-clip-text text-transparent">
-                المکتبة المدنیة الشیخ المهاجر المدني
+                المکتبة المدنية للشيخ المهاجر المدني
               </h1>
               <p className="text-[10px] text-amber-500/60 font-semibold uppercase tracking-widest">
                 ۲۲ د آنلاین او آفلاین تصویري لوستلو بې‌ساري کتابونه
@@ -887,7 +1026,7 @@ export default function App() {
             </div>
 
             <div className="text-amber-500/80 text-[10.5px] py-2 animate-pulse font-medium font-sans">
-              د المکتبة المدنیة د بشپړ افلاین منځپانګې د بارولو بهیر...
+              د المکتبة المدنية للشيخ المهاجر المدني د بشپړ افلاین منځپانګې د بارولو بهیر...
             </div>
           </div>
         </div>
@@ -903,7 +1042,7 @@ export default function App() {
             </div>
             <div className="text-right">
               <h1 className="text-[10px] sm:text-xs md:text-sm font-bold bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent truncate max-w-[155px] sm:max-w-none">
-                المکتبة المدنیة الشیخ المهاجر المدني
+                المکتبة المدنية للشيخ المهاجر المدني
               </h1>
               <p className="text-[7.5px] sm:text-[9px] opacity-60">کاريال جوړونکی: خبيب تکل</p>
             </div>
@@ -1414,10 +1553,10 @@ export default function App() {
                 </button>
                 <span className="font-mono font-bold text-amber-500">{readerPage}</span>
                 <span className="opacity-40 font-mono">/</span>
-                <span className="font-mono opacity-80">{activeReadingBook.pages.length}</span>
+                <span className="font-mono opacity-80">{totalPagesCount}</span>
                 <button
                   onClick={() => handlePageChange(readerPage + 1)}
-                  disabled={readerPage === activeReadingBook.pages.length}
+                  disabled={readerPage === totalPagesCount}
                   className="p-1 rounded text-slate-400 hover:bg-slate-800 disabled:opacity-30 block"
                   title="راتلونکې پاڼه"
                 >
@@ -1608,75 +1747,87 @@ export default function App() {
 
                     {/* Cache buster refresh */}
                     <div className="space-y-1 pt-1.5 border-t border-slate-900">
-                      <span className="text-[8.5px] text-slate-500 block text-right">که د نوي لوډ شوي پی ډي ایف بدلونونه نه ښکاري:</span>
-                      <button
-                        onClick={() => {
-                          setPdfCacheBuster(Date.now());
-                          triggerToast("د PDF کیش په المارۍ کې نوی کړل شو!", "success");
-                        }}
-                        className="w-full py-1 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/10 text-amber-400 font-bold rounded text-[9px] transition"
-                      >
-                        بدلونونه لوډ کړه (Bypass Cache)
-                      </button>
-                    </div>
-
-                    {/* Viewer Height Selection */}
-                    <div className="space-y-1 pt-1.5 border-t border-slate-900">
-                      <span className="text-[8.5px] opacity-70 block text-right">د کتنې د پاڼې لوړوالی:</span>
-                      <div className="grid grid-cols-3 gap-1">
-                        {['55vh', '78vh', '95vh'].map(h => (
-                          <button
-                            key={h}
-                            onClick={() => setPdfViewerHeight(h)}
-                            className={`py-0.5 rounded text-[8px] transition ${pdfViewerHeight === h ? 'bg-indigo-600 text-white font-bold' : 'bg-slate-900 border border-slate-850 text-slate-400 hover:text-white'}`}
-                          >
-                            {h === '55vh' ? 'لږکی' : h === '78vh' ? 'متوسط' : 'بشپړ مخ'}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* External native open */}
-                    <div className="pt-1.5 border-t border-slate-900 flex gap-1">
-                      <button
-                        onClick={() => {
-                          window.open((activeReadingBook as any).localUrl || `/assets/${activeReadingBook.id}.pdf?v=${pdfCacheBuster}`, '_blank');
-                          triggerToast("کتاب په نوې کړکۍ کې روښانه شو", "info");
-                        }}
-                        className="w-full py-1 bg-slate-900 hover:bg-slate-850 border border-slate-850 text-slate-300 rounded text-[9px] text-center transition"
-                      >
-                        په نوې کړکۍ کې کتل ↗
-                      </button>
+                      <span className="text-[8.5px] text-slate-500 block text-right">که د نوي لوډ شوي پی ډي ایف بدلونونه نه ښکاري، ریلوډ وکاروئ.</span>
                     </div>
                   </div>
                 )}
-
               </div>
             )}
-
-            {/* MAIN VIEWER PORT: STYLED SCANNED VINTAGE PAPER CANVAS */}
-            <div className={`col-span-1 ${isFullscreen ? 'lg:col-span-4' : 'lg:col-span-3'} overflow-y-auto px-4 py-6 flex items-start justify-center relative hide-scrollbar`} id="scanned_pdf_viewport_canvas">
-              
-              {/* Dynamic brightness overlay */}
-              <div 
-                className="absolute inset-0 bg-black pointer-events-none z-40 transition-opacity"
-                style={{ opacity: `${(100 - brightnessLevel) / 100 * 0.7}` }}
-              ></div>
-
+            <div className="flex-1 lg:col-span-3 overflow-hidden flex flex-col justify-center items-center p-2 relative" id="core_reader_viewpanel">
               {readerMode === 'pdf' ? (() => {
                 const pdfUrl = (activeReadingBook as any).localUrl || `/assets/${activeReadingBook.id}.pdf?v=${pdfCacheBuster}`;
+                
+                if (loadingPdf) {
+                  return (
+                    <div className="w-full flex flex-col items-center justify-center py-20 px-6 border border-slate-800 rounded-xl bg-slate-950 text-center">
+                      <Sparkles className="w-10 h-10 text-amber-500 animate-pulse mb-4" />
+                      <p className="text-xs font-bold text-slate-300">د کتاب پی ډي ایف پاڼه لوډیږي...</p>
+                      <p className="text-[10px] text-slate-500 mt-2 text-right dir-rtl leading-relaxed">
+                        دا پروسه ستاسو په براوزر کې د اصلي کتاب د کتنې سیسټم چمتو کوي. مهرباني وکړئ لږ انتظار وکړئ.
+                      </p>
+                    </div>
+                  );
+                }
+
+                if (pdfRenderError) {
+                  return (
+                    <div className="w-full max-w-md p-6 border border-red-500/30 rounded-xl bg-slate-950 text-right space-y-4">
+                      <div className="flex justify-end gap-2 items-center text-red-400 font-bold text-xs">
+                        <span>د کتاب په خلاصون کې ستونزه</span>
+                        <span className="text-lg">⚠️</span>
+                      </div>
+                      <p className="text-[10.5px] text-slate-300 leading-relaxed whitespace-pre-line">
+                        {pdfRenderError}
+                      </p>
+                      <div className="bg-slate-900 p-3 rounded border border-slate-800 space-y-2 text-[10px] text-slate-400">
+                        <strong>لارښوونه:</strong>
+                        <ul className="list-disc list-inside space-y-1">
+                          <li>تاسو کولی شئ کتاب په غږیز او متن فارمټ کې هم په اسانۍ ولولئ او واورئ.</li>
+                          <li>ډاډ ترلاسه کړئ چې د فایل فارمټ او د فایل نوم بالکل سم لیکل شوي دي.</li>
+                        </ul>
+                      </div>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => {
+                            setPdfCacheBuster(Date.now());
+                          }}
+                          className="w-full py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded text-[10px] transition cursor-pointer"
+                        >
+                          🔄 بیا هڅه (Retry Load)
+                        </button>
+                        <button
+                          onClick={() => {
+                            setReaderMode('text');
+                            triggerToast("د غږیز او لوستلو متن بڼه فعاله شوه", "info");
+                          }}
+                          className="w-full py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded text-[10px] transition cursor-pointer"
+                        >
+                          📖 متن بڼې ته تلل (TTS)
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => {
+                          window.open(pdfUrl, '_blank');
+                        }}
+                        className="w-full py-1 px-2 border border-sky-500/20 text-sky-400 hover:bg-sky-500/10 text-[9px] rounded transition"
+                      >
+                        مستقیم په بله نوې کړکۍ کې خلاصول ↗
+                      </button>
+                    </div>
+                  );
+                }
+
                 return (
-                  /* NATIVE EMBEDDED ORIGINAL PDF VIEWER */
-                  <div className="w-full h-full rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative bg-slate-950 flex flex-col justify-between">
+                  <div className="w-full flex flex-col items-center bg-slate-950 rounded-xl border border-slate-800 overflow-hidden shadow-2xl relative">
                     {/* Floating helpful banner */}
-                    <div className="bg-slate-950 border-b border-slate-800 p-2 text-right flex justify-between items-center text-[10px] text-slate-400">
-                      <div className="flex gap-1">
+                    <div className="w-full bg-slate-950 border-b border-slate-850 p-2 px-4 text-right flex justify-between items-center text-[10px] text-slate-400 relative z-10">
+                      <div className="flex gap-1.5">
                         <button
                           onClick={() => {
                             setPdfDarkMode(!pdfDarkMode);
-                            triggerToast(pdfDarkMode ? "عادي رنګونه" : "د رنګونو سرچپه کول (Night View)", "success");
+                            triggerToast(pdfDarkMode ? "رنګونه عادي حالت ته راغلل" : "د پی ډی ایف معکوس موډ (Night View) فعال شو!", "success");
                           }}
-                          className={`px-1.5 py-0.5 rounded text-[8.5px] font-bold ${pdfDarkMode ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-800 hover:text-white'}`}
+                          className={`px-2 py-0.5 rounded text-[8.5px] font-bold ${pdfDarkMode ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-800 hover:text-white'}`}
                           title="د سترګو ژغورنې لپاره د پی ډي ایف د رنګونو بدلول"
                         >
                           👁️ {pdfDarkMode ? "رڼا حالت" : "تاریک حالت"}
@@ -1686,36 +1837,80 @@ export default function App() {
                             setPdfCacheBuster(Date.now());
                             triggerToast("پی ډي ایف په بشپړ ډول تازه او ریلوډ شو!", "success");
                           }}
-                          className="px-1.5 py-0.5 rounded text-[8.5px] bg-slate-900 border border-slate-800 hover:text-white"
+                          className="px-2 py-0.5 rounded text-[8.5px] bg-slate-900 border border-slate-800 hover:text-white"
                           title="د اسټس فولډر د بدلونونو د ترلاسه کولو لپاره د غبرګون کیش ماتول"
                         >
                           🔄 ریلوډ کول
                         </button>
                       </div>
                       <div className="text-right">
-                        <span className="text-amber-500 font-bold block">اصلي نسخه (PDF لوستونکی)</span>
-                        <span className="text-[8.5px] text-slate-500">د تازه والي بستر: v_{pdfCacheBuster}</span>
+                        <span className="text-amber-500 font-bold block">اصلي نسخه (HTML5 PDF Viewer)</span>
+                        <span className="text-[8.5px] text-slate-500">پاڼه: {readerPage} د {pdfTotalPages}</span>
                       </div>
                     </div>
 
-                    {/* Embedded original PDF from assets / local upload */}
-                    <iframe 
-                      src={pdfUrl}
-                      className="w-full flex-1 border-0 bg-slate-900 transition-all rounded-b-xl"
-                      style={{ height: pdfViewerHeight, filter: pdfDarkMode ? 'invert(0.9) hue-rotate(180deg)' : 'none' }}
-                      title={activeReadingBook.pashtoTitle}
-                    />
+                    {/* Dynamic Canvas Area */}
+                    <div 
+                      className="w-full overflow-auto flex items-start justify-center p-4 bg-[#0a0f1d]/50 relative"
+                      style={{ minHeight: '55vh', maxHeight: pdfViewerHeight }}
+                    >
+                      <canvas 
+                        ref={canvasRef} 
+                        className="shadow-2xl border border-slate-800 rounded bg-white transition-all duration-300"
+                        style={{
+                          filter: `brightness(${brightnessLevel}%) contrast(${scannedContrast}%) ${pdfDarkMode ? 'invert(0.9) hue-rotate(180deg)' : ''} ${invertedScan ? 'invert(1) grayscale(1)' : ''} ${inkBoldness ? 'contrast(1.8) brightness(0.9) grayscale(1)' : ''}`,
+                          maxWidth: '100%',
+                          height: 'auto',
+                          transition: 'filter 0.2s ease',
+                        }}
+                      />
+                    </div>
 
-                    {/* PDF Viewer help tip */}
-                    <div className="bg-slate-950 border-t border-slate-800 p-2 text-center text-[9px] text-slate-400 flex justify-between items-center px-4">
+                    {/* ENLARGED PAGE FLIPPING CONTROLS FOR OFFLINE PDF VIEWING */}
+                    <div className="w-full bg-slate-900 border-t border-b border-slate-850 p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 px-6 select-none" id="pdf_canvas_navigation_controls">
+                      
+                      {/* Back button (Previous Page) */}
+                      <button
+                        onClick={() => handlePageChange(readerPage - 1)}
+                        disabled={readerPage === 1}
+                        className="w-full sm:w-auto px-6 py-3 bg-slate-950 border border-slate-700 hover:border-amber-500 hover:bg-slate-850 disabled:opacity-20 text-slate-200 hover:text-white rounded-xl transition duration-200 flex items-center justify-center gap-2 text-sm font-bold shadow-lg disabled:cursor-not-allowed cursor-pointer"
+                        title="تېر مخ ته تګ"
+                      >
+                        <span className="text-base font-bold">→</span>
+                        <span>تېر مخ (شا ته)</span>
+                      </button>
+
+                      {/* Middle Page Details Indicator */}
+                      <div className="flex items-center gap-2.5 bg-slate-950 px-5 py-2.5 rounded-full border border-slate-800 shadow-inner">
+                        <span className="text-xs text-slate-400 font-medium">پاڼه:</span>
+                        <span className="font-mono text-base font-extrabold text-amber-500">{readerPage}</span>
+                        <span className="text-slate-600">/</span>
+                        <span className="font-mono text-sm font-bold text-slate-400">{totalPagesCount}</span>
+                      </div>
+
+                      {/* Next button (Next Page) */}
+                      <button
+                        onClick={() => handlePageChange(readerPage + 1)}
+                        disabled={readerPage === totalPagesCount}
+                        className="w-full sm:w-auto px-6 py-3 bg-gradient-to-l from-amber-500 to-amber-600 text-slate-950 hover:from-amber-400 hover:to-amber-500 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 rounded-xl transition duration-200 flex items-center justify-center gap-2 text-sm font-bold shadow-lg disabled:cursor-not-allowed cursor-pointer"
+                        title="بل مخ ته تګ"
+                      >
+                        <span>بل مخ (مخکې)</span>
+                        <span className="text-base font-bold">←</span>
+                      </button>
+
+                    </div>
+
+                    {/* PDF Viewer help tip footer */}
+                    <div className="w-full bg-slate-950 border-t border-slate-850 p-2 text-center text-[9px] text-slate-400 flex justify-between items-center px-4">
                       <button
                         onClick={() => window.open(pdfUrl, '_blank')}
                         className="text-[8.5px] text-sky-400 underline"
                       >
-                        په نوې کړکۍ کې لوستل ↗
+                        په نوې کړکۍ کې پرانیستل ↗
                       </button>
                       <span>
-                        که د پی ډي ایف د ورانیدو مخنیوی غواړئ، یا مو رنګونه خراب شول، په مینو کې <span className="text-amber-500 font-bold">«متن + غږونګی»</span> وکاروئ.
+                        تاسو کولی شئ د لاندې ټڼو په مرسته بل مخ ته لاړ شئ یا د ښي اړخ تضاد اصلاح خلاص کړئ.
                       </span>
                     </div>
                   </div>
@@ -1738,8 +1933,8 @@ export default function App() {
 
                   {/* Running head of the page */}
                   <div className="flex items-center justify-between border-b border-black/10 pb-2 mb-4 font-mono text-[9px] opacity-75">
-                    <span>المکتبة المدنیة الشیخ المهاجر المدني</span>
-                    <span className="font-bold">مخ: {readerPage} د {activeReadingBook.pages.length}</span>
+                    <span>المکتبة المدنية للشيخ المهاجر المدني</span>
+                    <span className="font-bold">مخ: {readerPage} د {totalPagesCount}</span>
                   </div>
 
                   {/* Unique scan certification imprint */}
@@ -1797,7 +1992,7 @@ export default function App() {
               </div>
               <button
                 onClick={() => handlePageChange(readerPage + 1)}
-                disabled={readerPage === activeReadingBook.pages.length}
+                disabled={readerPage === totalPagesCount}
                 className="px-2.5 py-0.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 rounded text-[10px] disabled:opacity-30"
               >
                 بل مخ
@@ -2099,7 +2294,7 @@ export default function App() {
                 <X className="w-4 h-4" />
               </button>
               <h3 className="font-bold text-xs text-amber-500">
-                المکتبة المدنیة کې د خپل نوي پی ډي ایف ثبتول
+                المکتبة المدنية للشيخ المهاجر المدني کې د خپل نوي پی ډي ایف ثبتول
               </h3>
             </div>
 
@@ -2271,7 +2466,7 @@ export default function App() {
                   د «{bookToExport.pashtoTitle}» کتاب ډاونلوډ کولو لپاره د حافظې اجازه
                 </h4>
                 <p className="text-[10px] text-slate-400 leading-relaxed text-right">
-                  د دې لپاره چې د «المکتبة المدنیة الشیخ المهاجر المدني» دغه د کیفیت لرونکي لوستلو اثر په بشپړ ډول ستاسو د آلې په داخلي حافظه کې خوندي او صادر شي، نو اړینه ده چې د ډاونلوډ اجازه تایید کړئ.
+                  د دې لپاره چې د «المکتبة المدنية للشيخ المهاجر المدني» دغه د کیفیت لرونکي لوستلو اثر په بشپړ ډول ستاسو د آلې په داخلي حافظه کې خوندي او صادر شي، نو اړینه ده چې د ډاونلوډ اجازه تایید کړئ.
                 </p>
               </div>
 
