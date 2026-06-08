@@ -10,6 +10,7 @@ import {
   X, 
   Plus, 
   Trash2, 
+  Upload, 
   Volume2, 
   VolumeX, 
   ZoomIn, 
@@ -263,6 +264,24 @@ export default function App() {
   const [showExitDialog, setShowExitDialog] = useState<boolean>(false);
   const [readerMode, setReaderMode] = useState<'pdf' | 'text'>('pdf');
 
+  // PDF configuration and custom shelf additions
+  const [pdfCacheBuster, setPdfCacheBuster] = useState<number>(Date.now());
+  const [pdfDarkMode, setPdfDarkMode] = useState<boolean>(false);
+  const [pdfViewerHeight, setPdfViewerHeight] = useState<string>('78vh');
+  const [showAddBookModal, setShowAddBookModal] = useState<boolean>(false);
+  const [customBookIds, setCustomBookIds] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Form states for registering new books
+  const [custBookId, setCustBookId] = useState<string>('');
+  const [custBookPashtoTitle, setCustBookPashtoTitle] = useState<string>('');
+  const [custBookTitle, setCustBookTitle] = useState<string>('');
+  const [custBookAuthor, setCustBookAuthor] = useState<string>('شيخ ګل الرحمن حقاني');
+  const [custBookCategory, setCustBookCategory] = useState<'literature' | 'philosophy' | 'islamic' | 'science' | 'history' | 'language'>('islamic');
+  const [custBookSize, setCustBookSize] = useState<string>('3.5 MB');
+  const [custBookYear, setCustBookYear] = useState<string>('۱۴۰۵');
+  const [custBookDesc, setCustBookDesc] = useState<string>('');
+
   // Audio / Speech
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
   const timerRef = useRef<any | null>(null);
@@ -270,6 +289,33 @@ export default function App() {
   // Load books data dynamically from public/assets/books.json when app starts per user request #3
   // This resolves the issue where changed/updated books in assets did not show up in the application
   useEffect(() => {
+    const loadAndMergeBooks = (fetchedData: Book[]) => {
+      const saved = localStorage.getItem('custom_books_shelf');
+      if (saved) {
+        try {
+          const customBooks = JSON.parse(saved) as Book[];
+          if (Array.isArray(customBooks)) {
+            const merged = [...fetchedData];
+            const customIds: string[] = [];
+            customBooks.forEach(cb => {
+              customIds.push(cb.id);
+              if (!merged.some(b => b.id === cb.id)) {
+                merged.push(cb);
+              } else {
+                const index = merged.findIndex(b => b.id === cb.id);
+                merged[index] = cb;
+              }
+            });
+            setCustomBookIds(customIds);
+            return merged;
+          }
+        } catch (e) {
+          console.error("Failed to parse custom_books_shelf", e);
+        }
+      }
+      return fetchedData;
+    };
+
     fetch('/assets/books.json')
       .then(res => {
         if (res.ok) return res.json();
@@ -277,12 +323,18 @@ export default function App() {
       })
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
-          setBooks(data);
+          const merged = loadAndMergeBooks(data);
+          setBooks(merged);
           console.log("Loaded books dynamically from public/assets/books.json successfully!");
+        } else {
+          const merged = loadAndMergeBooks(fallbackBooks);
+          setBooks(merged);
         }
       })
       .catch(err => {
         console.warn("Using fallback booksData as books.json loading failed:", err);
+        const merged = loadAndMergeBooks(fallbackBooks);
+        setBooks(merged);
       });
   }, []);
 
@@ -430,6 +482,137 @@ export default function App() {
   const triggerToast = (message: string, type: 'success' | 'info' | 'error' = 'success') => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleLocalFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+       triggerToast("مهرباني وکړئ یوازې د پی ډی ایف (.pdf) بڼې فایل غوره کړئ!", "error");
+       return;
+    }
+    
+    const localUrl = URL.createObjectURL(file);
+    const customBook: Book = {
+      id: "temporary-local-pdf",
+      title: file.name,
+      pashtoTitle: file.name.replace(/\.[^/.]+$/, ""), // Strip extension
+      author: "سیمه ییز فایل (مکتبت المدینة)",
+      category: "islamic",
+      categoryLabel: "سیمه ییز پی ډی ایف دوتنه",
+      description: "دا کتاب ستاسو د مبایل یا کمپیوټر د حافظې څخه مستقیم پورته شوی دی.",
+      size: `${(file.size / (1024 * 1024)).toFixed(1)} MB`,
+      publishedYear: "پاڼه لوډر",
+      pages: [{ pageNumber: 1, chapterTitle: "اصلي پی ډی ایف پاڼه", content: "سیمه ییز فایل" }],
+      coverGradient: "from-slate-800 to-slate-950",
+      coverPattern: "geometric",
+      language: "pashto",
+      difficulty: "beginner",
+      difficultyLabel: "آسانه"
+    };
+
+    // Set local url directly
+    (customBook as any).localUrl = localUrl;
+
+    // Set as currently active book
+    setActiveReadingBook(customBook);
+    setReaderMode('pdf');
+    setReaderPage(1);
+    triggerToast("سیمه ییز پی ډی ایف په بریالیتوب سره لوډ شو!", "success");
+  };
+
+  const handleAddCustomBook = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!custBookId.trim() || !custBookPashtoTitle.trim()) {
+      triggerToast("مهرباني وکړئ د ID پیژندونکی او د کتاب پښتو نوم حتماً ډک کړئ!", "error");
+      return;
+    }
+
+    const cleanId = custBookId.trim().replace(/\s+/g, '-').toLowerCase();
+
+    const newBook: Book = {
+      id: cleanId,
+      title: custBookTitle.trim() || cleanId,
+      pashtoTitle: custBookPashtoTitle.trim(),
+      author: custBookAuthor.trim() || "شيخ ګل الرحمن حقاني",
+      category: custBookCategory,
+      categoryLabel: 
+        custBookCategory === 'islamic' ? 'اسلامي علوم او تصوف' :
+        custBookCategory === 'literature' ? 'ادب او هنر' :
+        custBookCategory === 'philosophy' ? 'عقلي او فلسفي منطق' :
+        custBookCategory === 'history' ? 'تاریخ او پېښلیک' :
+        custBookCategory === 'language' ? 'ژبه او نحوي ضوابط' : 'نور علوم',
+      description: custBookDesc.trim() || "د المکتبة المدنیة اړوند د کاروونکي لخوا اضافه شوی پی ډي ایف اثر.",
+      size: custBookSize.trim() || "3.5 MB",
+      publishedYear: custBookYear.trim() || "۱۴۰۵",
+      language: "pashto",
+      difficulty: "medium",
+      difficultyLabel: "منځنی",
+      coverGradient: "from-sky-900 to-slate-900",
+      coverPattern: "islamic",
+      pages: [
+        { pageNumber: 1, chapterTitle: "اصلي مینو", content: "تاسو د دې کتاب د اصلي پی ډي ایف لوستلو لپاره 'اصلي PDF کتل' تڼۍ باندې کلیک وکړئ." }
+      ]
+    };
+
+    // Save to localStorage
+    const saved = localStorage.getItem('custom_books_shelf');
+    let customList: Book[] = [];
+    if (saved) {
+      try {
+        customList = JSON.parse(saved);
+        if (!Array.isArray(customList)) customList = [];
+      } catch (err) {
+        customList = [];
+      }
+    }
+
+    customList = customList.filter(b => b.id !== cleanId);
+    customList.push(newBook);
+    localStorage.setItem('custom_books_shelf', JSON.stringify(customList));
+
+    // Update state lists
+    setBooks(prev => {
+      const filtered = prev.filter(b => b.id !== cleanId);
+      return [...filtered, newBook];
+    });
+    setCustomBookIds(prev => {
+      if (!prev.includes(cleanId)) return [...prev, cleanId];
+      return prev;
+    });
+
+    // Reset controls
+    setCustBookId('');
+    setCustBookPashtoTitle('');
+    setCustBookTitle('');
+    setCustBookDesc('');
+    setShowAddBookModal(false);
+
+    triggerToast(`«${newBook.pashtoTitle}» کتاب په بریا سره المارۍ کې ثبت شو!`, "success");
+  };
+
+  const handleDeleteCustomBook = (bookId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!window.confirm(`ایا تاسو باوري یاست چې دا کتاب له المارۍ څخه حذف کول غواړئ؟`)) {
+      return;
+    }
+
+    const saved = localStorage.getItem('custom_books_shelf');
+    if (saved) {
+      try {
+        let customList = JSON.parse(saved) as Book[];
+        if (Array.isArray(customList)) {
+          customList = customList.filter(b => b.id !== bookId);
+          localStorage.setItem('custom_books_shelf', JSON.stringify(customList));
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    setBooks(prev => prev.filter(b => b.id !== bookId));
+    setCustomBookIds(prev => prev.filter(id => id !== bookId));
+    triggerToast("کتاب په بریالیتوب سره حذف شو", "success");
   };
 
   const handleStartReading = (book: Book) => {
@@ -873,7 +1056,7 @@ export default function App() {
         </div>
 
         {/* TIGHT FILTERS CONTROL DECK */}
-        <div className={`p-2 rounded-xl border ${selectedTheme.border} ${selectedTheme.cardBg} space-y-2`} id="filters_control_bar">
+        <div className={`p-2.5 rounded-xl border ${selectedTheme.border} ${selectedTheme.cardBg} space-y-2.5`} id="filters_control_bar">
           <div className="flex flex-col sm:flex-row gap-2 items-center justify-between w-full" id="filters_control_bar_inside">
             
             {/* Search query INPUT */}
@@ -889,7 +1072,7 @@ export default function App() {
             </div>
 
             {/* List and Grid view toggler buttons */}
-            <div className="flex gap-1 shrink-0 w-full sm:w-auto justify-end">
+            <div className="flex gap-1.5 shrink-0 w-full sm:w-auto justify-end">
               <button
                 onClick={() => setViewMode('list')}
                 className={`px-2.5 py-1 rounded-md border text-[9.5px] font-bold transition flex items-center gap-0.5 cursor-pointer ${
@@ -914,6 +1097,38 @@ export default function App() {
               </button>
             </div>
 
+          </div>
+
+          {/* DYNAMIC PDF MANAGEMENT ROW (PASHTO ACTIONS) */}
+          <div className="pt-2 border-t border-dashed border-amber-500/20 flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p className="text-[9.5px] text-slate-400 text-right w-full sm:w-auto">
+              تاسو په اسټس فولډر کې خپل نوي پی ډي ایف دوتنې دلته لوډ یا ثبتولی شئ:
+            </p>
+            <div className="flex gap-1.5 w-full sm:w-auto justify-end shrink-0">
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleLocalFileSelect} 
+                accept=".pdf" 
+                className="hidden" 
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className="px-2.5 py-1 rounded bg-indigo-600/90 hover:bg-indigo-600 border border-indigo-500/20 text-white text-[9px] font-bold transition flex items-center gap-1 cursor-pointer"
+                title="په موقتي توګه د موبایل یا کمپیوټر د دوتنو څخه پی ډي ایف د لوستلو لپاره غوښتنلیک کې لوډ کړه"
+              >
+                <Upload className="w-3 h-3" />
+                سیمه ییز پی ډی ایف مستقیم کتل (موقتي)
+              </button>
+              <button
+                onClick={() => setShowAddBookModal(true)}
+                className="px-2.5 py-1 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 text-[9px] font-bold transition flex items-center gap-1 cursor-pointer"
+                title="ستاسو د assets فولډر د تالیف غوښتنلیک المارۍ کې ثبتول"
+              >
+                <Plus className="w-3 h-3" />
+                د نوي کتاب دایمي ثبتول (مکتبت المدینة)
+              </button>
+            </div>
           </div>
         </div>
 
@@ -957,6 +1172,16 @@ export default function App() {
                       </span>
                     )}
                     
+                    {customBookIds.includes(book.id) && (
+                      <button
+                        onClick={(e) => handleDeleteCustomBook(book.id, e)}
+                        className="px-1.5 py-1 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded text-[9px] transition"
+                        title="دا کتاب د المارۍ خپرونو څخه حذف کړه"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+
                     <button
                       onClick={() => setActiveBook(book)}
                       className={`px-2 py-1 border ${selectedTheme.border} rounded text-[9px] text-current hover:opacity-85 transition`}
@@ -1016,12 +1241,23 @@ export default function App() {
                     )}
 
                     <div className={`flex justify-between gap-1 pt-1 border-t ${selectedTheme.border}`}>
-                      <button
-                        onClick={() => setActiveBook(book)}
-                        className={`px-1.5 py-0.5 border ${selectedTheme.border} rounded text-[8.5px] text-current opacity-70 hover:opacity-100`}
-                      >
-                        تفصیل
-                      </button>
+                      <div className="flex gap-1 items-center animate-slow-fade-in">
+                        {customBookIds.includes(book.id) && (
+                          <button
+                            onClick={(e) => handleDeleteCustomBook(book.id, e)}
+                            className="p-1 border border-red-500/20 text-red-400 hover:bg-red-500 hover:text-white rounded transition-all"
+                            title="دا کتاب حذف کړه"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setActiveBook(book)}
+                          className={`px-1.5 py-0.5 border ${selectedTheme.border} rounded text-[8.5px] text-current opacity-70 hover:opacity-100`}
+                        >
+                          تفصیل
+                        </button>
+                      </div>
 
                       <div className="flex gap-1.5">
                         {/* Download section removed per user request */}
@@ -1348,6 +1584,73 @@ export default function App() {
                   ))}
                 </div>
 
+                {/* PDF Reader Custom Controls */}
+                {readerMode === 'pdf' && (
+                  <div className="p-2.5 bg-slate-950 rounded-lg border border-slate-800 space-y-2 mt-3 text-right">
+                    <h4 className="text-[10px] font-bold text-amber-500 uppercase border-b border-slate-850 pb-1 flex items-center justify-between">
+                      <Sliders className="w-3 h-3 text-amber-500" />
+                      <span>د PDF ځانګړي تنظیمونه</span>
+                    </h4>
+                    
+                    {/* PDF Dark Mode (Invert Colors) */}
+                    <div className="flex items-center justify-between text-[10px] pt-1">
+                      <button
+                        onClick={() => {
+                          setPdfDarkMode(!pdfDarkMode);
+                          triggerToast(pdfDarkMode ? "رنګونه عادي حالت ته راغلل" : "د پی ډی ایف معکوس موډ (Night View) فعال شو!", "success");
+                        }}
+                        className={`px-2 py-0.5 rounded text-[9px] font-bold transition ${pdfDarkMode ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-850 text-slate-400 hover:text-white'}`}
+                      >
+                        {pdfDarkMode ? "فعال" : "غیر فعال"}
+                      </button>
+                      <span className="opacity-85">د شپې موډ (سترګو پناه):</span>
+                    </div>
+
+                    {/* Cache buster refresh */}
+                    <div className="space-y-1 pt-1.5 border-t border-slate-900">
+                      <span className="text-[8.5px] text-slate-500 block text-right">که د نوي لوډ شوي پی ډي ایف بدلونونه نه ښکاري:</span>
+                      <button
+                        onClick={() => {
+                          setPdfCacheBuster(Date.now());
+                          triggerToast("د PDF کیش په المارۍ کې نوی کړل شو!", "success");
+                        }}
+                        className="w-full py-1 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/10 text-amber-400 font-bold rounded text-[9px] transition"
+                      >
+                        بدلونونه لوډ کړه (Bypass Cache)
+                      </button>
+                    </div>
+
+                    {/* Viewer Height Selection */}
+                    <div className="space-y-1 pt-1.5 border-t border-slate-900">
+                      <span className="text-[8.5px] opacity-70 block text-right">د کتنې د پاڼې لوړوالی:</span>
+                      <div className="grid grid-cols-3 gap-1">
+                        {['55vh', '78vh', '95vh'].map(h => (
+                          <button
+                            key={h}
+                            onClick={() => setPdfViewerHeight(h)}
+                            className={`py-0.5 rounded text-[8px] transition ${pdfViewerHeight === h ? 'bg-indigo-600 text-white font-bold' : 'bg-slate-900 border border-slate-850 text-slate-400 hover:text-white'}`}
+                          >
+                            {h === '55vh' ? 'لږکی' : h === '78vh' ? 'متوسط' : 'بشپړ مخ'}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* External native open */}
+                    <div className="pt-1.5 border-t border-slate-900 flex gap-1">
+                      <button
+                        onClick={() => {
+                          window.open((activeReadingBook as any).localUrl || `/assets/${activeReadingBook.id}.pdf?v=${pdfCacheBuster}`, '_blank');
+                          triggerToast("کتاب په نوې کړکۍ کې روښانه شو", "info");
+                        }}
+                        className="w-full py-1 bg-slate-900 hover:bg-slate-850 border border-slate-850 text-slate-300 rounded text-[9px] text-center transition"
+                      >
+                        په نوې کړکۍ کې کتل ↗
+                      </button>
+                    </div>
+                  </div>
+                )}
+
               </div>
             )}
 
@@ -1360,28 +1663,64 @@ export default function App() {
                 style={{ opacity: `${(100 - brightnessLevel) / 100 * 0.7}` }}
               ></div>
 
-              {readerMode === 'pdf' ? (
-                /* NATIVE EMBEDDED ORIGINAL PDF VIEWER */
-                <div className="w-full h-full min-h-[75vh] rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative bg-slate-950 flex flex-col justify-between">
-                  {/* Floating helpful banner */}
-                  <div className="bg-slate-950 border-b border-slate-800 p-2 text-right flex justify-between items-center text-[10px] text-slate-400">
-                    <span className="text-amber-500 font-bold">اصلي نسخه (PDF لوستونکی)</span>
-                    <span className="text-[9.5px]">تاسو د کتاب اصلي پورته شوی پی‌ډي‌اف لولئ</span>
-                  </div>
+              {readerMode === 'pdf' ? (() => {
+                const pdfUrl = (activeReadingBook as any).localUrl || `/assets/${activeReadingBook.id}.pdf?v=${pdfCacheBuster}`;
+                return (
+                  /* NATIVE EMBEDDED ORIGINAL PDF VIEWER */
+                  <div className="w-full h-full rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative bg-slate-950 flex flex-col justify-between">
+                    {/* Floating helpful banner */}
+                    <div className="bg-slate-950 border-b border-slate-800 p-2 text-right flex justify-between items-center text-[10px] text-slate-400">
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => {
+                            setPdfDarkMode(!pdfDarkMode);
+                            triggerToast(pdfDarkMode ? "عادي رنګونه" : "د رنګونو سرچپه کول (Night View)", "success");
+                          }}
+                          className={`px-1.5 py-0.5 rounded text-[8.5px] font-bold ${pdfDarkMode ? 'bg-amber-500 text-slate-950' : 'bg-slate-900 border border-slate-800 hover:text-white'}`}
+                          title="د سترګو ژغورنې لپاره د پی ډي ایف د رنګونو بدلول"
+                        >
+                          👁️ {pdfDarkMode ? "رڼا حالت" : "تاریک حالت"}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setPdfCacheBuster(Date.now());
+                            triggerToast("پی ډي ایف په بشپړ ډول تازه او ریلوډ شو!", "success");
+                          }}
+                          className="px-1.5 py-0.5 rounded text-[8.5px] bg-slate-900 border border-slate-800 hover:text-white"
+                          title="د اسټس فولډر د بدلونونو د ترلاسه کولو لپاره د غبرګون کیش ماتول"
+                        >
+                          🔄 ریلوډ کول
+                        </button>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-amber-500 font-bold block">اصلي نسخه (PDF لوستونکی)</span>
+                        <span className="text-[8.5px] text-slate-500">د تازه والي بستر: v_{pdfCacheBuster}</span>
+                      </div>
+                    </div>
 
-                  {/* Embedded original PDF from assets */}
-                  <iframe 
-                    src={`/assets/${activeReadingBook.id}.pdf`}
-                    className="w-full flex-1 min-h-[70vh] border-0 bg-slate-900"
-                    title={activeReadingBook.pashtoTitle}
-                  />
+                    {/* Embedded original PDF from assets / local upload */}
+                    <iframe 
+                      src={pdfUrl}
+                      className="w-full flex-1 border-0 bg-slate-900 transition-all rounded-b-xl"
+                      style={{ height: pdfViewerHeight, filter: pdfDarkMode ? 'invert(0.9) hue-rotate(180deg)' : 'none' }}
+                      title={activeReadingBook.pashtoTitle}
+                    />
 
-                  {/* PDF Viewer help tip */}
-                  <div className="bg-slate-950 border-t border-slate-800 p-2 text-center text-[9px] text-slate-400">
-                    که د پی داس ایف د بار بندۍ یا لوډ ستونزه لرله، د پورتني ټب مینو څخه د <span className="text-amber-500 font-bold">«متن + غږونګی»</span> حالت څخه ګټه واخلئ.
+                    {/* PDF Viewer help tip */}
+                    <div className="bg-slate-950 border-t border-slate-800 p-2 text-center text-[9px] text-slate-400 flex justify-between items-center px-4">
+                      <button
+                        onClick={() => window.open(pdfUrl, '_blank')}
+                        className="text-[8.5px] text-sky-400 underline"
+                      >
+                        په نوې کړکۍ کې لوستل ↗
+                      </button>
+                      <span>
+                        که د پی ډي ایف د ورانیدو مخنیوی غواړئ، یا مو رنګونه خراب شول، په مینو کې <span className="text-amber-500 font-bold">«متن + غږونګی»</span> وکاروئ.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ) : (
+                );
+              })() : (
                 <div 
                   className={`w-full max-w-xl rounded-xl relative shadow-2xl overflow-hidden text-slate-950 leading-relaxed text-right transition-all duration-300 ${
                     cropMargins ? 'p-3 md:p-5' : 'p-6 md:p-8'
@@ -1741,6 +2080,159 @@ export default function App() {
               </div>
 
             </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* 8. NEW CUSTOM BOOK / PDF ASSET REGISTRY MODAL */}
+      {showAddBookModal && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl w-full max-w-md overflow-hidden animate-slow-fade-in text-right">
+            
+            <div className="bg-slate-950 p-4 flex justify-between items-center border-b border-slate-850">
+              <button 
+                onClick={() => setShowAddBookModal(false)} 
+                className="p-1 rounded bg-slate-900 text-slate-400 hover:text-white"
+                type="button"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              <h3 className="font-bold text-xs text-amber-500">
+                المکتبة المدنیة کې د خپل نوي پی ډي ایف ثبتول
+              </h3>
+            </div>
+
+            <form onSubmit={handleAddCustomBook} className="p-4 space-y-3.5 text-right overflow-y-auto max-h-[80vh]">
+              
+              <div className="bg-amber-500/5 border border-amber-500/10 p-3 rounded-lg text-[9.5px] leading-normal text-amber-400/90">
+                <strong>لارښوونه:</strong> د دې لپاره چې نوی کتاب په اپلیکیشن کې په بریالیتوب سره لوډ شي، د هغې پی ډي ایف فایل د اپلیکیشن د <span className="underline font-sans font-bold">public/assets/</span> په پوښۍ (فولډر) کې د کتاب ID په نوم واچوئ. مثلاً که ID مو <code className="font-mono bg-slate-950 px-1 py-0.2 rounded text-amber-400">new-book</code> لیکلی وي، په اسټس فولډر کې باید د فایل نوم <code className="font-sans font-bold text-white">new-book.pdf</code> وي. د دې طریقې سره ستاسو فایل د تل لپاره د مینو لیست کې شاملیږي.
+              </div>
+
+              {/* ID Identifier */}
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 block">کتاب پیژندونکی ID (Filename Identifier): <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  required
+                  value={custBookId}
+                  onChange={(e) => setCustBookId(e.target.value)}
+                  placeholder="مثلاً: pukhto-tariq-kitab (پرته له کومې فاصلې)"
+                  className="w-full px-3 py-1.5 bg-slate-950 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white"
+                />
+              </div>
+
+              {/* Title Pashto */}
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 block">د کتاب پښتو سرلیک: <span className="text-red-500">*</span></label>
+                <input
+                  type="text"
+                  required
+                  value={custBookPashtoTitle}
+                  onChange={(e) => setCustBookPashtoTitle(e.target.value)}
+                  placeholder="مثلاً: د پښتنو د مبارزې تاریخ"
+                  className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                />
+              </div>
+
+              {/* Original Urdu/Arabic Title (Optional) */}
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 block">اصلي علمي نوم (اختیاري):</label>
+                <input
+                  type="text"
+                  value={custBookTitle}
+                  onChange={(e) => setCustBookTitle(e.target.value)}
+                  placeholder="مثلاً: تأریخ المجاهدین القدماء"
+                  className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* Book Author */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 block">لیکوال:</label>
+                  <input
+                    type="text"
+                    value={custBookAuthor}
+                    onChange={(e) => setCustBookAuthor(e.target.value)}
+                    placeholder="شيخ ګل الرحمن حقاني"
+                    className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                  />
+                </div>
+
+                {/* Cover Year */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 block">چاپ کال (هجري یا میلادي):</label>
+                  <input
+                    type="text"
+                    value={custBookYear}
+                    onChange={(e) => setCustBookYear(e.target.value)}
+                    placeholder="۱۴۰۵ هـ ق"
+                    className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                {/* Category Selection */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 block">د کتاب برخه (موضوع):</label>
+                  <select
+                    value={custBookCategory}
+                    onChange={(e) => setCustBookCategory(e.target.value as any)}
+                    className="w-full px-2 py-1.5 bg-slate-950 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white"
+                  >
+                    <option value="islamic">اسلامي علوم او تصوف</option>
+                    <option value="literature">ادب او هنر</option>
+                    <option value="philosophy">عقلي او فلسفي منطق</option>
+                    <option value="history">تاریخ او پېښلیک</option>
+                    <option value="language">ژبه او نحوي ضوابط</option>
+                  </select>
+                </div>
+
+                {/* Estimate Size */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-400 block">د فایل اندازه:</label>
+                  <input
+                    type="text"
+                    value={custBookSize}
+                    onChange={(e) => setCustBookSize(e.target.value)}
+                    placeholder="2.5 MB"
+                    className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                  />
+                </div>
+              </div>
+
+              {/* Book Description */}
+              <div className="space-y-1">
+                <label className="text-[10px] font-bold text-slate-400 block">د کتاب لنډه پیژندنه او شرحه:</label>
+                <textarea
+                  value={custBookDesc}
+                  onChange={(e) => setCustBookDesc(e.target.value)}
+                  placeholder="د دې علمي اثر په اړه په لږو کلمو کې معلومات ولیکئ..."
+                  rows={2}
+                  className="w-full px-3 py-1.5 bg-slate-955 border border-slate-800 rounded text-right text-xs focus:outline-none focus:border-amber-500 text-white bg-slate-950"
+                />
+              </div>
+
+              {/* Action buttons */}
+              <div className="pt-3 border-t border-slate-800/80 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowAddBookModal(false)}
+                  className="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-[10px]"
+                >
+                  بندول
+                </button>
+                <button
+                  type="submit"
+                  className="w-full py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-[10px] font-bold"
+                >
+                  په المارۍ کې ثبتول
+                </button>
+              </div>
+
+            </form>
 
           </div>
         </div>
