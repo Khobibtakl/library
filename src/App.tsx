@@ -270,6 +270,7 @@ export default function App() {
   const [bookToExport, setBookToExport] = useState<Book | null>(null);
   const [showExitDialog, setShowExitDialog] = useState<boolean>(false);
   const [readerMode, setReaderMode] = useState<'pdf' | 'text'>('pdf');
+  const [showReaderSettings, setShowReaderSettings] = useState<boolean>(false);
 
   // PDF configuration and custom shelf additions
   const [pdfCacheBuster, setPdfCacheBuster] = useState<number>(Date.now());
@@ -1011,8 +1012,8 @@ export default function App() {
     
     // Only turn pages horizontal swipes that exceed threshold and are dominant over vertical movement
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 60) {
-      if (deltaX < 0) {
-        // Swiped Left - since text/page flow, let's turn to next page
+      if (deltaX > 0) {
+        // Dragged/Swiped Right - Go to Next Page per user request (ښۍ خوا ته په کشولو سره بل مخ راځي)
         if (readerPage < totalPagesCount) {
           handlePageChange(readerPage + 1);
           triggerToast("بل مخ ➔", "info");
@@ -1020,7 +1021,7 @@ export default function App() {
           triggerToast("تاسو وروستي مخ باندې یاست.", "info");
         }
       } else {
-        // Swiped Right - turn to previous page
+        // Dragged/Swiped Left - Go to Previous Page (چپ خوا ته په کشولو سره تېر مخ راځي)
         if (readerPage > 1) {
           handlePageChange(readerPage - 1);
           triggerToast("⬅ تېر مخ", "info");
@@ -1051,7 +1052,8 @@ export default function App() {
     const deltaY = e.clientY - swipeStartYRef.current;
     
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 60) {
-      if (deltaX < 0) {
+      if (deltaX > 0) {
+        // Dragged/Swiped Right with mouse - Go to Next Page
         if (readerPage < totalPagesCount) {
           handlePageChange(readerPage + 1);
           triggerToast("بل مخ ➔", "info");
@@ -1059,6 +1061,7 @@ export default function App() {
           triggerToast("تاسو وروستي مخ باندې یاست.", "info");
         }
       } else {
+        // Dragged/Swiped Left with mouse - Go to Previous Page
         if (readerPage > 1) {
           handlePageChange(readerPage - 1);
           triggerToast("⬅ تېر مخ", "info");
@@ -1604,19 +1607,284 @@ export default function App() {
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
         >
-          {/* Floating Exit Button (له کتاب څخه وتل) */}
-          <div className="absolute top-4 left-4 z-50 pointer-events-auto">
+          {/* Floating Controls Column */}
+          <div className="absolute top-4 left-4 z-50 pointer-events-auto flex flex-col gap-2.5 items-start font-sans">
+            {/* Exit Button (له کتاب څخه وتل) */}
             <button
               onClick={() => {
                 handleStopTTS();
                 setActiveReadingBook(null);
+                setShowReaderSettings(false);
               }}
-              className="flex items-center gap-2 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-xl shadow-[0_4px_25px_rgba(225,29,72,0.4)] md:shadow-lg transition-all duration-200 cursor-pointer font-bold text-xs border border-rose-500/30"
+              className="flex items-center gap-2 px-4 py-2.5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-xl shadow-[0_4px_20px_rgba(225,29,72,0.3)] duration-200 cursor-pointer font-bold text-xs border border-rose-500/20"
               title="له کتاب څخه وتل"
             >
               <X className="w-4 h-4" />
               <span>له کتاب څخه وتل</span>
             </button>
+
+            {/* Toggle Configuration settings */}
+            <button
+              onClick={() => setShowReaderSettings(!showReaderSettings)}
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl shadow-lg transition-all duration-200 cursor-pointer font-bold text-xs border ${
+                showReaderSettings 
+                  ? 'bg-amber-500 hover:bg-amber-400 text-slate-950 border-amber-400/30' 
+                  : 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-850'
+              }`}
+              title="د پی ډي ایف ترتیبات"
+            >
+              <SlidersHorizontal className="w-4 h-4" />
+              <span>د پی ډي ایف تنظیمات</span>
+            </button>
+
+            {/* Floating configuration settings panel */}
+            {showReaderSettings && (
+              <div className="bg-[#090f1d]/95 backdrop-blur-md border border-slate-800/80 p-4 rounded-xl shadow-2xl w-72 text-right dir-rtl space-y-4 animate-fade-in max-h-[75vh] overflow-y-auto mt-1">
+                <div className="flex items-center justify-between border-b border-slate-800/60 pb-2">
+                  <h4 className="text-xs font-bold text-amber-500 uppercase flex items-center gap-1.5 font-sans">
+                    <Sliders className="w-3.5 h-3.5" />
+                    <span>د پی ډي ایف ترتیبات</span>
+                  </h4>
+                  <button 
+                    onClick={() => setShowReaderSettings(false)}
+                    className="p-1 rounded bg-slate-950 border border-slate-850 text-slate-400 hover:text-white"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+
+                {/* 1. READER MODE SELECTOR */}
+                <div className="space-y-1.5">
+                  <span className="text-[10px] text-slate-400 font-bold block">د ښودلو بڼه (موډ):</span>
+                  <div className="grid grid-cols-2 gap-1 bg-slate-950 p-1 rounded-lg border border-slate-900 text-[10px]">
+                    <button
+                      onClick={() => {
+                        setReaderMode('pdf');
+                        triggerToast("د کتاب اصلي پی‌ډي‌ایف بڼه فعاله شوه", "info");
+                      }}
+                      className={`py-1.5 rounded-md font-bold transition cursor-pointer ${
+                        readerMode === 'pdf' 
+                          ? 'bg-amber-500 text-slate-950 shadow-sm' 
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      اصلي PDF کتل
+                    </button>
+                    <button
+                      onClick={() => {
+                        setReaderMode('text');
+                        triggerToast("د غږیز او لوستلو متن بڼه فعاله شوه", "info");
+                      }}
+                      className={`py-1.5 rounded-md font-bold transition cursor-pointer ${
+                        readerMode === 'text' 
+                          ? 'bg-amber-500 text-slate-950 shadow-sm' 
+                          : 'text-slate-400 hover:text-white'
+                      }`}
+                    >
+                      متن + غږونګی
+                    </button>
+                  </div>
+                </div>
+
+                {/* If mode is pdf, show specific canvas settings */}
+                {readerMode === 'pdf' && (
+                  <>
+                    {/* 2. ZOOM CONTROLS */}
+                    <div className="space-y-1.5">
+                      <span className="text-[10px] text-slate-400 font-bold block">د زوم کچه (Zoom):</span>
+                      <div className="flex items-center justify-between bg-slate-950 p-1.5 rounded-lg border border-slate-900">
+                        <button 
+                          onClick={() => setReaderZoom(prev => Math.max(50, prev - 10))}
+                          className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 pointer-events-auto"
+                        >
+                          <ZoomOut className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="text-xs font-mono font-bold text-amber-500">{readerZoom}%</span>
+                        <button 
+                          onClick={() => setReaderZoom(prev => Math.min(250, prev + 10))}
+                          className="px-2.5 py-1 rounded bg-slate-900 hover:bg-slate-800 text-slate-300 pointer-events-auto"
+                        >
+                          <ZoomIn className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* 3. ROTATION CONTROL */}
+                    <div className="flex items-center justify-between pt-1 border-t border-slate-850 text-xs">
+                      <span className="text-[10px] text-slate-400">د پاڼې څرخول:</span>
+                      <button
+                        onClick={() => {
+                          const nextAngle = (rotationAngle + 90) % 360;
+                          setRotationAngle(nextAngle);
+                          triggerToast(`پاڼه ۹۰ درجو ته وغبرګول شوه!`, 'info');
+                        }}
+                        className="px-2.5 py-1 rounded bg-slate-950 hover:bg-slate-900 border border-slate-900 text-sky-400 flex items-center gap-1 text-[10px] pointer-events-auto"
+                      >
+                        <RotateCw className="w-3 h-3" />
+                        <span>۹۰° څرخول ({rotationAngle}°)</span>
+                      </button>
+                    </div>
+
+                    {/* 4. ENHANCEMENT STUFF (DARK MODE & INK BOLDNESS) */}
+                    <div className="space-y-2 pt-2 border-t border-slate-850 text-xs">
+                      <span className="text-[10px] text-slate-400 font-bold block">رنګونه او فلټرونه:</span>
+                      
+                      {/* PDF Dark Mode */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-zinc-300">د شپې موډ (تور او سپین):</span>
+                        <button
+                          onClick={() => {
+                            setPdfDarkMode(!pdfDarkMode);
+                            triggerToast(pdfDarkMode ? "رنګونه عادي حالت ته راغلل" : "د پی ډی ایف معکوس موډ (Night View) فعال شو!", "info");
+                          }}
+                          className={`px-3 py-1 rounded-lg text-[9.5px] font-bold border transition pointer-events-auto ${
+                            pdfDarkMode 
+                              ? 'bg-amber-500/15 border-amber-500/30 text-amber-400' 
+                              : 'bg-slate-950 border-slate-800/80 text-slate-400'
+                          }`}
+                        >
+                          {pdfDarkMode ? "فعال دی" : "بند دی"}
+                        </button>
+                      </div>
+
+                      {/* Ink Boldness */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-zinc-300">د تورو توندوالی (روښانه):</span>
+                        <button
+                          onClick={() => {
+                            setInkBoldness(!inkBoldness);
+                            triggerToast(inkBoldness ? "توند رنګ ليرې شو" : "د رنګ توندوالی فعال شو!", 'info');
+                          }}
+                          className={`px-3 py-1 rounded-lg text-[9.5px] font-bold border transition pointer-events-auto ${
+                            inkBoldness 
+                              ? 'bg-amber-500/15 border-amber-500/30 text-amber-400' 
+                              : 'bg-slate-950 border-slate-800/80 text-slate-400'
+                          }`}
+                        >
+                          {inkBoldness ? "فعال دی" : "بند دی"}
+                        </button>
+                      </div>
+
+                      {/* Inverted Scan */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] text-zinc-300">بدل رنګ لوستونکي (Invert):</span>
+                        <button
+                          onClick={() => {
+                            setInvertedScan(!invertedScan);
+                            triggerToast(invertedScan ? "معکوس حالت بند شو" : "بدل رنګ لوستونکي موډ فعال شو", 'info');
+                          }}
+                          className={`px-3 py-1 rounded-lg text-[9.5px] font-bold border transition pointer-events-auto ${
+                            invertedScan 
+                              ? 'bg-amber-500/15 border-amber-500/30 text-amber-400' 
+                              : 'bg-slate-950 border-slate-800/80 text-slate-400'
+                          }`}
+                        >
+                          {invertedScan ? "فعال دی" : "بند دی"}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* 5. CONTRAST / BRIGHTNESS SLIDERS */}
+                    <div className="space-y-2 pt-2 border-t border-slate-850">
+                      <div className="space-y-0.5 pointer-events-auto">
+                        <span className="text-[9.5px] text-slate-400 block pb-0.5">تصویري تضاد (Contrast): {scannedContrast}%</span>
+                        <input
+                          type="range"
+                          min="80"
+                          max="200"
+                          value={scannedContrast}
+                          onChange={(e) => setScannedContrast(Number(e.target.value))}
+                          className="w-full accent-amber-500 h-1 cursor-pointer bg-slate-800 rounded-lg appearance-none"
+                        />
+                      </div>
+                      <div className="space-y-0.5 pointer-events-auto">
+                        <span className="text-[9.5px] text-slate-400 block pb-0.5">د سکرین روښانتیا (Brightness): {brightnessLevel}%</span>
+                        <input
+                          type="range"
+                          min="30"
+                          max="100"
+                          value={brightnessLevel}
+                          onChange={(e) => setBrightnessLevel(Number(e.target.value))}
+                          className="w-full accent-amber-500 h-1 cursor-pointer bg-slate-800 rounded-lg appearance-none"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* If mode is text, show TTS speed / voice play options */}
+                {readerMode === 'text' && (
+                  <div className="space-y-3 pt-1">
+                    <div className="space-y-1.5 p-2 bg-slate-950 border border-slate-900 rounded-lg pointer-events-auto">
+                      <span className="text-[10px] text-slate-400 font-bold block pb-1">د متن غږیز لوستونکی (TTS):</span>
+                      <div className="flex items-center justify-between">
+                        <button
+                          onClick={isSpeaking ? handleStopTTS : handlePlayTTS}
+                          className={`px-4 py-2 rounded-lg text-[10px] font-bold w-full flex items-center justify-center gap-1.5 transition ${
+                            isSpeaking 
+                              ? 'bg-rose-600 hover:bg-rose-500 text-white animate-pulse' 
+                              : 'bg-[#10b981] hover:bg-[#059669] text-white'
+                          }`}
+                        >
+                          {isSpeaking ? (
+                            <>
+                              <VolumeX className="w-3.5 h-3.5" />
+                              <span>غږ درول (Stop Voice)</span>
+                            </>
+                          ) : (
+                            <>
+                              <Volume2 className="w-3.5 h-3.5" />
+                              <span>غږ پیلول (Read Page)</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* Speech rate controller */}
+                    <div className="space-y-1 pointer-events-auto">
+                      <span className="text-[10px] text-slate-400 block pb-0.5 font-sans">د غږ سرعت: <span className="font-mono text-amber-500 font-bold">{ttsSpeed}x</span></span>
+                      <div className="flex bg-slate-950 p-0.5 rounded-lg border border-slate-900 text-[9px] justify-between">
+                        {[0.8, 0.95, 1.1, 1.25].map(val => (
+                          <button
+                            key={val}
+                            onClick={() => {
+                              setTtsSpeed(val);
+                              triggerToast(`غږیز سرعت: ${val}x`, "info");
+                            }}
+                            className={`px-2 py-1 rounded transition ${ttsSpeed === val ? 'bg-amber-500 text-slate-950 font-bold shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                          >
+                            {val}x
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {/* 6. JUMP TO PAGE */}
+                <div className="pt-2 border-t border-slate-855 flex items-center justify-between gap-1 pointer-events-auto">
+                  <span className="text-[10px] text-slate-400 font-bold">مخ ته ورتلل:</span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handlePageChange(readerPage - 1)}
+                      disabled={readerPage === 1}
+                      className="p-1.5 rounded bg-slate-950 border border-slate-900 text-slate-400 hover:text-white disabled:opacity-30"
+                    >
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                    <span className="text-[10px] font-bold text-slate-300 font-mono px-1.5 min-w-10 text-center">{readerPage} / {totalPagesCount}</span>
+                    <button
+                      onClick={() => handlePageChange(readerPage + 1)}
+                      disabled={readerPage === totalPagesCount}
+                      className="p-1.5 rounded bg-slate-950 border border-slate-900 text-slate-400 hover:text-white disabled:opacity-30"
+                    >
+                      <ChevronLeft className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Minimal Subtle Title & Page Indicator */}
@@ -1668,7 +1936,7 @@ export default function App() {
                       style={{
                         filter: `brightness(${brightnessLevel}%) contrast(${scannedContrast}%) ${pdfDarkMode ? 'invert(0.9) hue-rotate(180deg)' : ''} ${invertedScan ? 'invert(1) grayscale(1)' : ''} ${inkBoldness ? 'contrast(1.8) brightness(0.9) grayscale(1)' : ''}`,
                         transform: pageTransitioning 
-                          ? (transitionDirection === 'next' ? 'translateX(-110px) scale(0.93) rotate(-0.5deg)' : 'translateX(110px) scale(0.93) rotate(0.5deg)')
+                          ? (transitionDirection === 'next' ? 'translateX(110px) scale(0.93) rotate(0.5deg)' : 'translateX(-110px) scale(0.93) rotate(-0.5deg)')
                           : 'translateX(0) scale(1) rotate(0deg)',
                         opacity: pageTransitioning ? 0.35 : 1,
                         transition: 'filter 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease',
@@ -1676,10 +1944,10 @@ export default function App() {
                     />
                     
                     {/* Subtle RTL Overlay Swipe Indicators */}
-                    <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-950/20 to-transparent pointer-events-none flex items-center justify-start pl-3 opacity-0 hover:opacity-100 transition-opacity">
+                    <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-950/20 to-transparent pointer-events-none flex items-center justify-end pr-3 opacity-0 hover:opacity-100 transition-opacity">
                       <span className="text-xl text-amber-500/40">➔</span>
                     </div>
-                    <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-slate-950/20 to-transparent pointer-events-none flex items-center justify-end pr-3 opacity-0 hover:opacity-100 transition-opacity">
+                    <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-slate-950/20 to-transparent pointer-events-none flex items-center justify-start pl-3 opacity-0 hover:opacity-100 transition-opacity">
                       <span className="text-xl text-amber-500/40">⬅</span>
                     </div>
                   </div>
